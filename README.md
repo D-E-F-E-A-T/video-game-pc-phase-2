@@ -1,3 +1,3 @@
 # The Adventures Of Orchi
-An adventure game for Windows 10.
+An 2D adventure game
 
