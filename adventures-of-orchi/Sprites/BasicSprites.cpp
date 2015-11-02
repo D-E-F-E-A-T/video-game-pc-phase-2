@@ -129,14 +129,14 @@ void SpriteBatch::Initialize(
             { "COLOR",     0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 20, D3D11_INPUT_PER_INSTANCE_DATA, 1 }
         };
         loader->LoadShader(
-            "Content\\BasicSprites.GeometryShader.vs.cso",
+            "BasicSprites.GeometryShader.vs.cso",
             layoutDesc,
             ARRAYSIZE(layoutDesc),
             &m_vertexShader,
             &m_inputLayout
             );
         loader->LoadShader(
-            "Content\\BasicSprites.GeometryShader.gs.cso",
+            "BasicSprites.GeometryShader.gs.cso",
             &m_geometryShader
             );
     }
@@ -152,7 +152,7 @@ void SpriteBatch::Initialize(
             { "COLOR",     0, DXGI_FORMAT_R8G8B8A8_UNORM, 1, 20, D3D11_INPUT_PER_INSTANCE_DATA, 1 }
         };
         loader->LoadShader(
-            "Content\\BasicSprites.Instancing.vs.cso",
+            "BasicSprites.Instancing.vs.cso",
             layoutDesc,
             ARRAYSIZE(layoutDesc),
             &m_vertexShader,
@@ -168,7 +168,7 @@ void SpriteBatch::Initialize(
             { "COLOR",     0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0 }
         };
         loader->LoadShader(
-            "Content\\BasicSprites.Replication.vs.cso",
+            "BasicSprites.Replication.vs.cso",
             layoutDesc,
             ARRAYSIZE(layoutDesc),
             &m_vertexShader,
@@ -177,7 +177,7 @@ void SpriteBatch::Initialize(
     }
 
     loader->LoadShader(
-        "Content\\BasicSprites.ps.cso",
+        "BasicSprites.ps.cso",
         &m_pixelShader
         );
 

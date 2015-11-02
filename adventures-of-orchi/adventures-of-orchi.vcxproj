@@ -196,6 +196,15 @@
     <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Image Include="Assets\StoreLogo.png" />
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Image Include="grass.dds" />
+    <Image Include="heart.dds" />
+    <Image Include="ida.dds" />
+    <Image Include="link.dds" />
+    <Image Include="rock.dds" />
+    <Image Include="stonewall.dds" />
+    <Image Include="test.dds" />
+    <Image Include="tree.dds" />
+    <Image Include="water.dds" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h">
@@ -261,22 +270,22 @@
     <None Include="adventures-of-orchi_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Content\BasicSprites.GeometryShader.gs.hlsl">
+    <FxCompile Include="BasicSprites.GeometryShader.gs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Content\BasicSprites.GeometryShader.vs.hlsl">
+    <FxCompile Include="BasicSprites.GeometryShader.vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Content\BasicSprites.Instancing.vs.hlsl">
+    <FxCompile Include="BasicSprites.Instancing.vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Content\BasicSprites.ps.hlsl">
+    <FxCompile Include="BasicSprites.ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0_level_9_1</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Content\BasicSprites.Replication.vs.hlsl">
+    <FxCompile Include="BasicSprites.Replication.vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0_level_9_1</ShaderModel>
     </FxCompile>

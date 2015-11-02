@@ -205,7 +205,7 @@ void DX::DeviceResources::CreateDeviceResources()
 		);
 
 	CreateBrushes();
-//	LoadSprites();
+	LoadSprites();
 }
 
 // These resources need to be recreated every time the window size is changed.

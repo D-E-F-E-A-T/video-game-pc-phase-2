@@ -120,6 +120,15 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="grass.dds" />
+    <Image Include="heart.dds" />
+    <Image Include="ida.dds" />
+    <Image Include="link.dds" />
+    <Image Include="rock.dds" />
+    <Image Include="stonewall.dds" />
+    <Image Include="test.dds" />
+    <Image Include="tree.dds" />
+    <Image Include="water.dds" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -131,20 +140,10 @@
     <Page Include="DirectXPage.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Content\BasicSprites.GeometryShader.gs.hlsl">
-      <Filter>Content</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\BasicSprites.GeometryShader.vs.hlsl">
-      <Filter>Content</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\BasicSprites.Instancing.vs.hlsl">
-      <Filter>Content</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\BasicSprites.ps.hlsl">
-      <Filter>Content</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\BasicSprites.Replication.vs.hlsl">
-      <Filter>Content</Filter>
-    </FxCompile>
+    <FxCompile Include="BasicSprites.GeometryShader.gs.hlsl" />
+    <FxCompile Include="BasicSprites.GeometryShader.vs.hlsl" />
+    <FxCompile Include="BasicSprites.Instancing.vs.hlsl" />
+    <FxCompile Include="BasicSprites.ps.hlsl" />
+    <FxCompile Include="BasicSprites.Replication.vs.hlsl" />
   </ItemGroup>
 </Project>
