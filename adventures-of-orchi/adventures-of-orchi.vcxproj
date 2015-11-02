@@ -215,6 +215,9 @@
     <ClInclude Include="BasicMath.h" />
     <ClInclude Include="BasicReaderWriter.h" />
     <ClInclude Include="BasicShapes.h" />
+    <ClInclude Include="BroadCollisionStrategy.h" />
+    <ClInclude Include="CollisionDetectionInfo.h" />
+    <ClInclude Include="CollisionDetectionStrategy.h" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="adventures_of_orchiMain.h" />
     <ClInclude Include="Constants.h" />
@@ -232,8 +235,11 @@
     <ClInclude Include="GrassData.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GridSpace.h" />
+    <ClInclude Include="MathUtils.h" />
+    <ClInclude Include="NarrowCollisionStrategy.h" />
     <ClInclude Include="OrchiData.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="RockData.h" />
     <ClInclude Include="ScreenBuilder.h" />
     <ClInclude Include="ScreenUtils.h" />
@@ -249,6 +255,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="BasicReaderWriter.cpp" />
+    <ClCompile Include="BroadCollisionStrategy.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
     <ClCompile Include="adventures_of_orchiMain.cpp" />
     <ClCompile Include="Content\GameRenderer.cpp" />
@@ -259,6 +266,8 @@
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
     <ClCompile Include="Content\Sample3DSceneRenderer.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="MathUtils.cpp" />
+    <ClCompile Include="NarrowCollisionStrategy.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -267,6 +276,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="ScreenBuilder.cpp" />
     <ClCompile Include="ScreenUtils.cpp" />
     <ClCompile Include="Sprites\BasicLoader.cpp" />

@@ -5,6 +5,9 @@
 #include "..\Common\StepTimer.h"
 #include "Grid.h"
 #include "ScreenBuilder.h"
+#include "Player.h"
+#include "BroadCollisionStrategy.h"
+#include "NarrowCollisionStrategy.h"
 
 using namespace Windows::UI::Core;
 
@@ -32,7 +35,7 @@ namespace adventures_of_orchi
 		//BasicSprites::SpriteBatch ^ m_spriteBatch;
 		void Rotate(float radians);
 
-		CoreWindow ^ m_window;
+		Platform::Agile<CoreWindow> m_window;
 
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
@@ -54,6 +57,7 @@ namespace adventures_of_orchi
 		float	m_degreesPerSecond;
 		bool	m_tracking;
 
+		OrchiData m_orchiData;
 		std::vector<BaseSpriteData *> * m_pTreeData;
 		std::vector<BaseSpriteData> m_rockData;
 		std::vector<BaseSpriteData> m_waterData;
@@ -69,6 +73,37 @@ namespace adventures_of_orchi
 
 		void DrawSprites();
 		void BuildScreen();
+		void DrawPlayer();
+
+		Player * m_pPlayer;
+
+		float fWindowWidth;
+		float fWindowHeight;
+		
+		// Input related members
+		bool                    m_isControllerConnected;  // Do we have a controller connected
+		XINPUT_CAPABILITIES     m_xinputCaps;             // Capabilites of the controller
+		XINPUT_STATE            m_xinputState;            // The current state of the controller
+		uint64                  m_lastEnumTime;           // Last time a new controller connection was checked
+
+		void FetchControllerInput();
+		void MovePlayer(uint16 buttons, short horizontal, short vertical);
+		void HandleLeftThumbStick(short horizontal, short vertical);
+		int intersectRect[4];
+		void DrawSpriteIntersection();
+		int m_nCollisionState;
+
+		int m_nCollidedSpriteColumn;
+		int m_nCollidedSpriteRow;
+
+		bool m_bSpriteCollisionDetected;
+
+		BroadCollisionStrategy * m_broadCollisionDetectionStrategy;
+		NarrowCollisionStrategy * m_pNarrowCollisionDetectionStrategy;
+
+		list<BaseSpriteData *> * m_pCollided;
+		void HighlightSprite(int column, int row, ComPtr<ID2D1SolidColorBrush> brush);
+		void HighlightSprite(int * pLocation, ComPtr<ID2D1SolidColorBrush> brush);
 	};
 }
 

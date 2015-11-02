@@ -17,7 +17,7 @@ adventures_of_orchiMain::adventures_of_orchiMain(const std::shared_ptr<DX::Devic
 
 	// TODO: Replace this with your app's content initialization.
 	m_gameRenderer = std::unique_ptr<GameRenderer>(new GameRenderer(m_deviceResources, window));
-	m_sceneRenderer = std::unique_ptr<Sample3DSceneRenderer>(new Sample3DSceneRenderer(m_deviceResources));
+//	m_sceneRenderer = std::unique_ptr<Sample3DSceneRenderer>(new Sample3DSceneRenderer(m_deviceResources));
 
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
 
@@ -39,7 +39,7 @@ adventures_of_orchiMain::~adventures_of_orchiMain()
 void adventures_of_orchiMain::CreateWindowSizeDependentResources() 
 {
 	// TODO: Replace this with the size-dependent initialization of your app's content.
-	m_sceneRenderer->CreateWindowSizeDependentResources();
+	//m_sceneRenderer->CreateWindowSizeDependentResources();
 }
 
 void adventures_of_orchiMain::StartRenderLoop()
@@ -84,7 +84,7 @@ void adventures_of_orchiMain::Update()
 	{
 		// TODO: Replace this with your app's content update functions.
 		m_gameRenderer->Update(m_timer);
-		m_sceneRenderer->Update(m_timer);
+//		m_sceneRenderer->Update(m_timer);
 		m_fpsTextRenderer->Update(m_timer);
 	});
 }
@@ -93,7 +93,7 @@ void adventures_of_orchiMain::Update()
 void adventures_of_orchiMain::ProcessInput()
 {
 	// TODO: Add per frame input handling here.
-	m_sceneRenderer->TrackingUpdate(m_pointerLocationX);
+	//m_sceneRenderer->TrackingUpdate(m_pointerLocationX);
 	m_gameRenderer->TrackingUpdate(m_pointerLocationX);
 }
 
@@ -118,13 +118,16 @@ bool adventures_of_orchiMain::Render()
 	context->OMSetRenderTargets(1, targets, m_deviceResources->GetDepthStencilView());
 
 	// Clear the back buffer and depth stencil view.
-	context->ClearRenderTargetView(m_deviceResources->GetBackBufferRenderTargetView(), DirectX::Colors::CornflowerBlue);
+	context->ClearRenderTargetView(m_deviceResources->GetBackBufferRenderTargetView(), DirectX::Colors::Tan);
 	context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
-	m_sceneRenderer->Render();
+
+	
 	m_gameRenderer->Render();
+	//m_sceneRenderer->Render();
+
 	m_fpsTextRenderer->Render();
 
 	return true;
@@ -133,7 +136,7 @@ bool adventures_of_orchiMain::Render()
 // Notifies renderers that device resources need to be released.
 void adventures_of_orchiMain::OnDeviceLost()
 {
-	m_sceneRenderer->ReleaseDeviceDependentResources();
+//	m_sceneRenderer->ReleaseDeviceDependentResources();
 	m_gameRenderer->ReleaseDeviceDependentResources();
 	m_fpsTextRenderer->ReleaseDeviceDependentResources();
 }
@@ -141,7 +144,7 @@ void adventures_of_orchiMain::OnDeviceLost()
 // Notifies renderers that device resources may now be recreated.
 void adventures_of_orchiMain::OnDeviceRestored()
 {
-	m_sceneRenderer->CreateDeviceDependentResources();
+//	m_sceneRenderer->CreateDeviceDependentResources();
 	m_gameRenderer->CreateDeviceDependentResources();
 	m_fpsTextRenderer->CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();

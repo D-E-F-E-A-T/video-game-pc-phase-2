@@ -216,4 +216,21 @@
 #define TALL_BACK_BUFFER 2
 #endif // TALL_BACK_BUFFER
 
+#ifndef DEVICE_CONTEXT_2D
+#define DEVICE_CONTEXT_2D m_deviceResources->GetD2DDeviceContext()
+#endif // DEVICE_CONTEXT_2D
+
+#ifndef DEVICE_2D
+#define DEVICE_2D m_deviceResources->GetD2DDeviceContext()
+#endif // DEVICE_2D
+
+#ifndef DEVICE_CONTEXT_3D
+#define DEVICE_CONTEXT_3D m_deviceResources->GetD3DDeviceContext()
+#endif // DEVICE_CONTEXT_3D
+
+#ifndef DEVICE_3D
+#define DEVICE_3D m_deviceResources->GetD3DDevice()
+#endif // DEVICE_3D
+
+
 

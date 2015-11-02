@@ -31,7 +31,7 @@ namespace adventures_of_orchi
 		}
 		bool IsTracking() 
 		{ 
-			return m_sceneRenderer->IsTracking() && m_gameRenderer->IsTracking(); 
+			return /* m_sceneRenderer->IsTracking() && */ m_gameRenderer->IsTracking(); 
 		}
 		void StartRenderLoop();
 		void StopRenderLoop();
