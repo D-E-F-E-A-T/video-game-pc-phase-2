@@ -28,8 +28,26 @@ namespace adventures_of_orchi
 		void StopTracking();
 		bool IsTracking() { return m_tracking; }
 
+		void OnKeyDown(Windows::UI::Core::KeyEventArgs ^ args);
+		void OnSizeChanged(Windows::UI::Core::WindowSizeChangedEventArgs ^ args);
+
 		Grid grid;
 		ScreenBuilder * m_screenBuilder;
+
+		void CreateLifeText();
+		void CreateMapText();
+		void CreateButtonsText();
+		void CreateInventoryText();
+		void CreatePackText();
+
+		void DrawLifeText();
+		void DrawMapText();
+		void DrawButtonsText();
+		void DrawInventoryText();
+		void DrawPackText();
+
+		void DrawLeftMargin();
+		void DrawRightMargin();
 
 	private:
 		//BasicSprites::SpriteBatch ^ m_spriteBatch;
@@ -64,12 +82,11 @@ namespace adventures_of_orchi
 		std::vector<BaseSpriteData> m_stoneWallData;
 		std::vector<BaseSpriteData> m_grassData;
 
-		//ComPtr<ID3D11Texture2D> m_tree;
-		//ComPtr<ID3D11Texture2D> m_rock;
-		//ComPtr<ID3D11Texture2D> m_water;
-		//ComPtr<ID3D11Texture2D> m_stoneWall;
-		//ComPtr<ID3D11Texture2D> m_grass;
-		//ComPtr<ID3D11Texture2D> m_orchi;
+		Microsoft::WRL::ComPtr<IDWriteTextLayout1> m_textLayoutLife;
+		Microsoft::WRL::ComPtr<IDWriteTextLayout1> m_textLayoutButtons;
+		Microsoft::WRL::ComPtr<IDWriteTextLayout1> m_textLayoutMap;
+		Microsoft::WRL::ComPtr<IDWriteTextLayout1> m_textLayoutInventory;
+		Microsoft::WRL::ComPtr<IDWriteTextLayout1> m_textLayoutPack;
 
 		void DrawSprites();
 		void BuildScreen();
@@ -104,6 +121,9 @@ namespace adventures_of_orchi
 		list<BaseSpriteData *> * m_pCollided;
 		void HighlightSprite(int column, int row, ComPtr<ID2D1SolidColorBrush> brush);
 		void HighlightSprite(int * pLocation, ComPtr<ID2D1SolidColorBrush> brush);
+
+		DWRITE_TEXT_RANGE m_textRange;
+		ComPtr<IDWriteTextFormat>                       m_textFormat;
 	};
 }
 

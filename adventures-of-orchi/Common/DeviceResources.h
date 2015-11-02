@@ -124,5 +124,8 @@ namespace DX
 		ComPtr<ID3D11Texture2D> m_heart;
 
 		BasicSprites::SpriteBatch ^ m_spriteBatch;
+
+//		void UpdateForWindowSizeChange();
+
 	};
 }

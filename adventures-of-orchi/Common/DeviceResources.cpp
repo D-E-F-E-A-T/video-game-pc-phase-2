@@ -826,3 +826,27 @@ void DeviceResources::LoadSprites()
 
 	m_spriteBatch->AddTexture(m_heart.Get());
 }
+
+/*
+void DeviceResources::UpdateForWindowSizeChange()
+{
+	// Only handle window size changed if there is no pending DPI change.
+	if (m_dpi != DisplayInformation::GetForCurrentView()->LogicalDpi)
+	{
+		return;
+	}
+
+	if (m_window->Bounds.Width != m_windowBounds.Width ||
+		m_window->Bounds.Height != m_windowBounds.Height)
+	{
+		m_d2dContext->SetTarget(nullptr);
+		m_d2dTargetBitmap = nullptr;
+
+		m_d3dRenderTargetView = nullptr;
+
+		m_d3dDepthStencilView = nullptr;
+		m_windowSizeChangeInProgress = true;
+		CreateWindowSizeDependentResources();
+	}
+}
+*/

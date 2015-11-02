@@ -3,6 +3,8 @@
 
 #include "..\Common\DirectXHelper.h"
 #include "ScreenUtils.h"
+#include "LeftMargin.h"
+#include "RightMargin.h"
 
 using namespace adventures_of_orchi;
 
@@ -81,6 +83,14 @@ void GameRenderer::CreateWindowSizeDependentResources()
 	static const XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
 
 	XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
+
+	// TODO: Create panels for each of these.
+	//CreateLifeText();
+	//CreateButtonsText();
+
+	//CreateMapText();
+	//CreateInventoryText();
+	//CreatePackText();
 }
 
 // Called once per frame, rotates the cube and calculates the model and view matrices.
@@ -204,73 +214,24 @@ void GameRenderer::Render()
 	DEVICE_CONTEXT_2D->Clear(D2D1::ColorF(D2D1::ColorF::Tan));
 	DEVICE_CONTEXT_2D->SetTransform(D2D1::Matrix3x2F::Identity());
 
-	//grid.SetVisibility(true);
+	DrawLeftMargin();
+	DrawRightMargin();
 
-	//grid.Draw(m_deviceResources->GetD2DDeviceContext(), m_deviceResources->m_blackBrush);
+	//DrawLifeText();
+	//DrawButtonsText();
 
-/*
+	//DrawMapText();
+	//DrawInventoryText();
+	//DrawPackText();
+
+	grid.SetVisibility(true);
+
+	grid.Draw(DEVICE_CONTEXT_2D, m_deviceResources->m_blackBrush);
+
 	auto context = DEVICE_CONTEXT_3D;
 
-	// Prepare the constant buffer to send it to the graphics device.
-	context->UpdateSubresource(
-		m_constantBuffer.Get(),
-		0,
-		NULL,
-		&m_constantBufferData,
-		0,
-		0
-		);
 
-	// Each vertex is one instance of the VertexPositionColor struct.
-	UINT stride = sizeof(VertexPositionColor);
-	UINT offset = 0;
-	context->IASetVertexBuffers(
-		0,
-		1,
-		m_vertexBuffer.GetAddressOf(),
-		&stride,
-		&offset
-		);
 
-	context->IASetIndexBuffer(
-		m_indexBuffer.Get(),
-		DXGI_FORMAT_R16_UINT, // Each index is one 16-bit unsigned integer (short).
-		0
-		);
-
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	context->IASetInputLayout(m_inputLayout.Get());
-
-	// Attach our vertex shader.
-	context->VSSetShader(
-		m_vertexShader.Get(),
-		nullptr,
-		0
-		);
-
-	// Send the constant buffer to the graphics device.
-	context->VSSetConstantBuffers(
-		0,
-		1,
-		m_constantBuffer.GetAddressOf()
-		);
-
-	// Attach our pixel shader.
-	context->PSSetShader(
-		m_pixelShader.Get(),
-		nullptr,
-		0
-		);
-
-	// Draw the objects.
-	context->DrawIndexed(
-		m_indexCount,
-		0,
-		0
-		);
-
-*/
 #ifdef RENDER_DIAGNOSTICS
 
 	std::list<BaseSpriteData *>::const_iterator iterator;
@@ -800,4 +761,296 @@ void GameRenderer::HighlightSprite(int column, int row, ComPtr<ID2D1SolidColorBr
 	m_deviceResources->GetD2DDeviceContext()->FillRectangle(
 		rect,
 		brush.Get());
+}
+
+void GameRenderer::OnKeyDown(Windows::UI::Core::KeyEventArgs^ args)
+{
+	if (args->VirtualKey == Windows::System::VirtualKey::P)       // Pause
+	{
+	}
+
+	if (args->VirtualKey == Windows::System::VirtualKey::Left)
+	{
+		m_pPlayer->MoveWest(m_nCollisionState, PLAYER_MOVE_VELOCITY);
+	}
+	else if (args->VirtualKey == Windows::System::VirtualKey::Down)
+	{
+		m_pPlayer->MoveSouth(m_nCollisionState, PLAYER_MOVE_VELOCITY);
+	}
+	else if (args->VirtualKey == Windows::System::VirtualKey::Right)
+	{
+		m_pPlayer->MoveEast(m_nCollisionState, PLAYER_MOVE_VELOCITY);
+	}
+	else if (args->VirtualKey == Windows::System::VirtualKey::Up)
+	{
+		m_pPlayer->MoveNorth(m_nCollisionState, PLAYER_MOVE_VELOCITY);
+	}
+}
+
+
+void GameRenderer::OnSizeChanged(WindowSizeChangedEventArgs^ args)
+{
+	//UpdateForWindowSizeChange();
+
+	//grid.SetWindowWidth(m_window->Bounds.Width);
+	//grid.SetWindowHeight(m_window->Bounds.Height);
+
+	//BuildScreen();
+}
+
+
+void GameRenderer::DrawLeftMargin()
+{
+	LeftMargin leftMargin;
+
+	D2D1_RECT_F rect
+	{
+		0.0f,
+		0.0f,
+		fWindowWidth * LEFT_MARGIN_RATIO,
+		fWindowHeight
+	};
+
+	leftMargin.Draw(
+		DEVICE_CONTEXT_2D,
+		m_deviceResources->m_blackBrush.Get(),
+		rect);
+}
+
+void GameRenderer::DrawRightMargin()
+{
+	RightMargin rightMargin;
+
+	D2D1_RECT_F rect
+	{
+		fWindowWidth - (fWindowWidth * RIGHT_MARGIN_RATIO),
+		0.0f,
+		fWindowWidth,
+		fWindowHeight
+	};
+
+	rightMargin.Draw(
+		DEVICE_CONTEXT_2D,
+		m_deviceResources->m_blackBrush.Get(),
+		rect);
+}
+
+void GameRenderer::DrawLifeText()
+{
+	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
+
+	float fTop = size.height * 0.01f;
+	float fLeft = size.width - (size.width * RIGHT_MARGIN_RATIO);
+
+	DEVICE_CONTEXT_2D->DrawTextLayout(
+		D2D1::Point2F(fLeft, fTop),
+		m_textLayoutLife.Get(),
+		m_deviceResources->m_whiteBrush.Get()
+		);
+}
+
+void GameRenderer::DrawButtonsText()
+{
+	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
+
+	float fTop = size.height / 3.0f;
+	float fLeft = size.width - (size.width * RIGHT_MARGIN_RATIO);
+
+	DEVICE_CONTEXT_2D->DrawTextLayout(
+		D2D1::Point2F(fLeft, fTop),
+		m_textLayoutButtons.Get(),
+		m_deviceResources->m_whiteBrush.Get()
+		);
+}
+
+void GameRenderer::DrawMapText()
+{
+	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
+
+	float fTop = size.height * 0.01f;
+	float fLeft = 0.0f;// size.width - (size.width * LEFT_MARGIN_RATIO);
+
+	DEVICE_CONTEXT_2D->DrawTextLayout(
+		D2D1::Point2F(fLeft, fTop),
+		m_textLayoutMap.Get(),
+		m_deviceResources->m_whiteBrush.Get()
+		);
+}
+void GameRenderer::DrawInventoryText()
+{
+	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
+
+	float fTop = size.height / 3.0f;
+	float fLeft = 0.0f;
+
+	DEVICE_CONTEXT_2D->DrawTextLayout(
+		D2D1::Point2F(fLeft, fTop),
+		m_textLayoutInventory.Get(),
+		m_deviceResources->m_whiteBrush.Get()
+		);
+}
+
+void GameRenderer::DrawPackText()
+{
+	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
+
+	float fTop = size.height / 3.0f * 2.0f;
+	float fLeft = 0.0f; // size.width - (size.width * LEFT_MARGIN_RATIO);
+
+	DEVICE_CONTEXT_2D->DrawTextLayout(
+		D2D1::Point2F(fLeft, fTop),
+		m_textLayoutPack.Get(),
+		m_deviceResources->m_whiteBrush.Get()
+		);
+}
+
+void GameRenderer::CreateLifeText()
+{
+	Platform::String ^ text = "Life";
+
+	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
+	size.height = size.height / 3.0f;
+	size.width = size.width * RIGHT_MARGIN_RATIO;
+
+	ComPtr<IDWriteTextLayout> textLayout;
+
+	DX::ThrowIfFailed(
+		m_deviceResources->m_dwriteFactory->CreateTextLayout(
+			text->Data(),
+			text->Length(),
+			m_textFormat.Get(),
+			size.width,
+			size.height,
+			&textLayout
+			)
+		);
+
+	textLayout.As(&m_textLayoutLife);
+
+	m_textRange.startPosition = 0;
+	m_textRange.length = text->Length();
+	m_textLayoutLife->SetFontSize(SECTION_HEADER_FONT_SIZE, m_textRange);
+	m_textLayoutLife->SetCharacterSpacing(0.5f, 0.5f, 0, m_textRange);
+	m_textLayoutLife->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+}
+
+
+void GameRenderer::CreateMapText()
+{
+	Platform::String ^ text = "Map";
+
+	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
+	size.height = size.height / 3.0f;
+	size.width = size.width * LEFT_MARGIN_RATIO;
+
+	ComPtr<IDWriteTextLayout> textLayout;
+
+	DX::ThrowIfFailed(
+		m_deviceResources->m_dwriteFactory->CreateTextLayout(
+			text->Data(),
+			text->Length(),
+			m_textFormat.Get(),
+			size.width,
+			size.height,
+			&textLayout
+			)
+		);
+
+	textLayout.As(&m_textLayoutMap);
+
+	m_textRange.startPosition = 0;
+	m_textRange.length = text->Length();
+	m_textLayoutMap->SetFontSize(SECTION_HEADER_FONT_SIZE, m_textRange);
+	m_textLayoutMap->SetCharacterSpacing(0.5f, 0.5f, 0, m_textRange);
+	m_textLayoutMap->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+}
+
+void GameRenderer::CreateButtonsText()
+{
+	Platform::String ^ text = "Buttons";
+
+	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
+	size.height = size.height / 3.0f;
+	size.width = size.width * RIGHT_MARGIN_RATIO;
+
+	ComPtr<IDWriteTextLayout> textLayout;
+
+	DX::ThrowIfFailed(
+		m_deviceResources->m_dwriteFactory->CreateTextLayout(
+			text->Data(),
+			text->Length(),
+			m_textFormat.Get(),
+			size.width,
+			size.height,
+			&textLayout
+			)
+		);
+
+	textLayout.As(&m_textLayoutButtons);
+
+	m_textRange.startPosition = 0;
+	m_textRange.length = text->Length();
+	m_textLayoutButtons->SetFontSize(SECTION_HEADER_FONT_SIZE, m_textRange);
+	m_textLayoutButtons->SetCharacterSpacing(0.5f, 0.5f, 0, m_textRange);
+	m_textLayoutButtons->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+}
+
+void GameRenderer::CreateInventoryText()
+{
+	Platform::String ^ text = "Inventory";
+
+	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
+	size.height = size.height / 3.0f;
+	size.width = size.width * LEFT_MARGIN_RATIO;
+
+	ComPtr<IDWriteTextLayout> textLayout;
+
+	DX::ThrowIfFailed(
+		m_deviceResources->m_dwriteFactory->CreateTextLayout(
+			text->Data(),
+			text->Length(),
+			m_textFormat.Get(),
+			size.width,
+			size.height,
+			&textLayout
+			)
+		);
+
+	textLayout.As(&m_textLayoutInventory);
+
+	m_textRange.startPosition = 0;
+	m_textRange.length = text->Length();
+	m_textLayoutInventory->SetFontSize(SECTION_HEADER_FONT_SIZE, m_textRange);
+	m_textLayoutInventory->SetCharacterSpacing(0.5f, 0.5f, 0, m_textRange);
+	m_textLayoutInventory->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+}
+
+void GameRenderer::CreatePackText()
+{
+	Platform::String ^ text = "Pack";
+
+	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
+	size.height = size.height / 3.0f;
+	size.width = size.width * RIGHT_MARGIN_RATIO;
+
+	ComPtr<IDWriteTextLayout> textLayout;
+
+	DX::ThrowIfFailed(
+		m_deviceResources->m_dwriteFactory->CreateTextLayout(
+			text->Data(),
+			text->Length(),
+			m_textFormat.Get(),
+			size.width,
+			size.height,
+			&textLayout
+			)
+		);
+
+	textLayout.As(&m_textLayoutPack);
+
+	m_textRange.startPosition = 0;
+	m_textRange.length = text->Length();
+	m_textLayoutPack->SetFontSize(SECTION_HEADER_FONT_SIZE, m_textRange);
+	m_textLayoutPack->SetCharacterSpacing(0.5f, 0.5f, 0, m_textRange);
+	m_textLayoutPack->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 }

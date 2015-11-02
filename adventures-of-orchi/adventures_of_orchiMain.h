@@ -40,6 +40,8 @@ namespace adventures_of_orchi
 		// IDeviceNotify
 		virtual void OnDeviceLost();
 		virtual void OnDeviceRestored();
+		void OnKeyDown(Windows::UI::Core::KeyEventArgs ^ args);
+		void OnSizeChanged(Windows::UI::Core::WindowSizeChangedEventArgs ^ args);
 
 	private:
 		void ProcessInput();

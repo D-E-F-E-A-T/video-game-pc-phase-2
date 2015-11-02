@@ -33,6 +33,12 @@ DirectXPage::DirectXPage():
 	// Register event handlers for page lifecycle.
 	CoreWindow^ window = Window::Current->CoreWindow;
 
+	window->SizeChanged +=
+		ref new TypedEventHandler<CoreWindow^, WindowSizeChangedEventArgs^>(this, &DirectXPage::OnSizeChanged);
+
+	window->KeyDown +=
+		ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(this, &DirectXPage::OnKeyDown);
+
 	window->VisibilityChanged +=
 		ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &DirectXPage::OnVisibilityChanged);
 
@@ -191,3 +197,16 @@ void DirectXPage::OnSwapChainPanelSizeChanged(Object^ sender, SizeChangedEventAr
 	m_deviceResources->SetLogicalSize(e->NewSize);
 	m_main->CreateWindowSizeDependentResources();
 }
+
+
+void DirectXPage::OnSizeChanged(CoreWindow^ sender, WindowSizeChangedEventArgs^ args)
+{
+	m_main->OnSizeChanged(args);
+}
+
+void DirectXPage::OnKeyDown(CoreWindow^ sender, KeyEventArgs^ args)
+{
+	m_main->OnKeyDown(args);
+}
+
+

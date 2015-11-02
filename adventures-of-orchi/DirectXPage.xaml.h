@@ -29,7 +29,10 @@ namespace adventures_of_orchi
 		void OnRendering(Platform::Object^ sender, Platform::Object^ args);
 
 		// Window event handlers.
-		void OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args);
+		void OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs ^ args);
+		void OnSizeChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::WindowSizeChangedEventArgs ^ args);
+		void OnKeyDown(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs ^ args);
+
 
 		// DisplayInformation event handlers.
 		void OnDpiChanged(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);

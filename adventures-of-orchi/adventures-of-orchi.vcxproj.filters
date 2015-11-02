@@ -92,6 +92,8 @@
     <ClCompile Include="BroadCollisionStrategy.cpp" />
     <ClCompile Include="NarrowCollisionStrategy.cpp" />
     <ClCompile Include="MathUtils.cpp" />
+    <ClCompile Include="LeftMargin.cpp" />
+    <ClCompile Include="RightMargin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -134,6 +136,8 @@
     <ClInclude Include="CollisionDetectionStrategy.h" />
     <ClInclude Include="CollisionDetectionInfo.h" />
     <ClInclude Include="MathUtils.h" />
+    <ClInclude Include="LeftMargin.h" />
+    <ClInclude Include="RightMargin.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

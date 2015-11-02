@@ -133,6 +133,16 @@ bool adventures_of_orchiMain::Render()
 	return true;
 }
 
+void adventures_of_orchiMain::OnKeyDown(Windows::UI::Core::KeyEventArgs ^ args)
+{
+	m_gameRenderer->OnKeyDown(args);
+}
+
+void adventures_of_orchiMain::OnSizeChanged(Windows::UI::Core::WindowSizeChangedEventArgs ^ args)
+{
+	m_gameRenderer->OnSizeChanged(args);
+}
+
 // Notifies renderers that device resources need to be released.
 void adventures_of_orchiMain::OnDeviceLost()
 {
