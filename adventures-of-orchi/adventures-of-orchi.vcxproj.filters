@@ -85,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="BasicReaderWriter.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="ScreenBuilder.cpp" />
+    <ClCompile Include="ScreenUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -115,6 +118,12 @@
     <ClInclude Include="BasicShapes.h" />
     <ClInclude Include="DDSTextureLoader.h" />
     <ClInclude Include="DirectXSample.h" />
+    <ClInclude Include="Grid.h" />
+    <ClInclude Include="GridSpace.h" />
+    <ClInclude Include="BaseGridSpace.h" />
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="ScreenBuilder.h" />
+    <ClInclude Include="ScreenUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

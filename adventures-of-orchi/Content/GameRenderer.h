@@ -3,6 +3,10 @@
 #include "..\Common\DeviceResources.h"
 #include "ShaderStructures.h"
 #include "..\Common\StepTimer.h"
+#include "Grid.h"
+#include "ScreenBuilder.h"
+
+using namespace Windows::UI::Core;
 
 namespace adventures_of_orchi
 {
@@ -10,7 +14,7 @@ namespace adventures_of_orchi
 	class GameRenderer
 	{
 	public:
-		GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources);
+		GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window);
 		void CreateDeviceDependentResources();
 		void CreateWindowSizeDependentResources();
 		void ReleaseDeviceDependentResources();
@@ -21,11 +25,15 @@ namespace adventures_of_orchi
 		void StopTracking();
 		bool IsTracking() { return m_tracking; }
 
+		Grid grid;
+		ScreenBuilder * m_screenBuilder;
 
 	private:
+		//BasicSprites::SpriteBatch ^ m_spriteBatch;
 		void Rotate(float radians);
 
-	private:
+		CoreWindow ^ m_window;
+
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
@@ -45,6 +53,22 @@ namespace adventures_of_orchi
 		bool	m_loadingComplete;
 		float	m_degreesPerSecond;
 		bool	m_tracking;
+
+		std::vector<BaseSpriteData *> * m_pTreeData;
+		std::vector<BaseSpriteData> m_rockData;
+		std::vector<BaseSpriteData> m_waterData;
+		std::vector<BaseSpriteData> m_stoneWallData;
+		std::vector<BaseSpriteData> m_grassData;
+
+		//ComPtr<ID3D11Texture2D> m_tree;
+		//ComPtr<ID3D11Texture2D> m_rock;
+		//ComPtr<ID3D11Texture2D> m_water;
+		//ComPtr<ID3D11Texture2D> m_stoneWall;
+		//ComPtr<ID3D11Texture2D> m_grass;
+		//ComPtr<ID3D11Texture2D> m_orchi;
+
+		void DrawSprites();
+		void BuildScreen();
 	};
 }
 

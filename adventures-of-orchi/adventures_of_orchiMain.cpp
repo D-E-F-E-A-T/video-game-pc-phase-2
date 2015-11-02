@@ -6,16 +6,17 @@ using namespace adventures_of_orchi;
 using namespace Windows::Foundation;
 using namespace Windows::System::Threading;
 using namespace Concurrency;
+using namespace Windows::UI::Core;
 
 // Loads and initializes application assets when the application is loaded.
-adventures_of_orchiMain::adventures_of_orchiMain(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
+adventures_of_orchiMain::adventures_of_orchiMain(const std::shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window) :
 	m_deviceResources(deviceResources), m_pointerLocationX(0.0f)
 {
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
 	// TODO: Replace this with your app's content initialization.
-	m_gameRenderer = std::unique_ptr<GameRenderer>(new GameRenderer(m_deviceResources));
+	m_gameRenderer = std::unique_ptr<GameRenderer>(new GameRenderer(m_deviceResources, window));
 	m_sceneRenderer = std::unique_ptr<Sample3DSceneRenderer>(new Sample3DSceneRenderer(m_deviceResources));
 
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));

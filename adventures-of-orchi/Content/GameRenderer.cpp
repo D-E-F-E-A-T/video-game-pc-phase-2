@@ -9,7 +9,7 @@ using namespace DirectX;
 using namespace Windows::Foundation;
 
 // Loads vertex and pixel shaders from files and instantiates the cube geometry.
-GameRenderer::GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
+GameRenderer::GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window) :
 	m_loadingComplete(false),
 	m_degreesPerSecond(45),
 	m_indexCount(0),
@@ -18,6 +18,18 @@ GameRenderer::GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceRes
 {
 	CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
+
+	m_window = window;
+
+	m_pTreeData = new std::vector<BaseSpriteData *>;
+
+	grid.SetWindowWidth(m_window->Bounds.Width);
+	grid.SetWindowHeight(m_window->Bounds.Height);
+	grid.SetNumColumns(NUM_GRID_COLUMNS);
+	grid.SetNumRows(NUM_GRID_ROWS);
+
+	BuildScreen();
+//	this->m_pPlayer = new Player(&grid);
 }
 
 // Initializes view parameters when the window size changes.
@@ -115,6 +127,7 @@ void GameRenderer::Render()
 		return;
 	}
 
+/*
 	auto context = m_deviceResources->GetD3DDeviceContext();
 
 	// Prepare the constant buffer to send it to the graphics device.
@@ -175,6 +188,24 @@ void GameRenderer::Render()
 		0,
 		0
 		);
+*/
+
+	ID3D11RenderTargetView * renderTargets[1] = { m_deviceResources->m_d3dRenderTargetView.Get() };
+
+	//ID3D11RenderTargetView * renderTargets[1] = { m_d3dRenderTargetView.Get() };
+
+	m_deviceResources->GetD3DDeviceContext()->OMSetRenderTargets(
+		1,
+		renderTargets,
+		m_deviceResources->m_d3dDepthStencilView.Get());
+
+	m_deviceResources->GetD3DDeviceContext()->ClearDepthStencilView(
+		m_deviceResources->m_d3dDepthStencilView.Get(),
+		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
+		1.0f,
+		0);
+
+	DrawSprites();
 }
 
 void GameRenderer::CreateDeviceDependentResources()
@@ -318,4 +349,106 @@ void GameRenderer::ReleaseDeviceDependentResources()
 	m_constantBuffer.Reset();
 	m_vertexBuffer.Reset();
 	m_indexBuffer.Reset();
+}
+
+void GameRenderer::BuildScreen()
+{
+	delete m_screenBuilder;
+
+	m_screenBuilder =
+		new ScreenBuilder(
+			m_window->Bounds.Width,
+			m_window->Bounds.Height);
+
+	// Use chain-of-responsibility?
+	m_screenBuilder->BuildScreen1(m_pTreeData);
+
+	//LifePanel lifePanel(
+	//	m_window->Bounds.Width - m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
+	//	m_window->Bounds.Height * HEART_PANEL_HEIGHT_RATIO,
+	//	m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
+	//	HEART_PANEL_HEIGHT);
+
+	//lifePanel.BuildPanel(&m_heartData);
+}
+
+
+void GameRenderer::DrawSprites()
+{
+	ComPtr<ID3D11RenderTargetView> renderTargetView;
+
+	// Get the target associated with the back buffer.
+	// Select the scratch buffer for drawing sprites.
+	m_deviceResources->GetD3DDeviceContext()->OMGetRenderTargets(
+		1,
+		&renderTargetView,
+		//		&m_d3dOffscreenRenderTargetView,
+		nullptr
+		);
+
+	m_deviceResources->m_spriteBatch->Begin(renderTargetView, m_deviceResources->m_dpi);
+	//	m_spriteBatch->Begin(m_d3dOffscreenRenderTargetView);
+
+	// @see: http://www.gamedev.net/topic/603359-c-dx11-how-to-get-texture-size/
+
+
+	ID3D11Texture2D * pTextureInterface = NULL;
+
+	std::vector<BaseSpriteData *>::const_iterator iterator;
+
+	// This is a sprite run.
+	for (iterator = m_pTreeData->begin(); iterator != m_pTreeData->end(); iterator++)
+	{
+		float fColumnWidth = grid.GetColumnWidth();
+		float fRowHeight = grid.GetRowHeight();
+
+		m_deviceResources->m_spriteBatch->Draw(
+			m_deviceResources->m_tree.Get(),
+			(*iterator)->pos,
+			BasicSprites::PositionUnits::DIPs,
+			float2(fColumnWidth, fRowHeight),
+			BasicSprites::SizeUnits::DIPs,
+			float4(0.8f, 0.8f, 1.0f, 1.0f),
+			(*iterator)->rot
+			);
+	}
+
+	/*
+	m_heart.Get()->QueryInterface<ID3D11Texture2D>(&pTextureInterface);
+	D3D11_TEXTURE2D_DESC heartDesc;
+	pTextureInterface->GetDesc(&heartDesc);
+
+	// This is a sprite run.
+	for (auto heart = m_heartData.begin(); heart != m_heartData.end(); heart++)
+	{
+	m_spriteBatch->Draw(
+	m_heart.Get(),
+	heart->pos,
+	BasicSprites::PositionUnits::DIPs,
+	float2(
+	((m_window->Bounds.Width - m_window->Bounds.Width * RIGHT_MARGIN_RATIO) / NUM_HEART_COLUMNS) / heartDesc.Width / 2.0f * 0.85f,
+	(HEART_PANEL_HEIGHT / NUM_HEART_ROWS) / heartDesc.Height) * 0.85f,
+	BasicSprites::SizeUnits::Normalized,
+	float4(0.8f, 0.8f, 1.0f, 1.0f),
+	heart->rot
+	);
+	}
+	*/
+	// This is a sprite run.
+	//m_spriteBatch->Draw(
+	//	m_orchi.Get(),
+	//	m_orchiData.pos,
+	//	BasicSprites::PositionUnits::DIPs,
+	//	float2(grid.GetColumnWidth(), grid.GetRowHeight()),	// This will stretch or shrink orchi.
+	//	BasicSprites::SizeUnits::DIPs,
+	//	float4(0.8f, 0.8f, 1.0f, 1.0f),
+	//	m_orchiData.rot
+	//	);
+
+	m_deviceResources->m_spriteBatch->End();
+
+	// Copy from the scratch buffer to the back buffer.
+	// Create a bitmap and copy??? http://xboxforums.create.msdn.com/forums/p/84925/511738.aspx
+	//	renderTargetView->
+
 }

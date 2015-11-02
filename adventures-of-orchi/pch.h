@@ -14,3 +14,11 @@
 #include <concrt.h>
 #include <collection.h>
 #include "App.xaml.h"
+#include <vector>
+#include <d2d1_1helper.h>
+#include <math.h>
+#include <Xinput.h>
+#include <BasicMath.h>
+#include <dinput.h>
+#include <list>
+#include <DirectXMath.h>

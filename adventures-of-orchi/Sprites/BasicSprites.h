@@ -100,7 +100,7 @@ namespace BasicSprites
         void RemoveTexture(
             _In_ ID3D11Texture2D* texture
             );
-		void Begin(ComPtr<ID3D11RenderTargetView> renderTargetView);
+		void Begin(ComPtr<ID3D11RenderTargetView> renderTargetView, float dpi);
         void End();
         void Draw(
             _In_ ID3D11Texture2D* texture,

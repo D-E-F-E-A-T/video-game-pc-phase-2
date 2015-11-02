@@ -395,7 +395,7 @@ void SpriteBatch::RemoveTexture(
     m_textureMap.erase(texture);
 }
 
-void SpriteBatch::Begin(ComPtr<ID3D11RenderTargetView> renderTargetView)
+void SpriteBatch::Begin(ComPtr<ID3D11RenderTargetView> renderTargetView, float dpi)
 {
     // Reset internal sprite data.
 
@@ -420,7 +420,7 @@ void SpriteBatch::Begin(ComPtr<ID3D11RenderTargetView> renderTargetView)
         static_cast<float>(renderTargetTextureDesc.Height)
         );
 
-    m_dpi = Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->LogicalDpi;
+	m_dpi = dpi; //Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->LogicalDpi;
 }
 
 void SpriteBatch::End()

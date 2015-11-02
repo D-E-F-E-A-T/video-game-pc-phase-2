@@ -80,7 +80,7 @@ DirectXPage::DirectXPage():
 	// Run task on a dedicated high priority background thread.
 	m_inputLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);
 
-	m_main = std::unique_ptr<adventures_of_orchiMain>(new adventures_of_orchiMain(m_deviceResources));
+	m_main = std::unique_ptr<adventures_of_orchiMain>(new adventures_of_orchiMain(m_deviceResources, window));
 	m_main->StartRenderLoop();
 }
 

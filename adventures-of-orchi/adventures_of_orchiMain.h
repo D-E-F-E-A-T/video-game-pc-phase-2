@@ -12,7 +12,8 @@ namespace adventures_of_orchi
 	class adventures_of_orchiMain : public DX::IDeviceNotify
 	{
 	public:
-		adventures_of_orchiMain(const std::shared_ptr<DX::DeviceResources>& deviceResources);
+		adventures_of_orchiMain(
+			const std::shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window);
 		~adventures_of_orchiMain();
 		void CreateWindowSizeDependentResources();
 		void StartTracking() 
