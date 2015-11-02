@@ -108,8 +108,6 @@ void DX::DeviceResources::CreateDeviceIndependentResources()
 			)
 		);
 
-	CreateBrushes();
-	LoadSprites();
 }
 
 // Configures the Direct3D device, and stores handles to it and the device context.
@@ -205,6 +203,9 @@ void DX::DeviceResources::CreateDeviceResources()
 			&m_d2dContext
 			)
 		);
+
+	CreateBrushes();
+//	LoadSprites();
 }
 
 // These resources need to be recreated every time the window size is changed.

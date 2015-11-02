@@ -80,12 +80,11 @@
     <ClCompile Include="Sprites\BasicSprites.cpp">
       <Filter>Sprites</Filter>
     </ClCompile>
-    <ClCompile Include="Sprites\SimpleSprites.cpp">
-      <Filter>Sprites</Filter>
-    </ClCompile>
     <ClCompile Include="Sprites\BasicLoader.cpp">
       <Filter>Sprites</Filter>
     </ClCompile>
+    <ClCompile Include="BasicReaderWriter.cpp" />
+    <ClCompile Include="DDSTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -104,6 +103,18 @@
     <ClInclude Include="Sprites\BasicLoader.h">
       <Filter>Sprites</Filter>
     </ClInclude>
+    <ClInclude Include="BasicMath.h" />
+    <ClInclude Include="BasicReaderWriter.h" />
+    <ClInclude Include="GrassData.h" />
+    <ClInclude Include="OrchiData.h" />
+    <ClInclude Include="RockData.h" />
+    <ClInclude Include="StoneWallData.h" />
+    <ClInclude Include="TreeData.h" />
+    <ClInclude Include="WaterData.h" />
+    <ClInclude Include="BaseSpriteData.h" />
+    <ClInclude Include="BasicShapes.h" />
+    <ClInclude Include="DDSTextureLoader.h" />
+    <ClInclude Include="DirectXSample.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -120,20 +131,20 @@
     <Page Include="DirectXPage.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Sprites\BasicSprites.GeometryShader.gs.hlsl">
-      <Filter>Sprites</Filter>
+    <FxCompile Include="Content\BasicSprites.GeometryShader.gs.hlsl">
+      <Filter>Content</Filter>
     </FxCompile>
-    <FxCompile Include="Sprites\BasicSprites.GeometryShader.vs.hlsl">
-      <Filter>Sprites</Filter>
+    <FxCompile Include="Content\BasicSprites.GeometryShader.vs.hlsl">
+      <Filter>Content</Filter>
     </FxCompile>
-    <FxCompile Include="Sprites\BasicSprites.Instancing.vs.hlsl">
-      <Filter>Sprites</Filter>
+    <FxCompile Include="Content\BasicSprites.Instancing.vs.hlsl">
+      <Filter>Content</Filter>
     </FxCompile>
-    <FxCompile Include="Sprites\BasicSprites.ps.hlsl">
-      <Filter>Sprites</Filter>
+    <FxCompile Include="Content\BasicSprites.ps.hlsl">
+      <Filter>Content</Filter>
     </FxCompile>
-    <FxCompile Include="Sprites\BasicSprites.Replication.vs.hlsl">
-      <Filter>Sprites</Filter>
+    <FxCompile Include="Content\BasicSprites.Replication.vs.hlsl">
+      <Filter>Content</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

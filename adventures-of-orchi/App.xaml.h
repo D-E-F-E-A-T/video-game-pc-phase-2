@@ -6,11 +6,11 @@
 #pragma once
 
 #include "App.g.h"
-#include "DirectXPage.xaml.h"
+#include "DirectXPage.g.h"
 
 namespace adventures_of_orchi
 {
-		/// <summary>
+	/// <summary>
 	/// Provides application-specific behavior to supplement the default Application class.
 	/// </summary>
 	ref class App sealed

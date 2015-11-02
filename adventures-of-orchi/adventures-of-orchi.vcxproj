@@ -201,9 +201,14 @@
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="BaseSpriteData.h" />
+    <ClInclude Include="BasicMath.h" />
+    <ClInclude Include="BasicReaderWriter.h" />
+    <ClInclude Include="BasicShapes.h" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="adventures_of_orchiMain.h" />
     <ClInclude Include="Content\GameRenderer.h" />
+    <ClInclude Include="DDSTextureLoader.h" />
     <ClInclude Include="DirectXPage.xaml.h">
       <DependentUpon>DirectXPage.xaml</DependentUpon>
     </ClInclude>
@@ -212,18 +217,27 @@
     <ClInclude Include="Content\Sample3DSceneRenderer.h" />
     <ClInclude Include="Content\SampleFpsTextRenderer.h" />
     <ClInclude Include="Content\ShaderStructures.h" />
+    <ClInclude Include="DirectXSample.h" />
+    <ClInclude Include="GrassData.h" />
+    <ClInclude Include="OrchiData.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="RockData.h" />
     <ClInclude Include="Sprites\BasicLoader.h" />
     <ClInclude Include="Sprites\BasicSprites.h" />
     <ClInclude Include="Sprites\SimpleSprites.h" />
+    <ClInclude Include="StoneWallData.h" />
+    <ClInclude Include="TreeData.h" />
+    <ClInclude Include="WaterData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="BasicReaderWriter.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
     <ClCompile Include="adventures_of_orchiMain.cpp" />
     <ClCompile Include="Content\GameRenderer.cpp" />
+    <ClCompile Include="DDSTextureLoader.cpp" />
     <ClCompile Include="DirectXPage.xaml.cpp">
       <DependentUpon>DirectXPage.xaml</DependentUpon>
     </ClCompile>
@@ -239,7 +253,6 @@
     </ClCompile>
     <ClCompile Include="Sprites\BasicLoader.cpp" />
     <ClCompile Include="Sprites\BasicSprites.cpp" />
-    <ClCompile Include="Sprites\SimpleSprites.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -248,17 +261,31 @@
     <None Include="adventures-of-orchi_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Content\BasicSprites.GeometryShader.gs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Content\BasicSprites.GeometryShader.vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Content\BasicSprites.Instancing.vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Content\BasicSprites.ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0_level_9_1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Content\BasicSprites.Replication.vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0_level_9_1</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Content\SamplePixelShader.hlsl">
       <ShaderType>Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Content\SampleVertexShader.hlsl">
       <ShaderType>Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Sprites\BasicSprites.GeometryShader.gs.hlsl" />
-    <FxCompile Include="Sprites\BasicSprites.GeometryShader.vs.hlsl" />
-    <FxCompile Include="Sprites\BasicSprites.Instancing.vs.hlsl" />
-    <FxCompile Include="Sprites\BasicSprites.ps.hlsl" />
-    <FxCompile Include="Sprites\BasicSprites.Replication.vs.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

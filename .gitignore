@@ -1,0 +1,6 @@
+*.opensdf
+*.sdf
+adventures-of-orchi/ARM/
+adventures-of-orchi/Generated Files/
+Debug/
+ipch/

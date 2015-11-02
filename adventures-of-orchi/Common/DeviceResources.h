@@ -121,6 +121,7 @@ namespace DX
 		ComPtr<ID3D11Texture2D> m_stoneWall;
 		ComPtr<ID3D11Texture2D> m_grass;
 		ComPtr<ID3D11Texture2D> m_orchi;
+		ComPtr<ID3D11Texture2D> m_heart;
 
 		BasicSprites::SpriteBatch ^ m_spriteBatch;
 	};
