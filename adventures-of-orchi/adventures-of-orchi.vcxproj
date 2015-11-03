@@ -190,6 +190,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
+    <Image Include="Assets\splash.scale-100.png" />
+    <Image Include="Assets\splash.scale-200.png" />
     <Image Include="Assets\SplashScreen.scale-200.png" />
     <Image Include="Assets\Square150x150Logo.scale-200.png" />
     <Image Include="Assets\Square44x44Logo.scale-200.png" />
@@ -235,12 +237,15 @@
     <ClInclude Include="GrassData.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GridSpace.h" />
+    <ClInclude Include="HeartData.h" />
     <ClInclude Include="LeftMargin.h" />
+    <ClInclude Include="LifePanel.h" />
     <ClInclude Include="MathUtils.h" />
     <ClInclude Include="NarrowCollisionStrategy.h" />
     <ClInclude Include="OrchiData.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Portal.h" />
     <ClInclude Include="RightMargin.h" />
     <ClInclude Include="RockData.h" />
     <ClInclude Include="ScreenBuilder.h" />
@@ -269,6 +274,7 @@
     <ClCompile Include="Content\Sample3DSceneRenderer.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="LeftMargin.cpp" />
+    <ClCompile Include="LifePanel.cpp" />
     <ClCompile Include="MathUtils.cpp" />
     <ClCompile Include="NarrowCollisionStrategy.cpp" />
     <ClCompile Include="pch.cpp">
@@ -291,6 +297,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="adventures-of-orchi_TemporaryKey.pfx" />
+    <None Include="Assets\splash-sdk.xcf" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BasicSprites.GeometryShader.gs.hlsl">

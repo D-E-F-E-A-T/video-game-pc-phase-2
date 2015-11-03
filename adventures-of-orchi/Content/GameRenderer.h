@@ -10,6 +10,8 @@
 #include "NarrowCollisionStrategy.h"
 
 using namespace Windows::UI::Core;
+using namespace std;
+using namespace Microsoft::WRL;
 
 namespace adventures_of_orchi
 {
@@ -28,8 +30,8 @@ namespace adventures_of_orchi
 		void StopTracking();
 		bool IsTracking() { return m_tracking; }
 
-		void OnKeyDown(Windows::UI::Core::KeyEventArgs ^ args);
-		void OnSizeChanged(Windows::UI::Core::WindowSizeChangedEventArgs ^ args);
+		void OnKeyDown(KeyEventArgs ^ args);
+		void OnSizeChanged(WindowSizeChangedEventArgs ^ args);
 
 		Grid grid;
 		ScreenBuilder * m_screenBuilder;
@@ -50,7 +52,6 @@ namespace adventures_of_orchi
 		void DrawRightMargin();
 
 	private:
-		//BasicSprites::SpriteBatch ^ m_spriteBatch;
 		void Rotate(float radians);
 
 		Platform::Agile<CoreWindow> m_window;
@@ -59,12 +60,12 @@ namespace adventures_of_orchi
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
 		// Direct3D resources for cube geometry.
-		Microsoft::WRL::ComPtr<ID3D11InputLayout>	m_inputLayout;
-		Microsoft::WRL::ComPtr<ID3D11Buffer>		m_vertexBuffer;
-		Microsoft::WRL::ComPtr<ID3D11Buffer>		m_indexBuffer;
-		Microsoft::WRL::ComPtr<ID3D11VertexShader>	m_vertexShader;
-		Microsoft::WRL::ComPtr<ID3D11PixelShader>	m_pixelShader;
-		Microsoft::WRL::ComPtr<ID3D11Buffer>		m_constantBuffer;
+		ComPtr<ID3D11InputLayout>	m_inputLayout;
+		ComPtr<ID3D11Buffer>		m_vertexBuffer;
+		ComPtr<ID3D11Buffer>		m_indexBuffer;
+		ComPtr<ID3D11VertexShader>	m_vertexShader;
+		ComPtr<ID3D11PixelShader>	m_pixelShader;
+		ComPtr<ID3D11Buffer>		m_constantBuffer;
 
 		// System resources for cube geometry.
 		ModelViewProjectionConstantBuffer	m_constantBufferData;
@@ -76,21 +77,25 @@ namespace adventures_of_orchi
 		bool	m_tracking;
 
 		OrchiData m_orchiData;
-		std::vector<BaseSpriteData *> * m_pTreeData;
-		std::vector<BaseSpriteData> m_rockData;
-		std::vector<BaseSpriteData> m_waterData;
-		std::vector<BaseSpriteData> m_stoneWallData;
-		std::vector<BaseSpriteData> m_grassData;
+		std::vector<BaseSpriteData> m_heartData;
 
-		Microsoft::WRL::ComPtr<IDWriteTextLayout1> m_textLayoutLife;
-		Microsoft::WRL::ComPtr<IDWriteTextLayout1> m_textLayoutButtons;
-		Microsoft::WRL::ComPtr<IDWriteTextLayout1> m_textLayoutMap;
-		Microsoft::WRL::ComPtr<IDWriteTextLayout1> m_textLayoutInventory;
-		Microsoft::WRL::ComPtr<IDWriteTextLayout1> m_textLayoutPack;
+		vector<BaseSpriteData *> * m_pTreeData;
+		vector<BaseSpriteData> m_rockData;
+		vector<BaseSpriteData> m_waterData;
+		vector<BaseSpriteData> m_stoneWallData;
+		vector<BaseSpriteData> m_grassData;
+
+		vector<Portal *> * m_pPortals;
+
+		ComPtr<IDWriteTextLayout1> m_textLayoutLife;
+		ComPtr<IDWriteTextLayout1> m_textLayoutButtons;
+		ComPtr<IDWriteTextLayout1> m_textLayoutMap;
+		ComPtr<IDWriteTextLayout1> m_textLayoutInventory;
+		ComPtr<IDWriteTextLayout1> m_textLayoutPack;
 
 		void DrawSprites();
 		void BuildScreen();
-		void DrawPlayer();
+		void UpdatePlayer();
 
 		Player * m_pPlayer;
 

@@ -18,7 +18,6 @@ namespace adventures_of_orchi
 		void CreateWindowSizeDependentResources();
 		void StartTracking() 
 		{ 
-			m_sceneRenderer->StartTracking(); 
 			m_gameRenderer->StartTracking();
 
 		}
@@ -26,12 +25,11 @@ namespace adventures_of_orchi
 		void TrackingUpdate(float positionX) { m_pointerLocationX = positionX; }
 		void StopTracking() 
 		{ 
-			m_sceneRenderer->StopTracking(); 
 			m_gameRenderer->StopTracking();
 		}
 		bool IsTracking() 
 		{ 
-			return /* m_sceneRenderer->IsTracking() && */ m_gameRenderer->IsTracking(); 
+			return m_gameRenderer->IsTracking(); 
 		}
 		void StartRenderLoop();
 		void StopRenderLoop();

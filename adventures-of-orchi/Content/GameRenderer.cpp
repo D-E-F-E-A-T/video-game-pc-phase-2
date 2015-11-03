@@ -5,11 +5,14 @@
 #include "ScreenUtils.h"
 #include "LeftMargin.h"
 #include "RightMargin.h"
+#include "LifePanel.h"
 
 using namespace adventures_of_orchi;
 
 using namespace DirectX;
 using namespace Windows::Foundation;
+
+using namespace std;
 
 // Loads vertex and pixel shaders from files and instantiates the cube geometry.
 GameRenderer::GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window) :
@@ -25,7 +28,8 @@ GameRenderer::GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceRes
 
 	m_window = window;
 
-	m_pTreeData = new std::vector<BaseSpriteData *>;
+	m_pTreeData = new vector<BaseSpriteData *>;
+	m_pPortals = new vector<Portal *>;
 
 	fWindowWidth = m_window->Bounds.Width;
 	fWindowHeight = m_window->Bounds.Height;
@@ -167,6 +171,8 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 				m_xinputState.Gamepad.sThumbLX,
 				m_xinputState.Gamepad.sThumbLY);
 		}
+
+		UpdatePlayer();
 	}
 }
 
@@ -211,7 +217,7 @@ void GameRenderer::Render()
 
 	DEVICE_CONTEXT_2D->BeginDraw();
 
-	DEVICE_CONTEXT_2D->Clear(D2D1::ColorF(D2D1::ColorF::Tan));
+	DEVICE_CONTEXT_2D->Clear(D2D1::ColorF(D2D1::ColorF::CornflowerBlue));
 	DEVICE_CONTEXT_2D->SetTransform(D2D1::Matrix3x2F::Identity());
 
 	DrawLeftMargin();
@@ -251,7 +257,7 @@ void GameRenderer::Render()
 
 	HRESULT hr = DEVICE_CONTEXT_2D->EndDraw();
 
-	DrawPlayer();
+
 
 	ID3D11RenderTargetView * renderTargets = m_deviceResources->m_d3dRenderTargetView.Get();
 
@@ -259,15 +265,16 @@ void GameRenderer::Render()
 	DEVICE_CONTEXT_3D->OMSetRenderTargets(
 		1,
 		&renderTargets,
-		m_deviceResources->m_d3dDepthStencilView.Get());
+		NULL);// m_deviceResources->m_d3dDepthStencilView.Get());
 
-	DEVICE_CONTEXT_3D->ClearDepthStencilView(
-		m_deviceResources->m_d3dDepthStencilView.Get(),
-		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
-		1.0f,
-		0);
+	//DEVICE_CONTEXT_3D->ClearDepthStencilView(
+	//	m_deviceResources->m_d3dDepthStencilView.Get(),
+	//	D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
+	//	1.0f,
+	//	0);
 
 
+	
 	DrawSprites();
 
 	m_pCollided->clear();
@@ -425,16 +432,17 @@ void GameRenderer::BuildScreen()
 			m_window->Bounds.Width,
 			m_window->Bounds.Height);
 
+
 	// Use chain-of-responsibility?
-	m_screenBuilder->BuildScreen1(m_pTreeData);
+	m_screenBuilder->BuildScreen1(m_pTreeData, m_pPortals);
 
-	//LifePanel lifePanel(
-	//	m_window->Bounds.Width - m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
-	//	m_window->Bounds.Height * HEART_PANEL_HEIGHT_RATIO,
-	//	m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
-	//	HEART_PANEL_HEIGHT);
+	LifePanel lifePanel(
+		m_window->Bounds.Width - m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
+		m_window->Bounds.Height * HEART_PANEL_HEIGHT_RATIO,
+		m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
+		HEART_PANEL_HEIGHT);
 
-	//lifePanel.BuildPanel(&m_heartData);
+	lifePanel.BuildPanel(&m_heartData);
 }
 
 
@@ -478,27 +486,26 @@ void GameRenderer::DrawSprites()
 			);
 	}
 
-	/*
-	m_heart.Get()->QueryInterface<ID3D11Texture2D>(&pTextureInterface);
+	m_deviceResources->m_heart.Get()->QueryInterface<ID3D11Texture2D>(&pTextureInterface);
 	D3D11_TEXTURE2D_DESC heartDesc;
 	pTextureInterface->GetDesc(&heartDesc);
 
 	// This is a sprite run.
 	for (auto heart = m_heartData.begin(); heart != m_heartData.end(); heart++)
 	{
-	m_spriteBatch->Draw(
-	m_heart.Get(),
-	heart->pos,
-	BasicSprites::PositionUnits::DIPs,
-	float2(
-	((m_window->Bounds.Width - m_window->Bounds.Width * RIGHT_MARGIN_RATIO) / NUM_HEART_COLUMNS) / heartDesc.Width / 2.0f * 0.85f,
-	(HEART_PANEL_HEIGHT / NUM_HEART_ROWS) / heartDesc.Height) * 0.85f,
-	BasicSprites::SizeUnits::Normalized,
-	float4(0.8f, 0.8f, 1.0f, 1.0f),
-	heart->rot
-	);
+		m_deviceResources->m_spriteBatch->Draw(
+			m_deviceResources->m_heart.Get(),
+			heart->pos,
+			BasicSprites::PositionUnits::DIPs,
+			float2(
+				((fWindowWidth - fWindowWidth * RIGHT_MARGIN_RATIO) / NUM_HEART_COLUMNS) / heartDesc.Width / 2.0f * 0.85f,
+				(HEART_PANEL_HEIGHT / NUM_HEART_ROWS) / heartDesc.Height) * 0.85f,
+			BasicSprites::SizeUnits::Normalized,
+			float4(0.8f, 0.8f, 1.0f, 1.0f),
+			heart->rot
+			);
 	}
-	*/
+
 
 	m_deviceResources->m_spriteBatch->Draw(
 		m_deviceResources->m_orchi.Get(),
@@ -514,14 +521,12 @@ void GameRenderer::DrawSprites()
 
 	// Copy from the scratch buffer to the back buffer.
 	// Create a bitmap and copy??? http://xboxforums.create.msdn.com/forums/p/84925/511738.aspx
-	//	renderTargetView->
-
 }
 
 
 // DO NOT USE m_window in the Update/Render loop as
 //	it causes the loop to stall.
-void GameRenderer::DrawPlayer()
+void GameRenderer::UpdatePlayer()
 {
 	float x = 0.0f;
 	float y = 0.0f;

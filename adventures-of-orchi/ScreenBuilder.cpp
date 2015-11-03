@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "ScreenBuilder.h"
 #include "ScreenUtils.h"
+#include "Portal.h"
+#include "Constants.h"
 
 ScreenBuilder::ScreenBuilder(float screenWidth, float screenHeight)
 {
@@ -11,9 +13,11 @@ ScreenBuilder::ScreenBuilder(float screenWidth, float screenHeight)
 /*
 	TODO: Use web services
 */
-void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
+void ScreenBuilder::BuildScreen1(
+	std::vector<BaseSpriteData *> * treeData,
+	std::vector<Portal *> * portals)
 {
-	m_treeData->clear();
+	treeData->clear();
 
 	float x = 0.0f;
 	float y = 0.0f;
@@ -27,7 +31,7 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 				m_fScreenHeight,
 				j, i, &x, &y);
 
-			m_treeData->push_back(new TreeData(j, i, x, y));
+			treeData->push_back(new TreeData(j, i, x, y));
 		}
 	}
 
@@ -41,7 +45,7 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 				j, i, &x, &y);
 
 			TreeData data(j, i, x, y);
-			m_treeData->push_back(new TreeData(j, i, x, y));
+			treeData->push_back(new TreeData(j, i, x, y));
 		}
 	}
 
@@ -52,7 +56,7 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 			m_fScreenHeight, 
 			i, 4, &x, &y);
 		
-		m_treeData->push_back(new TreeData(i, 4, x, y));
+		treeData->push_back(new TreeData(i, 4, x, y));
 	}
 
 	for (int i = 0; i < 4; i++)
@@ -62,7 +66,7 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 			m_fScreenHeight, 
 			i, 5, &x, &y);
 
-		m_treeData->push_back(new TreeData(i, 5, x, y));
+		treeData->push_back(new TreeData(i, 5, x, y));
 	}
 
 	for (int i = 0; i < 3; i++)
@@ -72,7 +76,7 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 			m_fScreenHeight, 
 			i, 6, &x, &y);
 		
-		m_treeData->push_back(new TreeData(i, 6, x, y));
+		treeData->push_back(new TreeData(i, 6, x, y));
 	}
 
 
@@ -83,7 +87,7 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 			m_fScreenHeight, 
 			i, 4, &x, &y);
 
-		m_treeData->push_back(new TreeData(i, 4, x, y));
+		treeData->push_back(new TreeData(i, 4, x, y));
 	}
 
 
@@ -94,7 +98,7 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 			m_fScreenHeight, 
 			i, 9, &x, &y);
 
-		m_treeData->push_back(new TreeData(i, 9, x, y));
+		treeData->push_back(new TreeData(i, 9, x, y));
 	}
 
 	
@@ -105,7 +109,7 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 			m_fScreenHeight, 
 			i, 10, &x, &y);
 
-		m_treeData->push_back(new TreeData(i, 10, x, y));
+		treeData->push_back(new TreeData(i, 10, x, y));
 	}
 
 
@@ -116,7 +120,7 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 			m_fScreenHeight, 
 			i, 10, &x, &y);
 
-		m_treeData->push_back(new TreeData(i, 10, x, y));
+		treeData->push_back(new TreeData(i, 10, x, y));
 	}
 
 
@@ -129,7 +133,7 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 				m_fScreenHeight,
 				i, j, &x, &y);
 
-			m_treeData->push_back(new TreeData(i, j, x, y));
+			treeData->push_back(new TreeData(i, j, x, y));
 		}
 	}
 
@@ -141,7 +145,7 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 			m_fScreenHeight, 
 			i, 11, &x, &y);
 
-		m_treeData->push_back(new TreeData(i, 11, x, y));
+		treeData->push_back(new TreeData(i, 11, x, y));
 	}
 
 	for (int i = 0; i < 8; i++)
@@ -153,28 +157,26 @@ void ScreenBuilder::BuildScreen1(std::vector<BaseSpriteData *> * m_treeData)
 				m_fScreenHeight,
 				i, j, &x, &y);
 
-			m_treeData->push_back(new TreeData(i, j, x, y));
+			treeData->push_back(new TreeData(i, j, x, y));
 		}
 	}
 
-/*
-	for (int i = 0; i < 17; i++)
-	{
-		ScreenUtils::CalculateSquareCenter(
-			m_fScreenWidth,
-			m_fScreenHeight,
-			i, 0, &x, &y);
+	portals->push_back(new Portal(0, 7, WEST, 2));
+	portals->push_back(new Portal(0, 8, WEST, 2));
+	portals->push_back(new Portal(0, 9, WEST, 2));
 
-		m_treeData->push_back(new TreeData(i, 0, x, y));
-	}
-*/
+	portals->push_back(new Portal(7, 0, NORTH, 3));
+	portals->push_back(new Portal(8, 0, NORTH, 3));
+	portals->push_back(new Portal(9, 0, NORTH, 3));
+	portals->push_back(new Portal(10, 0, NORTH, 3));
 
-/*
-	ScreenUtils::CalculateSquareCenter(
-		m_fScreenWidth,
-		m_fScreenHeight,
-		4, 4, &x, &y);
+	portals->push_back(new Portal(16, 5, EAST, 4));
+	portals->push_back(new Portal(16, 6, EAST, 4));
+	portals->push_back(new Portal(16, 7, EAST, 4));
+	portals->push_back(new Portal(16, 8, EAST, 4));
 
-	m_treeData->push_back(new TreeData(4, 4, x, y));
-*/
+	portals->push_back(new Portal(8, 14, SOUTH, 5));
+	portals->push_back(new Portal(9, 14, SOUTH, 5));
+	portals->push_back(new Portal(10, 14, SOUTH, 5));
+
 }

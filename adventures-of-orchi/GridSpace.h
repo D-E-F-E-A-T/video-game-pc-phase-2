@@ -18,10 +18,12 @@ public:
 
 	int GetColumn() { return this->column; }
 	int GetRow() { return this->row; }
+	int GetType() { return this->type; }
 
 protected:
 
 private:
 	int column;
 	int row;
+	int type;
 };
