@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BroadCollisionStrategy.h"
 #include <vector>
-#include "Player.h"
+#include "Model\Player.h"
 #include "MathUtils.h"
 #include <iostream>
 

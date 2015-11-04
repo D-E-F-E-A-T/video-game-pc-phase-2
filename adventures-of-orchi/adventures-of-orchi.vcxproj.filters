@@ -65,6 +65,12 @@
     <Filter Include="Sprites">
       <UniqueIdentifier>{589b1e2c-c086-42b3-9c26-a72e2f10746e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{ac0ff977-22e9-4ba0-8e1c-8f6c19a54fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controller">
+      <UniqueIdentifier>{511fb2fb-1b46-4cb0-a6b0-3d72ea1db395}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -88,13 +94,15 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="ScreenBuilder.cpp" />
     <ClCompile Include="ScreenUtils.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="BroadCollisionStrategy.cpp" />
     <ClCompile Include="NarrowCollisionStrategy.cpp" />
     <ClCompile Include="MathUtils.cpp" />
     <ClCompile Include="LeftMargin.cpp" />
     <ClCompile Include="RightMargin.cpp" />
     <ClCompile Include="LifePanel.cpp" />
+    <ClCompile Include="Model\Player.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -131,7 +139,6 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ScreenBuilder.h" />
     <ClInclude Include="ScreenUtils.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="BroadCollisionStrategy.h" />
     <ClInclude Include="NarrowCollisionStrategy.h" />
     <ClInclude Include="CollisionDetectionStrategy.h" />
@@ -139,9 +146,50 @@
     <ClInclude Include="MathUtils.h" />
     <ClInclude Include="LeftMargin.h" />
     <ClInclude Include="RightMargin.h" />
-    <ClInclude Include="Portal.h" />
     <ClInclude Include="LifePanel.h" />
     <ClInclude Include="HeartData.h" />
+    <ClInclude Include="ControllerView.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Space.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Portal.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Movable.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Stationary.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Tool.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Character.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Thing.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Player.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Sword.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Tree.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Sand.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Grass.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Water.h">
+      <Filter>Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

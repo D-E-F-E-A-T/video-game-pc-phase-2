@@ -5,7 +5,7 @@
 #include "..\Common\StepTimer.h"
 #include "Grid.h"
 #include "ScreenBuilder.h"
-#include "Player.h"
+#include "Model\Player.h"
 #include "BroadCollisionStrategy.h"
 #include "NarrowCollisionStrategy.h"
 

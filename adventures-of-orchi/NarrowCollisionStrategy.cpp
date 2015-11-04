@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "NarrowCollisionStrategy.h"
-#include "Player.h"
+#include "Model\Player.h"
 #include "MathUtils.h"
 #include <iostream>
 #include <Windows.h>
@@ -61,8 +61,8 @@ int NarrowCollisionStrategy::Detect(
 
 	// Should really use the dimensions of the sprite.
 	//	For now, using the dimensions of the grid space.
-	playerTopLeft[HORIZONTAL_AXIS] = (int)playerLocation[HORIZONTAL_AXIS] - grid->GetColumnWidth() / 2;
-	playerTopLeft[VERTICAL_AXIS] = (int)playerLocation[VERTICAL_AXIS] - grid->GetRowHeight() / 2;
+	playerTopLeft[HORIZONTAL_AXIS] = (int)(playerLocation[HORIZONTAL_AXIS] - grid->GetColumnWidth() / 2.f);
+	playerTopLeft[VERTICAL_AXIS] = (int)(playerLocation[VERTICAL_AXIS] - grid->GetRowHeight() / 2.f);
 
 	for (iterator = collided->begin(); iterator != collided->end(); iterator++)
 	{
@@ -132,19 +132,19 @@ int NarrowCollisionStrategy::Detect(
 
 					// Relative to the raw sprite dimensions (0, 1.0f)
 					obstaclePixelNormalizedLocation[VERTICAL_AXIS] =
-						(float)obstacleIntersectionVerticalOffset / (float)renderedSpriteDimensions[VERTICAL_AXIS];
+						(float)((float)obstacleIntersectionVerticalOffset / (float)renderedSpriteDimensions[VERTICAL_AXIS]);
 
 					playerPixelRawCoordinate[HORIZONTAL_AXIS] =
-						playerPixelNormalizedLocation[HORIZONTAL_AXIS] * rawPlayerDimensions[HORIZONTAL_AXIS];
+						(int)(playerPixelNormalizedLocation[HORIZONTAL_AXIS] * (float)rawPlayerDimensions[HORIZONTAL_AXIS]);
 
 					playerPixelRawCoordinate[VERTICAL_AXIS] =
-						playerPixelNormalizedLocation[VERTICAL_AXIS] * rawPlayerDimensions[VERTICAL_AXIS];
+						(int)(playerPixelNormalizedLocation[VERTICAL_AXIS] * (float)rawPlayerDimensions[VERTICAL_AXIS]);
 
 					obstaclePixelRawCoordinate[HORIZONTAL_AXIS] =
-						obstaclePixelNormalizedLocation[HORIZONTAL_AXIS] * rawObstacleDimensions[HORIZONTAL_AXIS];
+						(int)(obstaclePixelNormalizedLocation[HORIZONTAL_AXIS] * (float)rawObstacleDimensions[HORIZONTAL_AXIS]);
 
 					obstaclePixelRawCoordinate[VERTICAL_AXIS] =
-						obstaclePixelNormalizedLocation[VERTICAL_AXIS] * rawObstacleDimensions[VERTICAL_AXIS];
+						(int)((float)obstaclePixelNormalizedLocation[VERTICAL_AXIS] * (float)rawObstacleDimensions[VERTICAL_AXIS]);
 			
 					int rawPlayerPixelIndex =
 						(playerPixelRawCoordinate[VERTICAL_AXIS] * rawPlayerDimensions[HORIZONTAL_AXIS]) +
@@ -193,7 +193,7 @@ uint8_t * NarrowCollisionStrategy::readPixels(
 	int * dimensions)
 {
 	HBITMAP	hBitmapTexture = NULL;
-	HGDIOBJ hBitmap;
+//	HGDIOBJ hBitmap;
 
 	ID3D11Texture2D* d3dtex = (ID3D11Texture2D*)texture;
 	D3D11_TEXTURE2D_DESC desc;

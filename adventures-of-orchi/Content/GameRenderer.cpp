@@ -6,6 +6,7 @@
 #include "LeftMargin.h"
 #include "RightMargin.h"
 #include "LifePanel.h"
+#include "..\Model\Portal.h"
 
 using namespace adventures_of_orchi;
 
@@ -13,6 +14,7 @@ using namespace DirectX;
 using namespace Windows::Foundation;
 
 using namespace std;
+
 
 // Loads vertex and pixel shaders from files and instantiates the cube geometry.
 GameRenderer::GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window) :
@@ -267,6 +269,7 @@ void GameRenderer::Render()
 		&renderTargets,
 		NULL);// m_deviceResources->m_d3dDepthStencilView.Get());
 
+	// Without this, the player renders on top of the trees.
 	//DEVICE_CONTEXT_3D->ClearDepthStencilView(
 	//	m_deviceResources->m_d3dDepthStencilView.Get(),
 	//	D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,

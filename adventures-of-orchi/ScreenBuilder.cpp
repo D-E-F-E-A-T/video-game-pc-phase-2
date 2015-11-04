@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "ScreenBuilder.h"
 #include "ScreenUtils.h"
-#include "Portal.h"
 #include "Constants.h"
 
 ScreenBuilder::ScreenBuilder(float screenWidth, float screenHeight)

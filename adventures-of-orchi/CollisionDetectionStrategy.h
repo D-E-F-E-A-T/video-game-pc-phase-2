@@ -2,7 +2,7 @@
 #include "pch.h"
 #include "CollisionDetectionInfo.h"
 #include <vector>
-#include "Player.h"
+#include "Model\Player.h"
 #include "BaseSpriteData.h"
 #include <list>
 #include "GridSpace.h"

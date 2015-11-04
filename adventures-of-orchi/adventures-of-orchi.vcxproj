@@ -224,6 +224,7 @@
     <ClInclude Include="adventures_of_orchiMain.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Content\GameRenderer.h" />
+    <ClInclude Include="ControllerView.h" />
     <ClInclude Include="DDSTextureLoader.h" />
     <ClInclude Include="DirectXPage.xaml.h">
       <DependentUpon>DirectXPage.xaml</DependentUpon>
@@ -241,19 +242,30 @@
     <ClInclude Include="LeftMargin.h" />
     <ClInclude Include="LifePanel.h" />
     <ClInclude Include="MathUtils.h" />
+    <ClInclude Include="Model\Character.h" />
+    <ClInclude Include="Model\Grass.h" />
+    <ClInclude Include="Model\Movable.h" />
+    <ClInclude Include="Model\Player.h" />
+    <ClInclude Include="Model\Sand.h" />
+    <ClInclude Include="Model\Sword.h" />
+    <ClInclude Include="Model\Thing.h" />
+    <ClInclude Include="Model\Tree.h" />
+    <ClInclude Include="Model\Water.h" />
     <ClInclude Include="NarrowCollisionStrategy.h" />
     <ClInclude Include="OrchiData.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Portal.h" />
+    <ClInclude Include="Model\Portal.h" />
     <ClInclude Include="RightMargin.h" />
     <ClInclude Include="RockData.h" />
     <ClInclude Include="ScreenBuilder.h" />
     <ClInclude Include="ScreenUtils.h" />
+    <ClInclude Include="Model\Space.h" />
     <ClInclude Include="Sprites\BasicLoader.h" />
     <ClInclude Include="Sprites\BasicSprites.h" />
     <ClInclude Include="Sprites\SimpleSprites.h" />
+    <ClInclude Include="Model\Stationary.h" />
     <ClInclude Include="StoneWallData.h" />
+    <ClInclude Include="Model\Tool.h" />
     <ClInclude Include="TreeData.h" />
     <ClInclude Include="WaterData.h" />
   </ItemGroup>
@@ -276,6 +288,7 @@
     <ClCompile Include="LeftMargin.cpp" />
     <ClCompile Include="LifePanel.cpp" />
     <ClCompile Include="MathUtils.cpp" />
+    <ClCompile Include="Model\Player.cpp" />
     <ClCompile Include="NarrowCollisionStrategy.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -285,7 +298,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="RightMargin.cpp" />
     <ClCompile Include="ScreenBuilder.cpp" />
     <ClCompile Include="ScreenUtils.cpp" />

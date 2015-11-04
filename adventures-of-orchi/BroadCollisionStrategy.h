@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "CollisionDetectionStrategy.h"
-#include "Player.h"
+#include "Model\Player.h"
 #include "BaseSpriteData.h"
 #include "GridSpace.h"
 
