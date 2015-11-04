@@ -79,13 +79,7 @@ namespace adventures_of_orchi
 		OrchiData m_orchiData;
 		std::vector<BaseSpriteData> m_heartData;
 
-		vector<BaseSpriteData *> * m_pTreeData;
-		vector<BaseSpriteData> m_rockData;
-		vector<BaseSpriteData> m_waterData;
-		vector<BaseSpriteData> m_stoneWallData;
-		vector<BaseSpriteData> m_grassData;
-
-		vector<Portal *> * m_pPortals;
+		vector<Space *> * m_pSpaces;
 
 		ComPtr<IDWriteTextLayout1> m_textLayoutLife;
 		ComPtr<IDWriteTextLayout1> m_textLayoutButtons;

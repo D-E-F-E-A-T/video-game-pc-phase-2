@@ -94,6 +94,7 @@ int NarrowCollisionStrategy::Detect(
 			renderedSpriteDimensions[HEIGHT_INDEX],
 			intersectRect);
 
+
 		if (bIntersection == true)
 		{
 			int intersectionWidth = abs(intersectRect[INTERSECTION_LEFT] - intersectRect[INTERSECTION_RIGHT]);

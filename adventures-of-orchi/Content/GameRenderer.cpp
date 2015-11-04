@@ -30,8 +30,7 @@ GameRenderer::GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceRes
 
 	m_window = window;
 
-	m_pTreeData = new vector<BaseSpriteData *>;
-	m_pPortals = new vector<Portal *>;
+	m_pSpaces = new vector<Space *>;
 
 	fWindowWidth = m_window->Bounds.Width;
 	fWindowHeight = m_window->Bounds.Height;
@@ -127,10 +126,10 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 		playerLocation[0] = (fWindowWidth -
 			(fWindowWidth * LEFT_MARGIN_RATIO) -
 			(fWindowWidth * RIGHT_MARGIN_RATIO)) *
-			m_pPlayer->GetHorizontalRatio() +
+			m_pPlayer->GetHLocationRatio() +
 			(fWindowWidth * LEFT_MARGIN_RATIO);
 
-		playerLocation[1] = m_pPlayer->GetVerticalRatio() * fWindowHeight;
+		playerLocation[1] = m_pPlayer->GetVLocationRatio() * fWindowHeight;
 
 
 
@@ -139,7 +138,7 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 			playerSize,
 			spriteSize,
 			m_pPlayer,
-			m_pTreeData,
+			m_pSpaces,
 			fWindowWidth,
 			fWindowHeight,
 			playerLocation);
@@ -213,7 +212,6 @@ void GameRenderer::Render()
 	{
 		return;
 	}
-
 
 	D2D1_SIZE_F renderTargetSize = DEVICE_CONTEXT_2D->GetSize();
 
@@ -435,9 +433,8 @@ void GameRenderer::BuildScreen()
 			m_window->Bounds.Width,
 			m_window->Bounds.Height);
 
-
 	// Use chain-of-responsibility?
-	m_screenBuilder->BuildScreen1(m_pTreeData, m_pPortals);
+	m_screenBuilder->BuildScreen1(m_pSpaces);
 
 	LifePanel lifePanel(
 		m_window->Bounds.Width - m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
@@ -458,34 +455,33 @@ void GameRenderer::DrawSprites()
 	DEVICE_CONTEXT_3D->OMGetRenderTargets(
 		1,
 		&renderTargetView,
-		//		&m_d3dOffscreenRenderTargetView,
 		nullptr
 		);
 
 	m_deviceResources->m_spriteBatch->Begin(renderTargetView, m_deviceResources->m_dpi);
-	//	m_spriteBatch->Begin(m_d3dOffscreenRenderTargetView);
+
 
 	// @see: http://www.gamedev.net/topic/603359-c-dx11-how-to-get-texture-size/
 
 
 	ID3D11Texture2D * pTextureInterface = NULL;
 
-	std::vector<BaseSpriteData *>::const_iterator iterator;
+	std::vector<Space *>::const_iterator iterator;
 
 	// This is a sprite run.
-	for (iterator = m_pTreeData->begin(); iterator != m_pTreeData->end(); iterator++)
+	for (iterator = m_pSpaces->begin(); iterator != m_pSpaces->end(); iterator++)
 	{
 		float fColumnWidth = grid.GetColumnWidth();
 		float fRowHeight = grid.GetRowHeight();
 
 		m_deviceResources->m_spriteBatch->Draw(
 			m_deviceResources->m_tree.Get(),
-			(*iterator)->pos,
+			(*iterator)->GetSpriteData()->pos,
 			BasicSprites::PositionUnits::DIPs,
 			float2(fColumnWidth, fRowHeight),
 			BasicSprites::SizeUnits::DIPs,
 			float4(0.8f, 0.8f, 1.0f, 1.0f),
-			(*iterator)->rot
+			(*iterator)->GetSpriteData()->rot
 			);
 	}
 
@@ -541,8 +537,8 @@ void GameRenderer::UpdatePlayer()
 	float fBoundsWidth = fWindowWidth; // m_window->Bounds.Width;
 	float fBoundsHeight = fWindowHeight;	// m_window->Bounds.Height;
 
-	float fPlayerHRatio = m_pPlayer->GetHorizontalRatio();
-	float fPlayerVRatio = m_pPlayer->GetVerticalRatio();
+	float fPlayerHRatio = m_pPlayer->GetHLocationRatio();
+	float fPlayerVRatio = m_pPlayer->GetVLocationRatio();
 
 	m_orchiData.pos.x = ((fBoundsWidth -
 		fBoundsWidth * LEFT_MARGIN_RATIO -

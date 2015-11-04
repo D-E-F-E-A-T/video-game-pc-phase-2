@@ -5,8 +5,8 @@
 Player::Player(Grid * grid)
 {
 	m_grid = grid;
-	m_fHorizontalRatio = 0.5f;
-	m_fVerticalRatio = 0.5f;
+	m_pfLocationRatio[HORIZONTAL_AXIS] = 0.5f;
+	m_pfLocationRatio[VERTICAL_AXIS] = 0.5f;
 	m_nPreviousMoveDirection = CENTER;
 
 	m_nUnitsPerGridSquare[HORIZONTAL_AXIS] =
@@ -26,14 +26,14 @@ void Player::MoveNorth(int nCollisionState, float fVelocity)
 	else
 	{
 		float prospectiveVerticalRatio =
-			m_fVerticalRatio -= fVelocity;
+			m_pfLocationRatio[VERTICAL_AXIS] -= fVelocity;
 
 		// Don't go above the top of the screen. 
 		//	Later this will be the trigger to move to the next screen.
 		if (prospectiveVerticalRatio >= 0.f)
-			m_fVerticalRatio = prospectiveVerticalRatio;
+			m_pfLocationRatio[VERTICAL_AXIS] = prospectiveVerticalRatio;
 		else
-			m_fVerticalRatio = 0.0f;
+			m_pfLocationRatio[VERTICAL_AXIS] = 0.0f;
 
 		UpdateGridLocation();
 
@@ -51,15 +51,15 @@ void Player::MoveEast(int nCollisionState, float fVelocity)
 	else
 	{
 		float prospectiveHorizontalRatio =
-			m_fHorizontalRatio += fVelocity;
+			m_pfLocationRatio[HORIZONTAL_AXIS] += fVelocity;
 
 		if (prospectiveHorizontalRatio <= 1.0f)
 		{
-			m_fHorizontalRatio = prospectiveHorizontalRatio;
+			m_pfLocationRatio[HORIZONTAL_AXIS] = prospectiveHorizontalRatio;
 		}
 		else
 		{
-			m_fHorizontalRatio = 1.0f;
+			m_pfLocationRatio[HORIZONTAL_AXIS] = 1.0f;
 		}
 
 		UpdateGridLocation();
@@ -78,14 +78,14 @@ void Player::MoveSouth(int nCollisionState, float fVelocity)
 	else
 	{
 		float prospectiveVerticalOffset =
-			m_fVerticalRatio += fVelocity;
+			m_pfLocationRatio[VERTICAL_AXIS] += fVelocity;
 
 		// Don't go above the top of the screen. 
 		//	Later this will be the trigger to move to the next screen.
 		if (prospectiveVerticalOffset <= 1.0f)
-			m_fVerticalRatio = prospectiveVerticalOffset;
+			m_pfLocationRatio[VERTICAL_AXIS] = prospectiveVerticalOffset;
 		else
-			m_fVerticalRatio = 1.0f;
+			m_pfLocationRatio[VERTICAL_AXIS] = 1.0f;
 
 		UpdateGridLocation();
 
@@ -103,15 +103,15 @@ void Player::MoveWest(int nCollisionState, float fVelocity)
 	else
 	{
 		float prospectiveHorizontalOffset =
-			m_fHorizontalRatio -= fVelocity;
+			m_pfLocationRatio[HORIZONTAL_AXIS] -= fVelocity;
 
 		if (prospectiveHorizontalOffset >= 0.f)
 		{
-			m_fHorizontalRatio = prospectiveHorizontalOffset;
+			m_pfLocationRatio[HORIZONTAL_AXIS] = prospectiveHorizontalOffset;
 		}
 		else
 		{
-			m_fHorizontalRatio = 0.f;
+			m_pfLocationRatio[HORIZONTAL_AXIS] = 0.f;
 		}
 
 		UpdateGridLocation();
@@ -125,11 +125,11 @@ void Player::MoveWest(int nCollisionState, float fVelocity)
 void Player::UpdateGridLocation()
 {
 	int nHorizontalLocation = 
-		(int)(m_fHorizontalRatio * TOTAL_GRID_DIVISIONS) /
+		(int)(m_pfLocationRatio[HORIZONTAL_AXIS] * TOTAL_GRID_DIVISIONS) /
 		m_nUnitsPerGridSquare[HORIZONTAL_AXIS];
 
 	int nVerticalLocation = 
-		(int)(m_fVerticalRatio * TOTAL_GRID_DIVISIONS) /
+		(int)(m_pfLocationRatio[VERTICAL_AXIS] * TOTAL_GRID_DIVISIONS) /
 		m_nUnitsPerGridSquare[VERTICAL_AXIS];
 
 	m_pGridLocation[HORIZONTAL_AXIS] = nHorizontalLocation;

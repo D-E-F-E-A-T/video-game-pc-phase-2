@@ -242,11 +242,15 @@
     <ClInclude Include="LeftMargin.h" />
     <ClInclude Include="LifePanel.h" />
     <ClInclude Include="MathUtils.h" />
+    <ClInclude Include="Model\AbsoluteLocationStrategy.h" />
     <ClInclude Include="Model\Character.h" />
     <ClInclude Include="Model\Grass.h" />
+    <ClInclude Include="Model\GridSpaceLocationStrategy.h" />
     <ClInclude Include="Model\Movable.h" />
+    <ClInclude Include="Model\Plane.h" />
     <ClInclude Include="Model\Player.h" />
     <ClInclude Include="Model\Sand.h" />
+    <ClInclude Include="Model\Stack.h" />
     <ClInclude Include="Model\Sword.h" />
     <ClInclude Include="Model\Thing.h" />
     <ClInclude Include="Model\Tree.h" />

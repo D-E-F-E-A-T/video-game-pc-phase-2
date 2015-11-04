@@ -1,8 +1,13 @@
 #pragma once
+#include "Stationary.h"
 
-class Thing
+class Thing : public Stationary
 {
 public:
+	Thing(BaseSpriteData * treeData) : Stationary(treeData)
+	{
+
+	}
 
 protected:
 

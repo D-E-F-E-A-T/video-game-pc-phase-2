@@ -3,6 +3,7 @@
 #include "TreeData.h"
 #include <vector>
 #include "Model\Portal.h"
+#include "Model\Space.h"
 
 using namespace std;
 
@@ -10,7 +11,9 @@ class ScreenBuilder
 {
 public:
 	ScreenBuilder(float screenWidth, float screenHeight);
-	void BuildScreen1(vector<BaseSpriteData *> * m_treeData, vector<Portal *> * m_portals);
+
+	// TODO: This will just have 1 argument.
+	void BuildScreen1(vector<Space *> * m_spaceData);
 
 protected:
 

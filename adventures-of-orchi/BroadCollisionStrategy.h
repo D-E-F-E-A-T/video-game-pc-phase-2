@@ -4,6 +4,7 @@
 #include "Model\Player.h"
 #include "BaseSpriteData.h"
 #include "GridSpace.h"
+#include "Model\Space.h"
 
 class BroadCollisionStrategy // : public CollisionDetectionStrategy
 {
@@ -16,7 +17,7 @@ public:
 		float2 playerSize,
 		float2 spriteSize,
 		Player * pPlayer,
-		vector<BaseSpriteData *> * sprites,
+		vector<Space *> * sprites,
 		float fWindowWidth,
 		float fWindowHeight,
 		float * playerLocation);
@@ -24,7 +25,7 @@ public:
 protected:
 	int Calculate(
 		Player * player, 
-		vector<BaseSpriteData *> * sprites, 
+		vector<Space *> * sprites, 
 		list<BaseSpriteData *> * retVal,
 		float fWindowWidth,
 		float fWindowHeight,
@@ -39,7 +40,7 @@ protected:
 
 	float CalculateDistance(
 		Player player, 
-		BaseSpriteData * sprite, 
+		BaseSpriteData * sprite,
 		float fWindowWidth, 
 		float fWindowHeight,
 		float * playerLocation);

@@ -2,6 +2,9 @@
 #include "ScreenBuilder.h"
 #include "ScreenUtils.h"
 #include "Constants.h"
+#include "Model\Tree.h"
+
+using namespace std;
 
 ScreenBuilder::ScreenBuilder(float screenWidth, float screenHeight)
 {
@@ -12,11 +15,9 @@ ScreenBuilder::ScreenBuilder(float screenWidth, float screenHeight)
 /*
 	TODO: Use web services
 */
-void ScreenBuilder::BuildScreen1(
-	std::vector<BaseSpriteData *> * treeData,
-	std::vector<Portal *> * portals)
+void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 {
-	treeData->clear();
+	spaces->clear();
 
 	float x = 0.0f;
 	float y = 0.0f;
@@ -30,7 +31,7 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				j, i, &x, &y);
 
-			treeData->push_back(new TreeData(j, i, x, y));
+			spaces->push_back(new Tree(new TreeData(j, i, x, y)));
 		}
 	}
 
@@ -43,8 +44,7 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				j, i, &x, &y);
 
-			TreeData data(j, i, x, y);
-			treeData->push_back(new TreeData(j, i, x, y));
+			spaces->push_back(new Tree(new TreeData(j, i, x, y)));
 		}
 	}
 
@@ -55,7 +55,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 4, &x, &y);
 		
-		treeData->push_back(new TreeData(i, 4, x, y));
+		spaces->push_back(new Tree(new TreeData(i, 4, x, y)));
 	}
 
 	for (int i = 0; i < 4; i++)
@@ -65,7 +65,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 5, &x, &y);
 
-		treeData->push_back(new TreeData(i, 5, x, y));
+		spaces->push_back(new Tree(new TreeData(i, 5, x, y)));
 	}
 
 	for (int i = 0; i < 3; i++)
@@ -75,7 +75,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 6, &x, &y);
 		
-		treeData->push_back(new TreeData(i, 6, x, y));
+		spaces->push_back(new Tree(new TreeData(i, 6, x, y)));
 	}
 
 
@@ -86,7 +86,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 4, &x, &y);
 
-		treeData->push_back(new TreeData(i, 4, x, y));
+		spaces->push_back(new Tree(new TreeData(i, 4, x, y)));
 	}
 
 
@@ -97,7 +97,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 9, &x, &y);
 
-		treeData->push_back(new TreeData(i, 9, x, y));
+		spaces->push_back(new Tree(new TreeData(i, 9, x, y)));
 	}
 
 	
@@ -108,7 +108,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 10, &x, &y);
 
-		treeData->push_back(new TreeData(i, 10, x, y));
+		spaces->push_back(new Tree(new TreeData(i, 10, x, y)));
 	}
 
 
@@ -119,7 +119,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 10, &x, &y);
 
-		treeData->push_back(new TreeData(i, 10, x, y));
+		spaces->push_back(new Tree(new TreeData(i, 10, x, y)));
 	}
 
 
@@ -132,7 +132,7 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				i, j, &x, &y);
 
-			treeData->push_back(new TreeData(i, j, x, y));
+			spaces->push_back(new Tree(new TreeData(i, j, x, y)));
 		}
 	}
 
@@ -144,7 +144,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 11, &x, &y);
 
-		treeData->push_back(new TreeData(i, 11, x, y));
+		spaces->push_back(new Tree(new TreeData(i, 11, x, y)));
 	}
 
 	for (int i = 0; i < 8; i++)
@@ -156,26 +156,26 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				i, j, &x, &y);
 
-			treeData->push_back(new TreeData(i, j, x, y));
+			spaces->push_back(new Tree(new TreeData(i, j, x, y)));
 		}
 	}
 
-	portals->push_back(new Portal(0, 7, WEST, 2));
-	portals->push_back(new Portal(0, 8, WEST, 2));
-	portals->push_back(new Portal(0, 9, WEST, 2));
+	//spaces->push_back(new Portal(0, 7, WEST, 2));
+	//portals->push_back(new Portal(0, 8, WEST, 2));
+	//portals->push_back(new Portal(0, 9, WEST, 2));
 
-	portals->push_back(new Portal(7, 0, NORTH, 3));
-	portals->push_back(new Portal(8, 0, NORTH, 3));
-	portals->push_back(new Portal(9, 0, NORTH, 3));
-	portals->push_back(new Portal(10, 0, NORTH, 3));
+	//portals->push_back(new Portal(7, 0, NORTH, 3));
+	//portals->push_back(new Portal(8, 0, NORTH, 3));
+	//portals->push_back(new Portal(9, 0, NORTH, 3));
+	//portals->push_back(new Portal(10, 0, NORTH, 3));
 
-	portals->push_back(new Portal(16, 5, EAST, 4));
-	portals->push_back(new Portal(16, 6, EAST, 4));
-	portals->push_back(new Portal(16, 7, EAST, 4));
-	portals->push_back(new Portal(16, 8, EAST, 4));
+	//portals->push_back(new Portal(16, 5, EAST, 4));
+	//portals->push_back(new Portal(16, 6, EAST, 4));
+	//portals->push_back(new Portal(16, 7, EAST, 4));
+	//portals->push_back(new Portal(16, 8, EAST, 4));
 
-	portals->push_back(new Portal(8, 14, SOUTH, 5));
-	portals->push_back(new Portal(9, 14, SOUTH, 5));
-	portals->push_back(new Portal(10, 14, SOUTH, 5));
+	//portals->push_back(new Portal(8, 14, SOUTH, 5));
+	//portals->push_back(new Portal(9, 14, SOUTH, 5));
+	//portals->push_back(new Portal(10, 14, SOUTH, 5));
 
 }

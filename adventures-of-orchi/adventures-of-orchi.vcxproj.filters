@@ -190,6 +190,18 @@
     <ClInclude Include="Model\Water.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="Model\Plane.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Stack.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\GridSpaceLocationStrategy.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\AbsoluteLocationStrategy.h">
+      <Filter>Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

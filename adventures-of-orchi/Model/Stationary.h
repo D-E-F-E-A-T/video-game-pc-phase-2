@@ -2,11 +2,15 @@
 #include "Space.h"
 
 
-	class Stationary : public Space
+class Stationary : public Space
+{
+public:
+	Stationary(BaseSpriteData * treeData) : Space(treeData)
 	{
-	public:
 
-	protected:
+	}
 
-	private:
-	};
+protected:
+
+private:
+};
