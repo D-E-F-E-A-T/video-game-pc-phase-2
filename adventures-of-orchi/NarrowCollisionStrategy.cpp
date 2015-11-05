@@ -25,10 +25,11 @@ int NarrowCollisionStrategy::Detect(
 	ID3D11Texture2D * texturePlayer,
 	ID3D11Texture2D * textureTree,	// Just checking for trees, for now.
 	Player * pPlayer,
-	std::list<BaseSpriteData *> * collided,
+	std::list<Space *> * collided,
 	float * playerLocation,
 	Grid * grid, // Player location is the coordinates of the center of the sprite.
-	int * intersectRect)
+	int * intersectRect,
+	float2 screenDimensions)
 {
 	bool bIntersection = false;
 
@@ -55,7 +56,7 @@ int NarrowCollisionStrategy::Detect(
 	DumpPixels(rawObstacleDimensions[0], rawObstacleDimensions[1], obstaclePixels);
 #endif // DUMP_PIXELS
 
-	std::list<BaseSpriteData *>::const_iterator iterator;
+	std::list<Space *>::const_iterator iterator;
 
 	int playerTopLeft[2];
 
@@ -69,8 +70,8 @@ int NarrowCollisionStrategy::Detect(
 		int renderedSpriteDimensions[2];
 		float obstacleCenterLocation[2];
 
-		obstacleCenterLocation[HORIZONTAL_AXIS] = (*iterator)->pos.x;
-		obstacleCenterLocation[VERTICAL_AXIS] = (*iterator)->pos.y;
+		obstacleCenterLocation[HORIZONTAL_AXIS] = (*iterator)->GetLocationRatio().x * screenDimensions.x;
+		obstacleCenterLocation[VERTICAL_AXIS] = (*iterator)->GetLocationRatio().y * screenDimensions.y;
 
 		// These are relative to the rendered sprite.
 		//	Take into consideration the actual screen dimensions.

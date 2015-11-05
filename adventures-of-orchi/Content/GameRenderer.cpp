@@ -17,7 +17,7 @@ using namespace std;
 
 
 // Loads vertex and pixel shaders from files and instantiates the cube geometry.
-GameRenderer::GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window) :
+GameRenderer::GameRenderer(const shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window) :
 	m_loadingComplete(false),
 	m_degreesPerSecond(45),
 	m_indexCount(0),
@@ -32,8 +32,8 @@ GameRenderer::GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceRes
 
 	m_pSpaces = new vector<Space *>;
 
-	fWindowWidth = m_window->Bounds.Width;
-	fWindowHeight = m_window->Bounds.Height;
+	m_fWindowWidth = m_window->Bounds.Width;
+	m_fWindowHeight = m_window->Bounds.Height;
 
 	grid.SetWindowWidth(m_window->Bounds.Width);
 	grid.SetWindowHeight(m_window->Bounds.Height);
@@ -42,7 +42,7 @@ GameRenderer::GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceRes
 
 	BuildScreen();
 	this->m_pPlayer = new Player(&grid);
-	m_pCollided = new list<BaseSpriteData *>;
+	m_pCollided = new list<Space *>;
 }
 
 // Initializes view parameters when the window size changes.
@@ -123,13 +123,13 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 		float playerLocation[2];
 
 		// These are within the range of screen pixel size.
-		playerLocation[0] = (fWindowWidth -
-			(fWindowWidth * LEFT_MARGIN_RATIO) -
-			(fWindowWidth * RIGHT_MARGIN_RATIO)) *
-			m_pPlayer->GetHLocationRatio() +
-			(fWindowWidth * LEFT_MARGIN_RATIO);
+		playerLocation[0] = (m_fWindowWidth -
+			(m_fWindowWidth * LEFT_MARGIN_RATIO) -
+			(m_fWindowWidth * RIGHT_MARGIN_RATIO)) *
+			m_pPlayer->GetLocationRatio().x +
+			(m_fWindowWidth * LEFT_MARGIN_RATIO);
 
-		playerLocation[1] = m_pPlayer->GetVLocationRatio() * fWindowHeight;
+		playerLocation[1] = m_pPlayer->GetLocationRatio().y * m_fWindowHeight;
 
 
 
@@ -139,8 +139,8 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 			spriteSize,
 			m_pPlayer,
 			m_pSpaces,
-			fWindowWidth,
-			fWindowHeight,
+			m_fWindowWidth,
+			m_fWindowHeight,
 			playerLocation);
 
 		m_nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
@@ -152,7 +152,8 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 			m_pCollided,
 			playerLocation,
 			&grid,
-			intersectRect);
+			intersectRect,
+			float2(m_fWindowWidth, m_fWindowHeight));
 
 
 		// if the gamepad is not connected, check the keyboard.
@@ -240,14 +241,14 @@ void GameRenderer::Render()
 
 #ifdef RENDER_DIAGNOSTICS
 
-	std::list<BaseSpriteData *>::const_iterator iterator;
+	std::list<Space *>::const_iterator iterator;
 
 	for (iterator = m_pCollided->begin(); iterator != m_pCollided->end(); iterator++)
 	{
-		int column = (*iterator)->column;
-		int row = (*iterator)->row;
+//		int column = (*iterator)->column;
+//		int row = (*iterator)->row;
 
-		HighlightSprite(column, row, m_deviceResources->m_redBrush);
+		HighlightSprite(0, 0, m_deviceResources->m_redBrush);
 	}
 
 	if (m_nCollisionState == INTERSECTION ||
@@ -434,7 +435,9 @@ void GameRenderer::BuildScreen()
 			m_window->Bounds.Height);
 
 	// Use chain-of-responsibility?
-	m_screenBuilder->BuildScreen1(m_pSpaces);
+	m_screenBuilder->BuildScreen1(
+		m_pSpaces,
+		m_deviceResources->m_tree.Get());
 
 	LifePanel lifePanel(
 		m_window->Bounds.Width - m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
@@ -442,7 +445,7 @@ void GameRenderer::BuildScreen()
 		m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
 		HEART_PANEL_HEIGHT);
 
-	lifePanel.BuildPanel(&m_heartData);
+//	lifePanel.BuildPanel(&m_heartData);
 }
 
 
@@ -475,45 +478,45 @@ void GameRenderer::DrawSprites()
 		float fRowHeight = grid.GetRowHeight();
 
 		m_deviceResources->m_spriteBatch->Draw(
-			m_deviceResources->m_tree.Get(),
-			(*iterator)->GetSpriteData()->pos,
+			(*iterator)->GetSpriteTexture(),
+			(*iterator)->GetLocationRatio() * float2(m_fWindowWidth, m_fWindowHeight),
 			BasicSprites::PositionUnits::DIPs,
 			float2(fColumnWidth, fRowHeight),
 			BasicSprites::SizeUnits::DIPs,
 			float4(0.8f, 0.8f, 1.0f, 1.0f),
-			(*iterator)->GetSpriteData()->rot
+			0.f
 			);
 	}
 
-	m_deviceResources->m_heart.Get()->QueryInterface<ID3D11Texture2D>(&pTextureInterface);
-	D3D11_TEXTURE2D_DESC heartDesc;
-	pTextureInterface->GetDesc(&heartDesc);
+	//m_deviceResources->m_heart.Get()->QueryInterface<ID3D11Texture2D>(&pTextureInterface);
+	//D3D11_TEXTURE2D_DESC heartDesc;
+	//pTextureInterface->GetDesc(&heartDesc);
 
-	// This is a sprite run.
-	for (auto heart = m_heartData.begin(); heart != m_heartData.end(); heart++)
-	{
-		m_deviceResources->m_spriteBatch->Draw(
-			m_deviceResources->m_heart.Get(),
-			heart->pos,
-			BasicSprites::PositionUnits::DIPs,
-			float2(
-				((fWindowWidth - fWindowWidth * RIGHT_MARGIN_RATIO) / NUM_HEART_COLUMNS) / heartDesc.Width / 2.0f * 0.85f,
-				(HEART_PANEL_HEIGHT / NUM_HEART_ROWS) / heartDesc.Height) * 0.85f,
-			BasicSprites::SizeUnits::Normalized,
-			float4(0.8f, 0.8f, 1.0f, 1.0f),
-			heart->rot
-			);
-	}
+	//// This is a sprite run.
+	//for (auto heart = m_heartData.begin(); heart != m_heartData.end(); heart++)
+	//{
+	//	m_deviceResources->m_spriteBatch->Draw(
+	//		m_deviceResources->m_heart.Get(),
+	//		heart->pos,
+	//		BasicSprites::PositionUnits::DIPs,
+	//		float2(
+	//			((m_fWindowWidth - m_fWindowWidth * RIGHT_MARGIN_RATIO) / NUM_HEART_COLUMNS) / heartDesc.Width / 2.0f * 0.85f,
+	//			(HEART_PANEL_HEIGHT / NUM_HEART_ROWS) / heartDesc.Height) * 0.85f,
+	//		BasicSprites::SizeUnits::Normalized,
+	//		float4(0.8f, 0.8f, 1.0f, 1.0f),
+	//		heart->rot
+	//		);
+	//}
 
 
 	m_deviceResources->m_spriteBatch->Draw(
 		m_deviceResources->m_orchi.Get(),
-		m_orchiData.pos,
+		m_pPlayer->GetLocationRatio() * float2(m_fWindowWidth, m_fWindowHeight),
 		BasicSprites::PositionUnits::DIPs,
 		float2(grid.GetColumnWidth(), grid.GetRowHeight()),	// This will stretch or shrink orchi.
 		BasicSprites::SizeUnits::DIPs,
 		float4(0.8f, 0.8f, 1.0f, 1.0f),
-		m_orchiData.rot
+		0.f
 		);
 
 	m_deviceResources->m_spriteBatch->End();
@@ -534,27 +537,27 @@ void GameRenderer::UpdatePlayer()
 	//	moving vertically or horizontally.
 	//	Thus, don't consider the side margins when
 	//	multiplying by the player's location ratios.
-	float fBoundsWidth = fWindowWidth; // m_window->Bounds.Width;
-	float fBoundsHeight = fWindowHeight;	// m_window->Bounds.Height;
+	float fBoundsWidth = m_fWindowWidth; // m_window->Bounds.Width;
+	float fBoundsHeight = m_fWindowHeight;	// m_window->Bounds.Height;
 
-	float fPlayerHRatio = m_pPlayer->GetHLocationRatio();
-	float fPlayerVRatio = m_pPlayer->GetVLocationRatio();
+	float fPlayerHRatio = m_pPlayer->GetLocationRatio().x;
+	float fPlayerVRatio = m_pPlayer->GetLocationRatio().y;
 
-	m_orchiData.pos.x = ((fBoundsWidth -
-		fBoundsWidth * LEFT_MARGIN_RATIO -
-		fBoundsWidth * RIGHT_MARGIN_RATIO) *
-		fPlayerHRatio) +
-		(fBoundsWidth * LEFT_MARGIN_RATIO);
+	//m_pPlayer->GetLocationRatio().x = ((fBoundsWidth -
+	//	fBoundsWidth * LEFT_MARGIN_RATIO -
+	//	fBoundsWidth * RIGHT_MARGIN_RATIO) *
+	//	fPlayerHRatio) +
+	//	(fBoundsWidth * LEFT_MARGIN_RATIO) / this->m_fWindowWidth;
 
-	m_orchiData.pos.y = fBoundsHeight * fPlayerVRatio;
+	//m_orchiData.pos.y = fBoundsHeight * fPlayerVRatio;
 
-	float tempRot = 0.0f;
-	float tempMag = 0.0f;
-	m_orchiData.vel.x = tempMag * cosf(tempRot);
-	m_orchiData.vel.y = tempMag * sinf(tempRot);
-	m_orchiData.rot = 0.0f;
-	m_orchiData.scale = 1.0f;
-	m_orchiData.rotVel = 0.0f;
+	//float tempRot = 0.0f;
+	//float tempMag = 0.0f;
+	//m_orchiData.vel.x = tempMag * cosf(tempRot);
+	//m_orchiData.vel.y = tempMag * sinf(tempRot);
+	//m_orchiData.rot = 0.0f;
+	//m_orchiData.scale = 1.0f;
+	//m_orchiData.rotVel = 0.0f;
 }
 
 
@@ -739,26 +742,26 @@ void GameRenderer::HighlightSprite(int column, int row, ComPtr<ID2D1SolidColorBr
 	float y = 0.0f;
 
 	ScreenUtils::CalculateSquareCenter(
-		fWindowWidth,
-		fWindowHeight,
+		m_fWindowWidth,
+		m_fWindowHeight,
 		column,
 		row,
 		&x,
 		&y);
 
 	float gameAreaWidth =
-		fWindowWidth -
-		(fWindowWidth * LEFT_MARGIN_RATIO) -
-		(fWindowWidth * RIGHT_MARGIN_RATIO);
+		m_fWindowWidth -
+		(m_fWindowWidth * LEFT_MARGIN_RATIO) -
+		(m_fWindowWidth * RIGHT_MARGIN_RATIO);
 
-	float gameAreaHeight = fWindowHeight;
+	float gameAreaHeight = m_fWindowHeight;
 
 	D2D1_RECT_F rect
 	{
 		x - (gameAreaWidth / (float)NUM_GRID_COLUMNS) / 2.0f,
-		y - fWindowHeight / (float)NUM_GRID_ROWS / 2.0f,
+		y - m_fWindowHeight / (float)NUM_GRID_ROWS / 2.0f,
 		x + (gameAreaWidth / (float)NUM_GRID_COLUMNS) / 2.0f,
-		y + fWindowHeight / (float)NUM_GRID_ROWS / 2.0f
+		y + m_fWindowHeight / (float)NUM_GRID_ROWS / 2.0f
 	};
 
 
@@ -811,8 +814,8 @@ void GameRenderer::DrawLeftMargin()
 	{
 		0.0f,
 		0.0f,
-		fWindowWidth * LEFT_MARGIN_RATIO,
-		fWindowHeight
+		m_fWindowWidth * LEFT_MARGIN_RATIO,
+		m_fWindowHeight
 	};
 
 	leftMargin.Draw(
@@ -827,10 +830,10 @@ void GameRenderer::DrawRightMargin()
 
 	D2D1_RECT_F rect
 	{
-		fWindowWidth - (fWindowWidth * RIGHT_MARGIN_RATIO),
+		m_fWindowWidth - (m_fWindowWidth * RIGHT_MARGIN_RATIO),
 		0.0f,
-		fWindowWidth,
-		fWindowHeight
+		m_fWindowWidth,
+		m_fWindowHeight
 	};
 
 	rightMargin.Draw(

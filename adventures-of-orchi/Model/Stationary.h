@@ -5,7 +5,20 @@
 class Stationary : public Space
 {
 public:
-	Stationary(BaseSpriteData * treeData) : Space(treeData)
+	Stationary(
+		float2 pfLocationRatio,
+		float2 pfDimensions,
+		bool bIsVisible,
+		bool bIsActionable,
+		bool bIsCollidable,
+		ID3D11Texture2D * spriteData)
+		: Space(
+			pfLocationRatio,
+			pfDimensions,
+			bIsVisible,
+			bIsActionable,
+			bIsCollidable,
+			spriteData)
 	{
 
 	}

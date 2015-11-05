@@ -3,7 +3,6 @@
 #include "CollisionDetectionInfo.h"
 #include <vector>
 #include "Model\Player.h"
-#include "BaseSpriteData.h"
 #include <list>
 #include "GridSpace.h"
 
@@ -29,11 +28,11 @@ public:
 	virtual bool Detect(CollisionDetectionInfo * info) = 0;
 
 	virtual void Detect(
-		list<BaseSpriteData *> * retVal,
+		list<Space *> * retVal,
 		float2 playerSize,
 		float2 spriteSize,
 		Player * pPlayer,
-		vector<BaseSpriteData *> * sprites,
+		vector<Space *> * sprites,
 		float fWindowWidth,
 		float fWindowHeight) = 0;
 

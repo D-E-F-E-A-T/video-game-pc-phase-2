@@ -2,9 +2,7 @@
 #include "pch.h"
 
 #include "Model\Player.h"
-#include "BaseSpriteData.h"
 #include "GridSpace.h"
-//#include "BasicSprites.h"
 #include <list>
 
 
@@ -20,10 +18,11 @@ public:
 		ID3D11Texture2D * texture1,
 		ID3D11Texture2D * texture2,
 		Player * pPlayer,
-		std::list<BaseSpriteData *> * sprites,
+		std::list<Space *> * sprites,
 		float * playerLocation,
 		Grid * grid,
-		int * intersectRect);
+		int * intersectRect,
+		float2 screenDimensions);
 
 protected:
 private:

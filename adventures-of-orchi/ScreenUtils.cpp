@@ -19,4 +19,7 @@ void ScreenUtils::CalculateSquareCenter(
 
 	*x = (screenWidth * LEFT_MARGIN_RATIO) + MARGIN + (columnWidth * column) + (columnWidth / 2.0f);
 	*y = MARGIN + (rowHeight * row) + (rowHeight / 2.0f);
+
+	*x /= screenWidth;
+	*y /= screenHeight;
 }

@@ -2,7 +2,6 @@
 #include "pch.h"
 #include "CollisionDetectionStrategy.h"
 #include "Model\Player.h"
-#include "BaseSpriteData.h"
 #include "GridSpace.h"
 #include "Model\Space.h"
 
@@ -13,7 +12,7 @@ public:
 	bool Detect(CollisionDetectionInfo * info);
 
 	void Detect(
-		list<BaseSpriteData *> * retVal,
+		list<Space *> * retVal,
 		float2 playerSize,
 		float2 spriteSize,
 		Player * pPlayer,
@@ -26,21 +25,21 @@ protected:
 	int Calculate(
 		Player * player, 
 		vector<Space *> * sprites, 
-		list<BaseSpriteData *> * retVal,
+		list<Space *> * retVal,
 		float fWindowWidth,
 		float fWindowHeight,
 		float * playerLocation);
 
 	boolean IsClose(
 		Player * player, 
-		BaseSpriteData * data,
+		Space * data,
 		float fWindowWidth,
 		float fWindowHeight,
 		float * playerLocation);
 
 	float CalculateDistance(
 		Player player, 
-		BaseSpriteData * sprite,
+		Space * sprite,
 		float fWindowWidth, 
 		float fWindowHeight,
 		float * playerLocation);

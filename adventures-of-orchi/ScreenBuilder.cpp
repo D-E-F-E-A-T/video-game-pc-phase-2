@@ -12,10 +12,7 @@ ScreenBuilder::ScreenBuilder(float screenWidth, float screenHeight)
 	m_fScreenHeight = screenHeight;
 }
 
-/*
-	TODO: Use web services
-*/
-void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
+void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tree)
 {
 	spaces->clear();
 
@@ -31,7 +28,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 				m_fScreenHeight,
 				j, i, &x, &y);
 
-			spaces->push_back(new Tree(new TreeData(j, i, x, y)));
+			spaces->push_back(new Tree(
+				float2(x, y),
+				float2(0.f, 0.f),
+				true,
+				tree));
 		}
 	}
 
@@ -44,7 +45,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 				m_fScreenHeight,
 				j, i, &x, &y);
 
-			spaces->push_back(new Tree(new TreeData(j, i, x, y)));
+			spaces->push_back(new Tree(
+				float2(x, y),
+				float2(0.f, 0.f),
+				true,
+				tree));
 		}
 	}
 
@@ -55,7 +60,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 			m_fScreenHeight, 
 			i, 4, &x, &y);
 		
-		spaces->push_back(new Tree(new TreeData(i, 4, x, y)));
+		spaces->push_back(new Tree(
+			float2(x, y),
+			float2(0.f, 0.f),
+			true,
+			tree));
 	}
 
 	for (int i = 0; i < 4; i++)
@@ -65,7 +74,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 			m_fScreenHeight, 
 			i, 5, &x, &y);
 
-		spaces->push_back(new Tree(new TreeData(i, 5, x, y)));
+		spaces->push_back(new Tree(
+			float2(x, y),
+			float2(0.f, 0.f),
+			true,
+			tree));
 	}
 
 	for (int i = 0; i < 3; i++)
@@ -75,7 +88,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 			m_fScreenHeight, 
 			i, 6, &x, &y);
 		
-		spaces->push_back(new Tree(new TreeData(i, 6, x, y)));
+		spaces->push_back(new Tree(
+			float2(x, y),
+			float2(0.f, 0.f),
+			true,
+			tree));
 	}
 
 
@@ -86,7 +103,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 			m_fScreenHeight, 
 			i, 4, &x, &y);
 
-		spaces->push_back(new Tree(new TreeData(i, 4, x, y)));
+		spaces->push_back(new Tree(
+			float2(x, y),
+			float2(0.f, 0.f),
+			true,
+			tree));
 	}
 
 
@@ -97,7 +118,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 			m_fScreenHeight, 
 			i, 9, &x, &y);
 
-		spaces->push_back(new Tree(new TreeData(i, 9, x, y)));
+		spaces->push_back(new Tree(
+			float2(x, y),
+			float2(0.f, 0.f),
+			true,
+			tree));
 	}
 
 	
@@ -108,7 +133,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 			m_fScreenHeight, 
 			i, 10, &x, &y);
 
-		spaces->push_back(new Tree(new TreeData(i, 10, x, y)));
+		spaces->push_back(new Tree(
+			float2(x, y),
+			float2(0.f, 0.f),
+			true,
+			tree));
 	}
 
 
@@ -119,7 +148,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 			m_fScreenHeight, 
 			i, 10, &x, &y);
 
-		spaces->push_back(new Tree(new TreeData(i, 10, x, y)));
+		spaces->push_back(new Tree(
+			float2(x, y),
+			float2(0.f, 0.f),
+			true,
+			tree));
 	}
 
 
@@ -132,7 +165,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 				m_fScreenHeight,
 				i, j, &x, &y);
 
-			spaces->push_back(new Tree(new TreeData(i, j, x, y)));
+			spaces->push_back(new Tree(
+				float2(x, y),
+				float2(0.f, 0.f),
+				true,
+				tree));
 		}
 	}
 
@@ -144,7 +181,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 			m_fScreenHeight, 
 			i, 11, &x, &y);
 
-		spaces->push_back(new Tree(new TreeData(i, 11, x, y)));
+		spaces->push_back(new Tree(
+			float2(x, y),
+			float2(0.f, 0.f),
+			true,
+			tree));
 	}
 
 	for (int i = 0; i < 8; i++)
@@ -156,7 +197,11 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces)
 				m_fScreenHeight,
 				i, j, &x, &y);
 
-			spaces->push_back(new Tree(new TreeData(i, j, x, y)));
+			spaces->push_back(new Tree(
+				float2(x, y),
+				float2(0.f, 0.f),
+				true,
+				tree));
 		}
 	}
 

@@ -11,12 +11,6 @@
 //#include "SampleOverlay.h"
 //#include "AutoThrottle.h"
 #include "BasicSprites.h"
-#include "TreeData.h"
-#include "RockData.h"
-#include "WaterData.h"
-#include "GrassData.h"
-#include "StoneWallData.h"
-#include "OrchiData.h"
 
 namespace SampleSettings
 {

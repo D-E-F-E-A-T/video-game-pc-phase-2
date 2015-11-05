@@ -1,6 +1,5 @@
 #pragma once
 #include "pch.h"
-#include "TreeData.h"
 #include <vector>
 #include "Model\Portal.h"
 #include "Model\Space.h"
@@ -13,7 +12,7 @@ public:
 	ScreenBuilder(float screenWidth, float screenHeight);
 
 	// TODO: This will just have 1 argument.
-	void BuildScreen1(vector<Space *> * m_spaceData);
+	void BuildScreen1(vector<Space *> * m_spaceData, ID3D11Texture2D * tree);
 
 protected:
 

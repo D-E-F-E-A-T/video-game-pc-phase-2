@@ -1,11 +1,21 @@
 #pragma once
 #include "Thing.h"
-#include "BaseSpriteData.h"
 
 class Tree : public Thing
 {
 public:
-	Tree(BaseSpriteData * treeData) : Thing(treeData)
+	Tree(
+		float2 pfLocationRatio,
+		float2 pfDimensions,
+		bool bIsVisible,
+		ID3D11Texture2D * treeData) :
+		Thing(
+			pfLocationRatio,
+			pfDimensions,
+			true,
+			false,
+			true,
+			treeData)
 	{
 
 	}

@@ -17,7 +17,7 @@ bool BroadCollisionStrategy::Detect(CollisionDetectionInfo * info)
 }
 
 void BroadCollisionStrategy::Detect(
-	list<BaseSpriteData *> * retVal,
+	list<Space *> * retVal,
 	float2 playerSize,
 	float2 spriteSize,
 	Player * pPlayer,
@@ -39,7 +39,7 @@ void BroadCollisionStrategy::Detect(
 int BroadCollisionStrategy::Calculate(
 	Player * player, 
 	vector<Space *> * sprites, 
-	list<BaseSpriteData *> * retVal,
+	list<Space *> * retVal,
 	float fWindowWidth,
 	float fWindowHeight,
 	float * playerLocation)
@@ -61,11 +61,11 @@ int BroadCollisionStrategy::Calculate(
 
 	for (iterator = sprites->begin(); iterator != sprites->end(); iterator++)
 	{
-		BaseSpriteData * sprite = (*iterator)->GetSpriteData();
+//		BaseSpriteData * sprite = (*iterator)->GetSpriteData();
 
-		if (IsClose(player, sprite, fWindowWidth, fWindowHeight, playerLocation))
+		if (IsClose(player, *(iterator), fWindowWidth, fWindowHeight, playerLocation))
 		{
-			retVal->push_back(sprite);
+			retVal->push_back(*(iterator));
 		}
 	}
 
@@ -74,7 +74,7 @@ int BroadCollisionStrategy::Calculate(
 
 boolean BroadCollisionStrategy::IsClose(
 	Player * player, 
-	BaseSpriteData * data, 
+	Space * data, 
 	float fWindowWidth,
 	float fWindowHeight,
 	float * playerLocation)
@@ -91,7 +91,7 @@ boolean BroadCollisionStrategy::IsClose(
 
 float BroadCollisionStrategy::CalculateDistance(
 	Player player, 
-	BaseSpriteData * sprite,
+	Space * sprite,
 	float fWindowWidth,
 	float fWindowHeight,
 	float * playerLocation)
@@ -99,8 +99,8 @@ float BroadCollisionStrategy::CalculateDistance(
 	float spriteLocation[2];
 
 	// These are within the range of screen pixel size.
-	spriteLocation[0] = sprite->pos.x;
-	spriteLocation[1] = sprite->pos.y;
+	spriteLocation[0] = sprite->GetLocationRatio().x * fWindowWidth;
+	spriteLocation[1] = sprite->GetLocationRatio().y * fWindowHeight;
 
 	float retVal = MathUtils::CalculateDistance(
 		playerLocation[0],

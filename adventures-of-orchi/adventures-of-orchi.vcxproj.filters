@@ -123,13 +123,6 @@
     </ClInclude>
     <ClInclude Include="BasicMath.h" />
     <ClInclude Include="BasicReaderWriter.h" />
-    <ClInclude Include="GrassData.h" />
-    <ClInclude Include="OrchiData.h" />
-    <ClInclude Include="RockData.h" />
-    <ClInclude Include="StoneWallData.h" />
-    <ClInclude Include="TreeData.h" />
-    <ClInclude Include="WaterData.h" />
-    <ClInclude Include="BaseSpriteData.h" />
     <ClInclude Include="BasicShapes.h" />
     <ClInclude Include="DDSTextureLoader.h" />
     <ClInclude Include="DirectXSample.h" />
@@ -147,7 +140,6 @@
     <ClInclude Include="LeftMargin.h" />
     <ClInclude Include="RightMargin.h" />
     <ClInclude Include="LifePanel.h" />
-    <ClInclude Include="HeartData.h" />
     <ClInclude Include="ControllerView.h">
       <Filter>Controller</Filter>
     </ClInclude>

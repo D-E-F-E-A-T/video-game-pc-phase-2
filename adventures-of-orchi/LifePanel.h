@@ -1,6 +1,5 @@
 #pragma once
 #include "pch.h"
-#include "BaseSpriteData.h"
 
 class LifePanel
 {
@@ -11,7 +10,7 @@ public:
 		float fPanelWidth, 
 		float fPanelHeight);
 
-	void BuildPanel(std::vector<BaseSpriteData> * m_heartData);
+	//void BuildPanel(std::vector<BaseSpriteData> * m_heartData);
 
 protected:
 

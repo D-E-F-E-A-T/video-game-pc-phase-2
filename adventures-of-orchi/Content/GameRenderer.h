@@ -8,6 +8,7 @@
 #include "Model\Player.h"
 #include "BroadCollisionStrategy.h"
 #include "NarrowCollisionStrategy.h"
+#include "Model\Stack.h"
 
 using namespace Windows::UI::Core;
 using namespace std;
@@ -76,9 +77,10 @@ namespace adventures_of_orchi
 		float	m_degreesPerSecond;
 		bool	m_tracking;
 
-		OrchiData m_orchiData;
-		std::vector<BaseSpriteData> m_heartData;
+		//OrchiData m_orchiData;
+		//std::vector<BaseSpriteData> m_heartData;
 
+		Stack * m_pStack;
 		vector<Space *> * m_pSpaces;
 
 		ComPtr<IDWriteTextLayout1> m_textLayoutLife;
@@ -93,8 +95,8 @@ namespace adventures_of_orchi
 
 		Player * m_pPlayer;
 
-		float fWindowWidth;
-		float fWindowHeight;
+		float m_fWindowWidth;
+		float m_fWindowHeight;
 		
 		// Input related members
 		bool                    m_isControllerConnected;  // Do we have a controller connected
@@ -117,7 +119,7 @@ namespace adventures_of_orchi
 		BroadCollisionStrategy * m_broadCollisionDetectionStrategy;
 		NarrowCollisionStrategy * m_pNarrowCollisionDetectionStrategy;
 
-		list<BaseSpriteData *> * m_pCollided;
+		list<Space *> * m_pCollided;
 		void HighlightSprite(int column, int row, ComPtr<ID2D1SolidColorBrush> brush);
 		void HighlightSprite(int * pLocation, ComPtr<ID2D1SolidColorBrush> brush);
 
