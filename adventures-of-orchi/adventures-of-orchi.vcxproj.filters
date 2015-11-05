@@ -152,9 +152,6 @@
     <ClInclude Include="Model\Movable.h">
       <Filter>Model</Filter>
     </ClInclude>
-    <ClInclude Include="Model\Stationary.h">
-      <Filter>Model</Filter>
-    </ClInclude>
     <ClInclude Include="Model\Tool.h">
       <Filter>Model</Filter>
     </ClInclude>
@@ -194,6 +191,10 @@
     <ClInclude Include="Model\AbsoluteLocationStrategy.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="Model\Immovable.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

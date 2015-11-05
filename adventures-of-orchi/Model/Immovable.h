@@ -2,10 +2,10 @@
 #include "Space.h"
 
 
-class Stationary : public Space
+class Immovable : public Space
 {
 public:
-	Stationary(
+	Immovable(
 		float2 pfLocationRatio,
 		float2 pfDimensions,
 		bool bIsVisible,

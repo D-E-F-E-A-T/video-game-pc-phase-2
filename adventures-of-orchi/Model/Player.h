@@ -6,7 +6,7 @@
 class Player : public Space
 {
 public:
-	Player(Grid * grid);
+	Player();
 
 	void MoveNorth(int nCollisionState, float fVelocity);
 	void MoveEast(int nCollisionState, float fVelocity);
@@ -14,13 +14,13 @@ public:
 	void MoveWest(int nCollisionState, float fVelocity);
 
 	// Grid square where the player is currently located.
-	int * GetGridLocation()
-	{
-		return m_pGridLocation;
-	}
+	//int * GetGridLocation()
+	//{
+	//	return m_pGridLocation;
+	//}
 
 protected:
-	void UpdateGridLocation();
+	//void UpdateGridLocation();
 
 private:
 
@@ -28,7 +28,7 @@ private:
 
 	int m_nUnitsPerGridSquare[NUM_DIMENSIONS];
 
-	Grid * m_grid;
+	//Grid * m_grid;
 
 	int m_nPreviousMoveDirection;
 };

@@ -1,7 +1,7 @@
 #pragma once
-#include "Stationary.h"
+#include "Immovable.h"
 
-class Thing : public Stationary
+class Thing : public Immovable
 {
 public:
 	Thing(
@@ -11,7 +11,7 @@ public:
 		bool bIsActionable,
 		bool bIsCollidable,
 		ID3D11Texture2D * spriteData)
-		: Stationary(
+		: Immovable(
 			pfLocationRatio,
 			pfDimensions,
 			bIsVisible,

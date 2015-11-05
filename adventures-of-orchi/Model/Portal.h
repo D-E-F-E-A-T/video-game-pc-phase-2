@@ -1,11 +1,11 @@
 #pragma once
-#include "Stationary.h"
+#include "Immovable.h"
 
-class Portal : public Stationary
+class Portal : public Immovable
 {
 public:
 	Portal(float2 pfLocationRatio, float2 pfDimensions, int nDirection, int nDestination) :
-		Stationary(pfLocationRatio, pfDimensions, false, true, true, NULL)
+		Immovable(pfLocationRatio, pfDimensions, false, true, true, NULL)
 	{
 	}
 

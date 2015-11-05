@@ -12,6 +12,7 @@ public:
 	bool Detect(CollisionDetectionInfo * info);
 
 	void Detect(
+		Grid grid,
 		list<Space *> * retVal,
 		float2 playerSize,
 		float2 spriteSize,
@@ -23,6 +24,7 @@ public:
 
 protected:
 	int Calculate(
+		Grid grid,
 		Player * player, 
 		vector<Space *> * sprites, 
 		list<Space *> * retVal,

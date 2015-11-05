@@ -7,6 +7,7 @@
 #include "RightMargin.h"
 #include "LifePanel.h"
 #include "..\Model\Portal.h"
+#include "Utils.h"
 
 using namespace adventures_of_orchi;
 
@@ -41,7 +42,7 @@ GameRenderer::GameRenderer(const shared_ptr<DX::DeviceResources>& deviceResource
 	grid.SetNumRows(NUM_GRID_ROWS);
 
 	BuildScreen();
-	this->m_pPlayer = new Player(&grid);
+	this->m_pPlayer = new Player();
 	m_pCollided = new list<Space *>;
 }
 
@@ -131,9 +132,8 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 
 		playerLocation[1] = m_pPlayer->GetLocationRatio().y * m_fWindowHeight;
 
-
-
 		m_broadCollisionDetectionStrategy->Detect(
+			grid,
 			m_pCollided,
 			playerSize,
 			spriteSize,
@@ -245,10 +245,15 @@ void GameRenderer::Render()
 
 	for (iterator = m_pCollided->begin(); iterator != m_pCollided->end(); iterator++)
 	{
-//		int column = (*iterator)->column;
-//		int row = (*iterator)->row;
+		int column = 0;
+		int row = 0;
 
-		HighlightSprite(0, 0, m_deviceResources->m_redBrush);
+		::ConvertRatioToGridLocations(grid, (*iterator)->GetLocationRatio(), &column, &row);
+
+		HighlightSprite(
+			column, 
+			row, 
+			m_deviceResources->m_redBrush);
 	}
 
 	if (m_nCollisionState == INTERSECTION ||
@@ -508,10 +513,15 @@ void GameRenderer::DrawSprites()
 	//		);
 	//}
 
+	float fCurrentX = m_pPlayer->GetLocationRatio().x;
+
+	float fBoardWidth = m_fWindowWidth - (m_fWindowWidth * LEFT_MARGIN_RATIO) - (m_fWindowWidth * RIGHT_MARGIN_RATIO);
+	float fBoardLocation = fCurrentX * fBoardWidth;
+	float fX = fBoardLocation + (m_fWindowWidth * LEFT_MARGIN_RATIO);
 
 	m_deviceResources->m_spriteBatch->Draw(
 		m_deviceResources->m_orchi.Get(),
-		m_pPlayer->GetLocationRatio() * float2(m_fWindowWidth, m_fWindowHeight),
+		float2(fX, m_pPlayer->GetLocationRatio().y * m_fWindowHeight),
 		BasicSprites::PositionUnits::DIPs,
 		float2(grid.GetColumnWidth(), grid.GetRowHeight()),	// This will stretch or shrink orchi.
 		BasicSprites::SizeUnits::DIPs,
@@ -542,6 +552,8 @@ void GameRenderer::UpdatePlayer()
 
 	float fPlayerHRatio = m_pPlayer->GetLocationRatio().x;
 	float fPlayerVRatio = m_pPlayer->GetLocationRatio().y;
+
+	//m_pPlayer->GetGridLocation() *= {5.f, 5.f};
 
 	//m_pPlayer->GetLocationRatio().x = ((fBoundsWidth -
 	//	fBoundsWidth * LEFT_MARGIN_RATIO -
@@ -749,6 +761,9 @@ void GameRenderer::HighlightSprite(int column, int row, ComPtr<ID2D1SolidColorBr
 		&x,
 		&y);
 
+	x *= m_fWindowWidth;
+	y *= m_fWindowHeight;
+	
 	float gameAreaWidth =
 		m_fWindowWidth -
 		(m_fWindowWidth * LEFT_MARGIN_RATIO) -
@@ -1061,3 +1076,4 @@ void GameRenderer::CreatePackText()
 	m_textLayoutPack->SetCharacterSpacing(0.5f, 0.5f, 0, m_textRange);
 	m_textLayoutPack->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 }
+

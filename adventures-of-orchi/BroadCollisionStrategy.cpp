@@ -4,6 +4,7 @@
 #include "Model\Player.h"
 #include "MathUtils.h"
 #include <iostream>
+#include "Utils.h"
 
 // @see http://www.gamedev.net/page/resources/_/technical/directx-and-xna/pixel-perfect-collision-detection-in-directx-r2939
 BroadCollisionStrategy::BroadCollisionStrategy()
@@ -17,6 +18,7 @@ bool BroadCollisionStrategy::Detect(CollisionDetectionInfo * info)
 }
 
 void BroadCollisionStrategy::Detect(
+	Grid grid,
 	list<Space *> * retVal,
 	float2 playerSize,
 	float2 spriteSize,
@@ -28,6 +30,7 @@ void BroadCollisionStrategy::Detect(
 {
 	// Determine the 9 grid spaces around the player's location.
 	Calculate(
+		grid,
 		pPlayer, 
 		sprites, 
 		retVal,
@@ -37,6 +40,7 @@ void BroadCollisionStrategy::Detect(
 }
 
 int BroadCollisionStrategy::Calculate(
+	Grid grid,
 	Player * player, 
 	vector<Space *> * sprites, 
 	list<Space *> * retVal,
@@ -44,9 +48,11 @@ int BroadCollisionStrategy::Calculate(
 	float fWindowHeight,
 	float * playerLocation)
 {
-	int nCurrentHorizontalSpace = player->GetGridLocation()[HORIZONTAL_AXIS];
-	int nCurrentVerticalSpace = player->GetGridLocation()[VERTICAL_AXIS];
 
+	int column = 0; 
+	int row = 0; 
+	
+	::ConvertRatioToGridLocations(grid, player->GetLocationRatio(), &column, &row);
 /*
 	char buf[32];
 	sprintf_s(buf, "%d %d\n", nCurrentHorizontalSpace, nCurrentVerticalSpace);

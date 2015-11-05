@@ -262,8 +262,9 @@
     <ClInclude Include="Sprites\BasicLoader.h" />
     <ClInclude Include="Sprites\BasicSprites.h" />
     <ClInclude Include="Sprites\SimpleSprites.h" />
-    <ClInclude Include="Model\Stationary.h" />
+    <ClInclude Include="Model\Immovable.h" />
     <ClInclude Include="Model\Tool.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.xaml.cpp">
