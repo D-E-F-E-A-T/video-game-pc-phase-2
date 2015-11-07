@@ -2,7 +2,6 @@
 #include "pch.h"
 
 #include "Model\Player.h"
-#include "GridSpace.h"
 #include <list>
 
 

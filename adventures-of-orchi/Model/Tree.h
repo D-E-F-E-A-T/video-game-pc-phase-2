@@ -10,6 +10,7 @@ public:
 		bool bIsVisible,
 		const shared_ptr<DeviceResources>& deviceResources) :
 		Thing(
+			"tree.dds",
 			pfLocationRatio,
 			pfDimensions,
 			true,

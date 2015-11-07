@@ -2,7 +2,6 @@
 #include "pch.h"
 #include "CollisionDetectionStrategy.h"
 #include "Model\Player.h"
-#include "GridSpace.h"
 #include "Model\Space.h"
 
 class BroadCollisionStrategy // : public CollisionDetectionStrategy

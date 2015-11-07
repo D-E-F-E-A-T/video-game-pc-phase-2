@@ -2,17 +2,6 @@
 #include "Player.h"
 #include "Constants.h"
 
-Player::Player()
-{
-	m_fLocationRatio = { 0.5f, 0.5f };
-	//m_pfLocationRatio[HORIZONTAL_AXIS] = 0.5f;
-	//m_pfLocationRatio[VERTICAL_AXIS] = 0.5f;
-	m_nPreviousMoveDirection = CENTER;
-
-
-
-	//UpdateGridLocation();
-}
 
 void Player::MoveNorth(int nCollisionState, float fVelocity)
 {

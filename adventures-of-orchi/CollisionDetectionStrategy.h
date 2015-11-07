@@ -4,7 +4,6 @@
 #include <vector>
 #include "Model\Player.h"
 #include <list>
-#include "GridSpace.h"
 
 using namespace std;
 

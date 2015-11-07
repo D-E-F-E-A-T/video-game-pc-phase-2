@@ -1,20 +1,30 @@
 #pragma once
 #include "..\Grid.h"
 #include "..\Constants.h"
-#include "Space.h"
+#include "Character.h"
 
-class Player : public Space
+class Player : public Character
 {
 public:
-	Player();
+	Player(
+		float2 pfLocationRatio,
+		float2 pfDimensions,
+		bool bIsVisible,
+		const shared_ptr<DeviceResources>& deviceResources)
+		: Character(
+			"link.dds",
+			pfLocationRatio,
+			pfDimensions,
+			true,
+			deviceResources)
+	{
+		m_nPreviousMoveDirection = CENTER;
+	}
 
 	void MoveNorth(int nCollisionState, float fVelocity);
 	void MoveEast(int nCollisionState, float fVelocity);
 	void MoveSouth(int nCollisionState, float fVelocity);
 	void MoveWest(int nCollisionState, float fVelocity);
-
-	// TODO: Don't do this.
-	int GetType() { return 1; }
 
 protected:
 

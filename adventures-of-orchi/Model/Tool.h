@@ -2,11 +2,11 @@
 #include "Movable.h"
 
 
-	class Tool : public Movable
-	{
-	public:
+class Tool : public Movable
+{
+public:
 
-	protected:
+protected:
 
-	private:
-	};
+private:
+};

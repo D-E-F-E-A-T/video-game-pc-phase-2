@@ -78,9 +78,6 @@ namespace adventures_of_orchi
 		float	m_degreesPerSecond;
 		bool	m_tracking;
 
-		//OrchiData m_orchiData;
-		//std::vector<BaseSpriteData> m_heartData;
-
 		Stack * m_pStack;
 		vector<Space *> * m_pSpaces;
 
@@ -92,7 +89,6 @@ namespace adventures_of_orchi
 
 		void DrawSprites();
 		void BuildScreen();
-		void UpdatePlayer();
 
 		Player * m_pPlayer;
 
@@ -126,8 +122,6 @@ namespace adventures_of_orchi
 
 		DWRITE_TEXT_RANGE m_textRange;
 		ComPtr<IDWriteTextFormat>                       m_textFormat;
-
-		//void DrawPortals();
 	};
 }
 

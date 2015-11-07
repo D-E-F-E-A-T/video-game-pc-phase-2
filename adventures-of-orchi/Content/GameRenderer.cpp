@@ -44,7 +44,15 @@ GameRenderer::GameRenderer(const shared_ptr<DeviceResources>& deviceResources, C
 	grid.SetNumRows(NUM_GRID_ROWS);
 
 	BuildScreen();
-	this->m_pPlayer = new Player();
+
+	m_pPlayer = new Player(
+		float2(0.5f, 0.5f),
+		float2(1.f, 1.f),
+		true,
+		deviceResources);
+
+	m_pSpaces->push_back(m_pPlayer);
+
 	m_pCollided = new list<Space *>;
 }
 
@@ -106,8 +114,8 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 {
 	// DO NOT USE m_window HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-	//if (!m_tracking)
-	//{
+	if (!m_tracking)
+	{
 	//	// Convert degrees to radians, then convert seconds to rotation angle
 	//	//float radiansPerSecond = XMConvertToRadians(m_degreesPerSecond);
 	//	//double totalRotation = timer.GetTotalSeconds() * radiansPerSecond;
@@ -115,69 +123,67 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 
 	//	//Rotate(radians);
 
-	//	FetchControllerInput();
+		FetchControllerInput();
 
 
-	//	float2 playerSize = m_deviceResources->m_spriteBatch->GetSpriteSize(
-	//		m_deviceResources->m_orchi.Get());
-	//	float2 spriteSize = m_deviceResources->m_spriteBatch->GetSpriteSize(
-	//		m_deviceResources->m_tree.Get());
+		//float2 playerSize = m_deviceResources->m_spriteBatch->GetSpriteSize(
+		//	m_deviceResources->m_orchi.Get());
+		//float2 spriteSize = m_deviceResources->m_spriteBatch->GetSpriteSize(
+		//	m_deviceResources->m_tree.Get());
 
-	//	float playerLocation[2];
+		float playerLocation[2];
 
-	//	// These are within the range of screen pixel size.
-	//	playerLocation[0] = (m_fWindowWidth -
-	//		(m_fWindowWidth * LEFT_MARGIN_RATIO) -
-	//		(m_fWindowWidth * RIGHT_MARGIN_RATIO)) *
-	//		m_pPlayer->GetLocationRatio().x +
-	//		(m_fWindowWidth * LEFT_MARGIN_RATIO);
+		// These are within the range of screen pixel size.
+		playerLocation[0] = (m_fWindowWidth -
+			(m_fWindowWidth * LEFT_MARGIN_RATIO) -
+			(m_fWindowWidth * RIGHT_MARGIN_RATIO)) *
+			m_pPlayer->GetLocationRatio().x +
+			(m_fWindowWidth * LEFT_MARGIN_RATIO);
 
-	//	playerLocation[1] = m_pPlayer->GetLocationRatio().y * m_fWindowHeight;
+		playerLocation[1] = m_pPlayer->GetLocationRatio().y * m_fWindowHeight;
 
-	//	m_broadCollisionDetectionStrategy->Detect(
-	//		grid,
-	//		m_pCollided,
-	//		playerSize,
-	//		spriteSize,
-	//		m_pPlayer,
-	//		m_pSpaces,
-	//		m_fWindowWidth,
-	//		m_fWindowHeight,
-	//		playerLocation);
+		m_broadCollisionDetectionStrategy->Detect(
+			grid,
+			m_pCollided,
+			m_pPlayer->GetSpriteSize(),
+			m_pPlayer->GetSpriteSize(),
+			m_pPlayer,
+			m_pSpaces,
+			m_fWindowWidth,
+			m_fWindowHeight,
+			playerLocation);
 
-	//	m_nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
-	//		DEVICE_CONTEXT_3D,
-	//		DEVICE_3D,
-	//		m_deviceResources->m_orchi.Get(),
-	//		m_deviceResources->m_tree.Get(),
-	//		m_pPlayer,
-	//		m_pCollided,
-	//		playerLocation,
-	//		&grid,
-	//		intersectRect,
-	//		float2(m_fWindowWidth, m_fWindowHeight));
+		//m_nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
+		//	DEVICE_CONTEXT_3D,
+		//	DEVICE_3D,
+		//	m_deviceResources->m_orchi.Get(),
+		//	m_deviceResources->m_tree.Get(),
+		//	m_pPlayer,
+		//	m_pCollided,
+		//	playerLocation,
+		//	&grid,
+		//	intersectRect,
+		//	float2(m_fWindowWidth, m_fWindowHeight));
 
 
-	//	// if the gamepad is not connected, check the keyboard.
-	//	if (m_isControllerConnected)
-	//	{
-	//		// This would actually, detect a collision one interation
-	//		//	too late.  Consider detection earlier since
-	//		//	this could lead to weird behavior, depending
-	//		//	on how fast the sprites are moving.
-	//		//	For example, if sprites are moving very quickly,
-	//		//	collision would occur when the sprites 
-	//		//	have deeply intersected each other.
-	//		//  For slow moving sprites, this would not be 
-	//		//	much of a problem.
-	//		MovePlayer(
-	//			m_xinputState.Gamepad.wButtons,
-	//			m_xinputState.Gamepad.sThumbLX,
-	//			m_xinputState.Gamepad.sThumbLY);
-	//	}
-
-	//	UpdatePlayer();
-	//}
+		// if the gamepad is not connected, check the keyboard.
+		if (m_isControllerConnected)
+		{
+			// This would actually, detect a collision one interation
+			//	too late.  Consider detection earlier since
+			//	this could lead to weird behavior, depending
+			//	on how fast the sprites are moving.
+			//	For example, if sprites are moving very quickly,
+			//	collision would occur when the sprites 
+			//	have deeply intersected each other.
+			//  For slow moving sprites, this would not be 
+			//	much of a problem.
+			MovePlayer(
+				m_xinputState.Gamepad.wButtons,
+				m_xinputState.Gamepad.sThumbLX,
+				m_xinputState.Gamepad.sThumbLY);
+		}
+	}
 }
 
 // Rotate the 3D cube model a set amount of radians.
@@ -481,96 +487,20 @@ void GameRenderer::DrawSprites()
 	// This is a sprite run.
 	for (iterator = m_pSpaces->begin(); iterator != m_pSpaces->end(); iterator++)
 	{
-
-
 		float fColumnWidth = grid.GetColumnWidth();
 		float fRowHeight = grid.GetRowHeight();
 
 		float dpi = m_deviceResources->GetDpi();
 
 		(*iterator)->Render(
+			renderTargetView,
 			float2(m_fWindowWidth, m_fWindowHeight), 
 			float2(fColumnWidth, fRowHeight),
 			dpi);
 	}
 
-	//m_deviceResources->m_heart.Get()->QueryInterface<ID3D11Texture2D>(&pTextureInterface);
-	//D3D11_TEXTURE2D_DESC heartDesc;
-	//pTextureInterface->GetDesc(&heartDesc);
-
-	//// This is a sprite run.
-	//for (auto heart = m_heartData.begin(); heart != m_heartData.end(); heart++)
-	//{
-	//	m_deviceResources->m_spriteBatch->Draw(
-	//		m_deviceResources->m_heart.Get(),
-	//		heart->pos,
-	//		BasicSprites::PositionUnits::DIPs,
-	//		float2(
-	//			((m_fWindowWidth - m_fWindowWidth * RIGHT_MARGIN_RATIO) / NUM_HEART_COLUMNS) / heartDesc.Width / 2.0f * 0.85f,
-	//			(HEART_PANEL_HEIGHT / NUM_HEART_ROWS) / heartDesc.Height) * 0.85f,
-	//		BasicSprites::SizeUnits::Normalized,
-	//		float4(0.8f, 0.8f, 1.0f, 1.0f),
-	//		heart->rot
-	//		);
-	//}
-
-	//float fCurrentX = m_pPlayer->GetLocationRatio().x;
-
-	//float fBoardWidth = m_fWindowWidth - (m_fWindowWidth * LEFT_MARGIN_RATIO) - (m_fWindowWidth * RIGHT_MARGIN_RATIO);
-	//float fBoardLocation = fCurrentX * fBoardWidth;
-	//float fX = fBoardLocation + (m_fWindowWidth * LEFT_MARGIN_RATIO);
-
-	//m_deviceResources->m_spriteBatch->Draw(
-	//	m_deviceResources->m_orchi.Get(),
-	//	float2(fX, m_pPlayer->GetLocationRatio().y * m_fWindowHeight),
-	//	BasicSprites::PositionUnits::DIPs,
-	//	float2(grid.GetColumnWidth(), grid.GetRowHeight()),	// This will stretch or shrink orchi.
-	//	BasicSprites::SizeUnits::DIPs,
-	//	float4(0.8f, 0.8f, 1.0f, 1.0f),
-	//	0.f
-	//	);
-
-	//m_deviceResources->m_spriteBatch->End();
-
 	// Copy from the scratch buffer to the back buffer.
 	// Create a bitmap and copy??? http://xboxforums.create.msdn.com/forums/p/84925/511738.aspx
-}
-
-
-// DO NOT USE m_window in the Update/Render loop as
-//	it causes the loop to stall.
-void GameRenderer::UpdatePlayer()
-{
-	float x = 0.0f;
-	float y = 0.0f;
-
-	// Want player to move with same speed when
-	//	moving vertically or horizontally.
-	//	Thus, don't consider the side margins when
-	//	multiplying by the player's location ratios.
-	float fBoundsWidth = m_fWindowWidth; // m_window->Bounds.Width;
-	float fBoundsHeight = m_fWindowHeight;	// m_window->Bounds.Height;
-
-	float fPlayerHRatio = m_pPlayer->GetLocationRatio().x;
-	float fPlayerVRatio = m_pPlayer->GetLocationRatio().y;
-
-	//m_pPlayer->GetGridLocation() *= {5.f, 5.f};
-
-	//m_pPlayer->GetLocationRatio().x = ((fBoundsWidth -
-	//	fBoundsWidth * LEFT_MARGIN_RATIO -
-	//	fBoundsWidth * RIGHT_MARGIN_RATIO) *
-	//	fPlayerHRatio) +
-	//	(fBoundsWidth * LEFT_MARGIN_RATIO) / this->m_fWindowWidth;
-
-	//m_orchiData.pos.y = fBoundsHeight * fPlayerVRatio;
-
-	//float tempRot = 0.0f;
-	//float tempMag = 0.0f;
-	//m_orchiData.vel.x = tempMag * cosf(tempRot);
-	//m_orchiData.vel.y = tempMag * sinf(tempRot);
-	//m_orchiData.rot = 0.0f;
-	//m_orchiData.scale = 1.0f;
-	//m_orchiData.rotVel = 0.0f;
 }
 
 
@@ -1077,30 +1007,3 @@ void GameRenderer::CreatePackText()
 	m_textLayoutPack->SetCharacterSpacing(0.5f, 0.5f, 0, m_textRange);
 	m_textLayoutPack->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 }
-
-// TODO: Don't do this!
-//void GameRenderer::DrawPortals()
-//{
-//	std::vector<Space *>::const_iterator iterator;
-//
-//	for (iterator = m_pSpaces->begin(); iterator != m_pSpaces->end(); iterator++)
-//	{
-//		if ((*iterator)->GetType() == 5)
-//		{
-//			int column;
-//			int row;
-//
-//			::ConvertRatioToGridLocations(grid, (*iterator)->GetLocationRatio(), &column, &row);
-//
-//			HighlightRegion(
-//				column,
-//				row,
-//				m_deviceResources->m_purpleBrush);
-//		}
-//	}
-//}
-
-//std::list<Space *>::const_iterator iterator;
-//
-//for (iterator = m_pCollided->begin(); iterator != m_pCollided->end(); iterator++)
-//{
