@@ -241,6 +241,7 @@
     <ClInclude Include="MathUtils.h" />
     <ClInclude Include="Model\AbsoluteLocationStrategy.h" />
     <ClInclude Include="Model\Character.h" />
+    <ClInclude Include="Model\Diagnostic.h" />
     <ClInclude Include="Model\Grass.h" />
     <ClInclude Include="Model\GridSpaceLocationStrategy.h" />
     <ClInclude Include="Model\Movable.h" />

@@ -23,3 +23,15 @@ void ScreenUtils::CalculateSquareCenter(
 	*x /= screenWidth;
 	*y /= screenHeight;
 }
+
+void ScreenUtils::ConvertGlobalToGridLocation(
+	float2 globalPt,
+	float * x,
+	float * y)
+{
+	// globalPt.x is relative then entire width of the screen.
+	//	Need to subtract the left margin before converting to 
+	//	the correct Grid location.
+	*x = (globalPt.x - LEFT_MARGIN_RATIO) / (1.0f - LEFT_MARGIN_RATIO - RIGHT_MARGIN_RATIO);
+	*y = globalPt.y;
+}

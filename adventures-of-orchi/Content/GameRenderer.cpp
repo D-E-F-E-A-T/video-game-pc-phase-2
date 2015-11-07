@@ -250,7 +250,16 @@ void GameRenderer::Render()
 		int column = 0;
 		int row = 0;
 
-		::ConvertRatioToGridLocations(grid, (*iterator)->GetLocationRatio(), &column, &row);
+		float fX = 0.f;
+		float fY = 0.f;
+
+		ScreenUtils::ConvertGlobalToGridLocation((*iterator)->GetLocationRatio(), &fX, &fY);
+
+		::ConvertRatioToGridLocations(
+			grid, 
+			float2 { fX, fY }, //(*iterator)->GetLocationRatio(),
+			&column, 
+			&row);
 
 		HighlightRegion(
 			column, 

@@ -5,17 +5,17 @@
 
 static void ConvertRatioToGridLocations(Grid grid, float2 fLocationRatio, int * column, int * row)
 {
-	int horizontalUnits =
-		(int)(1.0f / (float)grid.GetNumColumns() * (float)TOTAL_GRID_DIVISIONS);
+	float fHorizontalUnits =
+		(float)TOTAL_GRID_DIVISIONS / (float)grid.GetNumColumns();
 
-	int verticalUnits =
-		(int)(1.0f / (float)grid.GetNumRows() * (float)TOTAL_GRID_DIVISIONS);
+	float fVerticalUnits =
+		(float)TOTAL_GRID_DIVISIONS / (float)grid.GetNumRows();
 
 	int nHorizontalLocation =
-		(int)(fLocationRatio.x * TOTAL_GRID_DIVISIONS) / horizontalUnits;
+		(int)(fLocationRatio.x * (float)TOTAL_GRID_DIVISIONS) / fHorizontalUnits;
 
 	int nVerticalLocation =
-		(int)(fLocationRatio.y * TOTAL_GRID_DIVISIONS) / verticalUnits;
+		(int)(fLocationRatio.y * (float)TOTAL_GRID_DIVISIONS) / fVerticalUnits;
 
 	*column = nHorizontalLocation;
 	*row = nVerticalLocation;

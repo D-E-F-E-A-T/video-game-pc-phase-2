@@ -10,4 +10,9 @@ public:
 		int row, 
 		float * x, 
 		float * y);
+
+	static void ConvertGlobalToGridLocation(
+		float2 globalPt,
+		float * x,
+		float * y);
 };
