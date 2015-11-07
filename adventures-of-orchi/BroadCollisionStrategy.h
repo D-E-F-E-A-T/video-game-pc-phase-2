@@ -11,39 +11,19 @@ public:
 	bool Detect(CollisionDetectionInfo * info);
 
 	void Detect(
-		Grid grid,
-		list<Space *> * retVal,
-		float2 playerSize,
-		float2 spriteSize,
 		Player * pPlayer,
 		vector<Space *> * sprites,
-		float fWindowWidth,
-		float fWindowHeight,
-		float * playerLocation);
+		list<Space *> * space);
 
 protected:
 	int Calculate(
-		Grid grid,
 		Player * player, 
-		vector<Space *> * sprites, 
-		list<Space *> * retVal,
-		float fWindowWidth,
-		float fWindowHeight,
-		float * playerLocation);
+		vector<Space *> * spaces, 
+		list<Space *> * retVal);
 
-	boolean IsClose(
-		Player * player, 
-		Space * data,
-		float fWindowWidth,
-		float fWindowHeight,
-		float * playerLocation);
-
-	float CalculateDistance(
-		Player player, 
-		Space * sprite,
-		float fWindowWidth, 
-		float fWindowHeight,
-		float * playerLocation);
+	bool IsClose(
+		Player * player,
+		Space * data);
 
 private:
 };

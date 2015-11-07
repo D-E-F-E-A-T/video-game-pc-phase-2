@@ -87,7 +87,7 @@ namespace adventures_of_orchi
 		ComPtr<IDWriteTextLayout1> m_textLayoutInventory;
 		ComPtr<IDWriteTextLayout1> m_textLayoutPack;
 
-		void DrawSprites();
+		void RenderSpaces();
 		void BuildScreen();
 
 		Player * m_pPlayer;

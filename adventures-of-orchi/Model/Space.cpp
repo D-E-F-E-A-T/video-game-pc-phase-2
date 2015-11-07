@@ -1,8 +1,13 @@
+#include "pch.h"
 #include "Space.h"
+#include "..\MathUtils.h"
+
 
 using namespace std;
 
+
 Space::Space(
+	String ^ strTextureName,
 	float2 fLocationRatio,
 	float2 fDimensions,
 	bool bIsVisible,
@@ -12,7 +17,6 @@ Space::Space(
 {
 	m_deviceResources = deviceResources;
 
-	//		m_pSprite = spriteData;
 	m_fLocationRatio = fLocationRatio;
 	m_fDimensions = fDimensions;
 
@@ -20,133 +24,65 @@ Space::Space(
 	m_bIsActionable = bIsActionable;
 	m_bIsCollidable = bIsCollidable;
 
-	m_spriteBatch = ref new BasicSprites::SpriteBatch();
-	unsigned int capacity = SampleSettings::Performance::ParticleCountMax +
-		SampleSettings::NumTrees + 1;
+	// Consider that not all spaces are Sprites!!
+	if (strTextureName != nullptr)
+	{
+		m_spriteBatch = ref new BasicSprites::SpriteBatch();
 
-	m_spriteBatch->Initialize(
-		m_deviceResources->GetD3DDevice().Get(),
-		capacity);
+		m_spriteBatch->Initialize(
+			m_deviceResources->GetD3DDevice(),
+			1);
 
-	BasicLoader ^ loader =
-		ref new BasicLoader(
-			m_deviceResources->GetD3DDevice.Get(),
-			m_deviceResources->GetWicImagingFactory().Get());
+		BasicLoader ^ loader =
+			ref new BasicLoader(
+				m_deviceResources->GetD3DDevice(),
+				m_deviceResources->GetWicImagingFactory());
 
-	loader->LoadTexture(
-		"tree.dds",
-		&m_tree,
-		nullptr);
+		// Use flyweight pattern to avoid loading this for every tree.
+		loader->LoadTexture(
+			strTextureName,
+			&m_pTexture,
+			nullptr);
 
-	m_spriteBatch->AddTexture(m_tree.Get());
-
-	loader->LoadTexture(
-		"rock.dds",
-		&m_rock,
-		nullptr);
-
-	m_spriteBatch->AddTexture(m_rock.Get());
-
-	loader->LoadTexture(
-		"water.dds",
-		&m_water,
-		nullptr);
-
-	m_spriteBatch->AddTexture(m_water.Get());
-
-	loader->LoadTexture(
-		"grass.dds",
-		&m_grass,
-		nullptr);
-
-	m_spriteBatch->AddTexture(m_grass.Get());
-
-	loader->LoadTexture(
-		"stonewall.dds",
-		&m_stoneWall,
-		nullptr);
-
-	m_spriteBatch->AddTexture(m_stoneWall.Get());
-
-	loader->LoadTexture(
-		"link.dds",
-		//		"test.dds",
-		&m_orchi,
-		nullptr);
-
-	m_spriteBatch->AddTexture(m_orchi.Get());
-
-	loader->LoadTexture(
-		"heart.dds",
-		&m_heart,
-		nullptr);
-
-	m_spriteBatch->AddTexture(m_heart.Get());
+		m_spriteBatch->AddTexture(m_pTexture.Get());
+	}
 }
 
-void Space::Render(float2 fWindowDimensions)
+void Space::Render(
+	ComPtr<ID3D11RenderTargetView> renderTargetView,
+	float2 fWindowDimensions,
+	float2 fScaleDimensions, float dpi)
 {
-	ComPtr<ID3D11RenderTargetView> renderTargetView;
+	m_spriteBatch->Begin(renderTargetView.Get(), dpi);
 
-	m_deviceResources->GetD3DDeviceContext()->OMGetRenderTargets(
-		1,
-		&renderTargetView,
-		nullptr
-		);
-
-	m_spriteBatch->Begin(renderTargetView.Get());
-
-	//ID3D11Texture2D * pTextureInterface = NULL;
-
-	std::vector<Space *>::const_iterator iterator;
-
-	//float fColumnWidth = grid.GetColumnWidth();
-	//float fRowHeight = grid.GetRowHeight();
+	float2 fPosition =
+		GetLocationRatio() * float2(fWindowDimensions.x, fWindowDimensions.y);
 
 	m_spriteBatch->Draw(
-		m_tree.Get(),
-		(*iterator)->GetLocationRatio() * float2(fWindowDimensions.x, fWindowDimensions.y),
+		m_pTexture.Get(),
+		fPosition,
 		BasicSprites::PositionUnits::DIPs,
-		m_fDimensions, 
+		m_fDimensions * fScaleDimensions,
 		BasicSprites::SizeUnits::DIPs,
 		float4(0.8f, 0.8f, 1.0f, 1.0f),
 		0.0f);
 
-	//for (iterator = m_pTreeData->begin(); iterator != m_pTreeData->end(); iterator++)
-	//{
-	//	float fColumnWidth = grid.GetColumnWidth();
-	//	float fRowHeight = grid.GetRowHeight();
-
-	//	m_spriteBatch->Draw(
-	//		m_tree.Get(),
-	//		(*iterator)->pos,
-	//		BasicSprites::PositionUnits::DIPs,
-	//		float2(fColumnWidth, fRowHeight),
-	//		BasicSprites::SizeUnits::DIPs,
-	//		float4(0.8f, 0.8f, 1.0f, 1.0f),
-	//		(*iterator)->rot
-	//		);
-	//}
-	//	m_spriteBatch->Begin(m_d3dOffscreenRenderTargetView);
-
-	//(*iterator)->GetSpriteTexture(),
-	//(*iterator)->GetLocationRatio() * float2(m_fWindowWidth, m_fWindowHeight),
-	//BasicSprites::PositionUnits::DIPs,
-	//float2(fColumnWidth, fRowHeight),
-	//BasicSprites::SizeUnits::DIPs,
-	//float4(0.8f, 0.8f, 1.0f, 1.0f),
-	//0.f);
-
 	m_spriteBatch->End();
 }
 
-float2 Space::GetLocationRatio() 
-{ 
-	return m_fLocationRatio; 
+float2 Space::GetLocationRatio()
+{
+	return m_fLocationRatio;
 }
 
+float2 Space::GetSpriteSize()
+{
+	return m_spriteBatch->GetSpriteSize(m_pTexture.Get());
+}
 
-ID3D11Texture2D * Space::GetSpriteTexture() 
-{ 
-	return m_pSprite; 
+float Space::CalculateDistance(Space * space)
+{
+	return MathUtils::CalculateDistance(
+		m_fLocationRatio, 
+		space->GetLocationRatio());
 }

@@ -143,15 +143,9 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 		playerLocation[1] = m_pPlayer->GetLocationRatio().y * m_fWindowHeight;
 
 		m_broadCollisionDetectionStrategy->Detect(
-			grid,
-			m_pCollided,
-			m_pPlayer->GetSpriteSize(),
-			m_pPlayer->GetSpriteSize(),
 			m_pPlayer,
 			m_pSpaces,
-			m_fWindowWidth,
-			m_fWindowHeight,
-			playerLocation);
+			m_pCollided);
 
 		//m_nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
 		//	DEVICE_CONTEXT_3D,
@@ -294,7 +288,7 @@ void GameRenderer::Render()
 
 
 	
-	DrawSprites();
+	RenderSpaces();
 
 	m_pCollided->clear();
 }
@@ -464,8 +458,7 @@ void GameRenderer::BuildScreen()
 //	lifePanel.BuildPanel(&m_heartData);
 }
 
-// TODO: Each Space must know how to render itself.
-void GameRenderer::DrawSprites()
+void GameRenderer::RenderSpaces()
 {
 	ComPtr<ID3D11RenderTargetView> renderTargetView;
 
@@ -479,8 +472,6 @@ void GameRenderer::DrawSprites()
 
 	// @see: http://www.gamedev.net/topic/603359-c-dx11-how-to-get-texture-size/
 
-
-	ID3D11Texture2D * pTextureInterface = NULL;
 
 	std::vector<Space *>::const_iterator iterator;
 

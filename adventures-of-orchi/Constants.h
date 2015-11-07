@@ -1,14 +1,6 @@
 #pragma once
 
 
-#ifndef SCREEN_WIDTH
-#define SCREEN_WIDTH 1920
-#endif // SCREEN_WIDTH
-
-#ifndef SCREEN_HEIGHT
-#define SCREEN_HEIGHT 1080
-#endif // SCREEN_HEIGHT
-
 #ifndef NUM_GRID_ROWS 
 #define NUM_GRID_ROWS 15
 #endif // NUM_GRID_ROWS 
@@ -27,7 +19,7 @@
 
 #ifndef MARGIN 
 #define MARGIN 0.0f
-#endif // SCREEN_BORDER_WIDTH
+#endif // MARGIN
 
 //#ifndef SHOW_OVERLAY
 //#define SHOW_OVERLAY
@@ -196,9 +188,9 @@
 #define INTERSECTION_BOTTOM 3
 #endif // INTERSECTION_BOTTOM
 
-//#ifndef RENDER_DIAGNOSTICS
-//#define RENDER_DIAGNOSTICS
-//#endif // RENDER_DIAGNOSTICS
+#ifndef RENDER_DIAGNOSTICS
+#define RENDER_DIAGNOSTICS
+#endif // RENDER_DIAGNOSTICS
 
 #ifndef NUM_RENDER_TARGETS 
 #define NUM_RENDER_TARGETS 3

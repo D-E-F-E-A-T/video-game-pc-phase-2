@@ -18,58 +18,27 @@ bool BroadCollisionStrategy::Detect(CollisionDetectionInfo * info)
 }
 
 void BroadCollisionStrategy::Detect(
-	Grid grid,
-	list<Space *> * retVal,
-	float2 playerSize,
-	float2 spriteSize,
 	Player * pPlayer,
-	vector<Space *> * sprites,
-	float fWindowWidth,
-	float fWindowHeight,
-	float * playerLocation)
+	vector<Space *> * spaces,
+	list<Space *> * retVal)
 {
 	// Determine the 9 grid spaces around the player's location.
 	Calculate(
-		grid,
 		pPlayer, 
-		sprites, 
-		retVal,
-		fWindowWidth,
-		fWindowHeight,
-		playerLocation);
+		spaces, 
+		retVal);
 }
 
 int BroadCollisionStrategy::Calculate(
-	Grid grid,
 	Player * player, 
-	vector<Space *> * sprites, 
-	list<Space *> * retVal,
-	float fWindowWidth,
-	float fWindowHeight,
-	float * playerLocation)
+	vector<Space *> * spaces, 
+	list<Space *> * retVal)
 {
-
-	int column = 0; 
-	int row = 0; 
-	
-	::ConvertRatioToGridLocations(grid, player->GetLocationRatio(), &column, &row);
-/*
-	char buf[32];
-	sprintf_s(buf, "%d %d\n", nCurrentHorizontalSpace, nCurrentVerticalSpace);
-	OutputDebugStringA(buf);
-*/
-
-
-	// Don't use grid spaces as locations since sprites might not be
-	//	aligned within a grid space (i.e. moving sprites)
-
 	std::vector<Space *>::const_iterator iterator;
 
-	for (iterator = sprites->begin(); iterator != sprites->end(); iterator++)
+	for (iterator = spaces->begin(); iterator != spaces->end(); iterator++)
 	{
-//		BaseSpriteData * sprite = (*iterator)->GetSpriteData();
-
-		if (IsClose(player, *(iterator), fWindowWidth, fWindowHeight, playerLocation))
+		if (IsClose(player, *(iterator)))
 		{
 			retVal->push_back(*(iterator));
 		}
@@ -78,42 +47,12 @@ int BroadCollisionStrategy::Calculate(
 	return 1;
 }
 
-boolean BroadCollisionStrategy::IsClose(
+bool BroadCollisionStrategy::IsClose(
 	Player * player, 
-	Space * data, 
-	float fWindowWidth,
-	float fWindowHeight,
-	float * playerLocation)
+	Space * obstacle)
 {
-	float distance = CalculateDistance(
-		*player, 
-		data, 
-		fWindowWidth, 
-		fWindowHeight,
-		playerLocation);
+	float distance = obstacle->CalculateDistance(player);
 	
-	return (distance < (fWindowWidth * 0.05f));		
-}
-
-float BroadCollisionStrategy::CalculateDistance(
-	Player player, 
-	Space * sprite,
-	float fWindowWidth,
-	float fWindowHeight,
-	float * playerLocation)
-{
-	float spriteLocation[2];
-
-	// These are within the range of screen pixel size.
-	spriteLocation[0] = sprite->GetLocationRatio().x * fWindowWidth;
-	spriteLocation[1] = sprite->GetLocationRatio().y * fWindowHeight;
-
-	float retVal = MathUtils::CalculateDistance(
-		playerLocation[0],
-		playerLocation[1],
-		spriteLocation[0],
-		spriteLocation[1]);
-
-	return retVal;
+	return (distance < 0.075f);		
 }
 

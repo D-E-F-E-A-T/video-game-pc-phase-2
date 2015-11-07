@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Player.h"
-#include "Constants.h"
+#include "..\Constants.h"
 
 
 void Player::MoveNorth(int nCollisionState, float fVelocity)

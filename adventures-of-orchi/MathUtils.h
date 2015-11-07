@@ -3,9 +3,5 @@
 class MathUtils
 {
 public:
-	static float CalculateDistance(
-		float x1,
-		float y1,
-		float x2,
-		float y2);
+	static float CalculateDistance(float2 pt, float2 p2);
 };
