@@ -116,33 +116,9 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 
 	if (!m_tracking)
 	{
-	//	// Convert degrees to radians, then convert seconds to rotation angle
-	//	//float radiansPerSecond = XMConvertToRadians(m_degreesPerSecond);
-	//	//double totalRotation = timer.GetTotalSeconds() * radiansPerSecond;
-	//	//float radians = static_cast<float>(fmod(totalRotation, XM_2PI));
-
-	//	//Rotate(radians);
-
 		FetchControllerInput();
 
-
-		//float2 playerSize = m_deviceResources->m_spriteBatch->GetSpriteSize(
-		//	m_deviceResources->m_orchi.Get());
-		//float2 spriteSize = m_deviceResources->m_spriteBatch->GetSpriteSize(
-		//	m_deviceResources->m_tree.Get());
-
-		float playerLocation[2];
-
-		// These are within the range of screen pixel size.
-		playerLocation[0] = (m_fWindowWidth -
-			(m_fWindowWidth * LEFT_MARGIN_RATIO) -
-			(m_fWindowWidth * RIGHT_MARGIN_RATIO)) *
-			m_pPlayer->GetLocationRatio().x +
-			(m_fWindowWidth * LEFT_MARGIN_RATIO);
-
-		playerLocation[1] = m_pPlayer->GetLocationRatio().y * m_fWindowHeight;
-
-		m_nCollisionState = NO_INTERSECTION;
+//		m_nCollisionState = NO_INTERSECTION;
 
 		m_broadCollisionDetectionStrategy->Detect(
 			m_pPlayer,
@@ -151,15 +127,33 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 
 		if (m_pCollided->size() > 0)
 		{
-			m_nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
-				DEVICE_CONTEXT_3D,
-				DEVICE_3D,
-				m_pPlayer,
-				m_pCollided,
-				playerLocation,
-				&grid,
-				intersectRect,
-				float2(m_fWindowWidth, m_fWindowHeight));
+			std::list<Space *>::const_iterator iterator;
+
+			for (iterator = m_pCollided->begin(); iterator != m_pCollided->end(); iterator++)
+			{
+				int nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
+					DEVICE_CONTEXT_3D,
+					DEVICE_3D,
+					m_pPlayer,
+					*iterator,
+					&grid,
+					intersectRect,
+					float2(m_fWindowWidth, m_fWindowHeight));
+
+				if (nCollisionState != NO_INTERSECTION)
+				{
+					D2D1_RECT_F rect
+					{
+						(float)intersectRect[0],
+						(float)intersectRect[2],
+						(float)intersectRect[1],
+						(float)intersectRect[3]
+					};
+
+					m_collidedRects.push_back(rect);
+					m_collidedRectStatuses.push_back(nCollisionState);
+				}
+			}
 		}
 
 		// if the gamepad is not connected, check the keyboard.
@@ -261,7 +255,7 @@ void GameRenderer::Render()
 
 		::ConvertRatioToGridLocations(
 			grid, 
-			float2 { fX, fY }, //(*iterator)->GetLocationRatio(),
+			float2 { fX, fY },
 			&column, 
 			&row);
 
@@ -271,41 +265,22 @@ void GameRenderer::Render()
 			m_deviceResources->m_yellowBrush);
 	}
 
-	// Note: Only one collision is detected.
-	//	May need to detect all collisions.
-	if (m_nCollisionState == INTERSECTION ||
-		m_nCollisionState == COLLISION)
-		DrawSpriteIntersection();
+	DrawSpriteIntersection();
 
 	//DrawPortals();
 #endif // RENDER_DIAGNOSTICS
 
-
-
 	HRESULT hr = DEVICE_CONTEXT_2D->EndDraw();
-
-
-
-	//ID3D11RenderTargetView * renderTargets = m_deviceResources->m_d3dRenderTargetView.Get();
-
-
-	//DEVICE_CONTEXT_3D->OMSetRenderTargets(
-	//	1,
-	//	&renderTargets,
-	//	NULL);// m_deviceResources->m_d3dDepthStencilView.Get());
-
-	// Without this, the player renders on top of the trees.
-	//DEVICE_CONTEXT_3D->ClearDepthStencilView(
-	//	m_deviceResources->m_d3dDepthStencilView.Get(),
-	//	D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
-	//	1.0f,
-	//	0);
-
 
 	
 	RenderSpaces();
 
 	m_pCollided->clear();
+
+#ifdef RENDER_DIAGNOSTICS
+	m_collidedRects.clear();
+	m_collidedRectStatuses.clear();
+#endif // RENDER_DIAGNOSTICS
 }
 
 void GameRenderer::CreateDeviceDependentResources()
@@ -648,31 +623,31 @@ void GameRenderer::HandleLeftThumbStick(short horizontal, short vertical)
 	}
 }
 
-
+#ifdef RENDER_DIAGNOSTICS
 void GameRenderer::DrawSpriteIntersection()
 {
-	D2D1_RECT_F rect
-	{
-		(float)intersectRect[0],
-		(float)intersectRect[2],
-		(float)intersectRect[1],
-		(float)intersectRect[3]
-	};
+	std::vector<D2D1_RECT_F>::const_iterator iterator;
+	std::vector<int>::const_iterator iterator2;
 
+	iterator2 = m_collidedRectStatuses.begin();
 
-	if (m_nCollisionState == INTERSECTION)
+	for (iterator = m_collidedRects.begin(); iterator != m_collidedRects.end(); iterator++)
 	{
-		m_deviceResources->GetD2DDeviceContext()->FillRectangle(
-			rect,
-			m_deviceResources->m_greenBrush.Get());
-	}
-	else if (m_nCollisionState == COLLISION)
-	{
-		m_deviceResources->GetD2DDeviceContext()->FillRectangle(
-			rect,
-			m_deviceResources->m_redBrush.Get());
+		if ((*iterator2) == INTERSECTION)
+		{
+			m_deviceResources->GetD2DDeviceContext()->FillRectangle(
+				(*iterator),
+				m_deviceResources->m_greenBrush.Get());
+		}
+		else if ((*iterator2) == COLLISION)
+		{
+			m_deviceResources->GetD2DDeviceContext()->FillRectangle(
+				(*iterator),
+				m_deviceResources->m_redBrush.Get());
+		}
 	}
 }
+#endif // RENDER_DIAGNOSTICS
 
 void GameRenderer::HighlightRegion(int * pLocation, ComPtr<ID2D1SolidColorBrush> brush)
 {

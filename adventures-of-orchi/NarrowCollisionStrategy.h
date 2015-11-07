@@ -15,8 +15,7 @@ public:
 		ID3D11DeviceContext2 * context,
 		ID3D11Device2 * device,
 		Player * player,
-		std::list<Space *> * collided,
-		float * playerLocation,
+		Space * collided, //std::list<Space *> * collided,
 		Grid * grid,
 		int * intersectRect,
 		float2 screenDimensions);

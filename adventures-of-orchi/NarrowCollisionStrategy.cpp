@@ -22,11 +22,8 @@ NarrowCollisionStrategy::~NarrowCollisionStrategy()
 int NarrowCollisionStrategy::Detect(
 	ID3D11DeviceContext2 * context,
 	ID3D11Device2 * device,
-//	ID3D11Texture2D * texturePlayer,
-//	ID3D11Texture2D * textureTree,	// Just checking for trees, for now.
 	Player * pPlayer,
-	std::list<Space *> * collided,
-	float * playerLocation,
+	Space * collided, // std::list<Space *> * collided,
 	Grid * grid, // Player location is the coordinates of the center of the sprite.
 	int * intersectRect,
 	float2 screenDimensions)
@@ -52,130 +49,123 @@ int NarrowCollisionStrategy::Detect(
 	DumpPixels(rawObstacleDimensions[0], rawObstacleDimensions[1], obstaclePixels);
 #endif // DUMP_PIXELS
 
-	std::list<Space *>::const_iterator iterator;
-
 	int playerTopLeft[2];
 
 	// Should really use the dimensions of the sprite.
 	//	For now, using the dimensions of the grid space.
-	//playerTopLeft[HORIZONTAL_AXIS] = (int)(playerLocation[HORIZONTAL_AXIS] - grid->GetColumnWidth() / 2.f);
-	//playerTopLeft[VERTICAL_AXIS] = (int)(playerLocation[VERTICAL_AXIS] - grid->GetRowHeight() / 2.f);
 	playerTopLeft[HORIZONTAL_AXIS] = (int)(pPlayer->GetLocationRatio().x * screenDimensions.x - grid->GetColumnWidth() / 2.f);
 	playerTopLeft[VERTICAL_AXIS] = (int)(pPlayer->GetLocationRatio().y * screenDimensions.y - grid->GetRowHeight() / 2.f);
 
-	for (iterator = collided->begin(); iterator != collided->end(); iterator++)
+	int renderedSpriteDimensions[2];
+	float obstacleCenterLocation[2];
+
+	obstaclePixels = readPixels(
+		context,
+		device,
+		collided->GetTexture(), 
+		rawObstacleDimensions);	
+
+	obstacleCenterLocation[HORIZONTAL_AXIS] = collided->GetLocationRatio().x * screenDimensions.x;
+	obstacleCenterLocation[VERTICAL_AXIS] = collided->GetLocationRatio().y * screenDimensions.y;
+
+	// These are relative to the rendered sprite.
+	//	Take into consideration the actual screen dimensions.
+	renderedSpriteDimensions[WIDTH_INDEX] = (int)grid->GetColumnWidth();
+	renderedSpriteDimensions[HEIGHT_INDEX] = (int)grid->GetRowHeight();
+
+	// Right now, all obstacles are assumed to occupy exactly one grid space.
+	int obstacleTopLeft[2];
+	obstacleTopLeft[HORIZONTAL_AXIS] = 
+		(int)obstacleCenterLocation[HORIZONTAL_AXIS] -
+		renderedSpriteDimensions[WIDTH_INDEX] / 2;
+
+	obstacleTopLeft[VERTICAL_AXIS] = 
+		(int)obstacleCenterLocation[VERTICAL_AXIS] -
+		renderedSpriteDimensions[HEIGHT_INDEX] / 2;
+
+	bIntersection = IntersectRect(
+		playerTopLeft,
+		obstacleTopLeft,
+		renderedSpriteDimensions[WIDTH_INDEX],
+		renderedSpriteDimensions[HEIGHT_INDEX],
+		intersectRect);
+
+
+	if (bIntersection == true)
 	{
-		int renderedSpriteDimensions[2];
-		float obstacleCenterLocation[2];
+		int intersectionWidth = abs(intersectRect[INTERSECTION_LEFT] - intersectRect[INTERSECTION_RIGHT]);
+		int intersectionHeight = abs(intersectRect[INTERSECTION_TOP] - intersectRect[INTERSECTION_BOTTOM]);
 
-		obstaclePixels = readPixels(
-			context,
-			device,
-			(*iterator)->GetTexture(),
-			rawObstacleDimensions);	
-
-		obstacleCenterLocation[HORIZONTAL_AXIS] = (*iterator)->GetLocationRatio().x * screenDimensions.x;
-		obstacleCenterLocation[VERTICAL_AXIS] = (*iterator)->GetLocationRatio().y * screenDimensions.y;
-
-		// These are relative to the rendered sprite.
-		//	Take into consideration the actual screen dimensions.
-		renderedSpriteDimensions[WIDTH_INDEX] = (int)grid->GetColumnWidth();
-		renderedSpriteDimensions[HEIGHT_INDEX] = (int)grid->GetRowHeight();
-
-		// Right now, all obstacles are assumed to occupy exactly one grid space.
-		int obstacleTopLeft[2];
-		obstacleTopLeft[HORIZONTAL_AXIS] = 
-			(int)obstacleCenterLocation[HORIZONTAL_AXIS] -
-			renderedSpriteDimensions[WIDTH_INDEX] / 2;
-
-		obstacleTopLeft[VERTICAL_AXIS] = 
-			(int)obstacleCenterLocation[VERTICAL_AXIS] -
-			renderedSpriteDimensions[HEIGHT_INDEX] / 2;
-
-		bIntersection = IntersectRect(
-			playerTopLeft,
-			obstacleTopLeft,
-			renderedSpriteDimensions[WIDTH_INDEX],
-			renderedSpriteDimensions[HEIGHT_INDEX],
-			intersectRect);
-
-
-		if (bIntersection == true)
+		for (int row = 0; row < intersectionHeight; row++)
 		{
-			int intersectionWidth = abs(intersectRect[INTERSECTION_LEFT] - intersectRect[INTERSECTION_RIGHT]);
-			int intersectionHeight = abs(intersectRect[INTERSECTION_TOP] - intersectRect[INTERSECTION_BOTTOM]);
-
-			for (int row = 0; row < intersectionHeight; row++)
+			for (int column = 0; column < intersectionWidth; column++)
 			{
-				for (int column = 0; column < intersectionWidth; column++)
-				{
 
-					// These coordinates are relative to the whole screen.
-					int playerIntersectionHorizontalOffset = intersectRect[0] - playerTopLeft[0] + column;
-					int playerIntersectionVerticalOffset = intersectRect[2] - playerTopLeft[1] + row;
+				// These coordinates are relative to the whole screen.
+				int playerIntersectionHorizontalOffset = intersectRect[0] - playerTopLeft[0] + column;
+				int playerIntersectionVerticalOffset = intersectRect[2] - playerTopLeft[1] + row;
 
-					// These coordinates are relative to the whole screen.
-					int obstacleIntersectionHorizontalOffset = intersectRect[0] - obstacleTopLeft[0] + column;
-					int obstacleIntersectionVerticalOffset = intersectRect[2] - obstacleTopLeft[1] + row;
+				// These coordinates are relative to the whole screen.
+				int obstacleIntersectionHorizontalOffset = intersectRect[0] - obstacleTopLeft[0] + column;
+				int obstacleIntersectionVerticalOffset = intersectRect[2] - obstacleTopLeft[1] + row;
 
 
-					float playerPixelNormalizedLocation[2];
-					int playerPixelRawCoordinate[2];
-					float obstaclePixelNormalizedLocation[2];
-					int obstaclePixelRawCoordinate[2];
+				float playerPixelNormalizedLocation[2];
+				int playerPixelRawCoordinate[2];
+				float obstaclePixelNormalizedLocation[2];
+				int obstaclePixelRawCoordinate[2];
 
-					// Relative to the raw sprite dimensions (0, 1.0f)
-					playerPixelNormalizedLocation[HORIZONTAL_AXIS] =
-						(float)playerIntersectionHorizontalOffset / (float)renderedSpriteDimensions[HORIZONTAL_AXIS];
+				// Relative to the raw sprite dimensions (0, 1.0f)
+				playerPixelNormalizedLocation[HORIZONTAL_AXIS] =
+					(float)playerIntersectionHorizontalOffset / (float)renderedSpriteDimensions[HORIZONTAL_AXIS];
 
-					// Relative to the raw sprite dimensions (0, 1.0f)
-					playerPixelNormalizedLocation[VERTICAL_AXIS] =
-						(float)playerIntersectionVerticalOffset / (float)renderedSpriteDimensions[VERTICAL_AXIS];
+				// Relative to the raw sprite dimensions (0, 1.0f)
+				playerPixelNormalizedLocation[VERTICAL_AXIS] =
+					(float)playerIntersectionVerticalOffset / (float)renderedSpriteDimensions[VERTICAL_AXIS];
 
-					// Relative to the raw sprite dimensions (0, 1.0f)
-					obstaclePixelNormalizedLocation[HORIZONTAL_AXIS] =
-						(float)obstacleIntersectionHorizontalOffset / (float)renderedSpriteDimensions[HORIZONTAL_AXIS];
+				// Relative to the raw sprite dimensions (0, 1.0f)
+				obstaclePixelNormalizedLocation[HORIZONTAL_AXIS] =
+					(float)obstacleIntersectionHorizontalOffset / (float)renderedSpriteDimensions[HORIZONTAL_AXIS];
 
-					// Relative to the raw sprite dimensions (0, 1.0f)
-					obstaclePixelNormalizedLocation[VERTICAL_AXIS] =
-						(float)((float)obstacleIntersectionVerticalOffset / (float)renderedSpriteDimensions[VERTICAL_AXIS]);
+				// Relative to the raw sprite dimensions (0, 1.0f)
+				obstaclePixelNormalizedLocation[VERTICAL_AXIS] =
+					(float)((float)obstacleIntersectionVerticalOffset / (float)renderedSpriteDimensions[VERTICAL_AXIS]);
 
-					playerPixelRawCoordinate[HORIZONTAL_AXIS] =
-						(int)(playerPixelNormalizedLocation[HORIZONTAL_AXIS] * (float)rawPlayerDimensions[HORIZONTAL_AXIS]);
+				playerPixelRawCoordinate[HORIZONTAL_AXIS] =
+					(int)(playerPixelNormalizedLocation[HORIZONTAL_AXIS] * (float)rawPlayerDimensions[HORIZONTAL_AXIS]);
 
-					playerPixelRawCoordinate[VERTICAL_AXIS] =
-						(int)(playerPixelNormalizedLocation[VERTICAL_AXIS] * (float)rawPlayerDimensions[VERTICAL_AXIS]);
+				playerPixelRawCoordinate[VERTICAL_AXIS] =
+					(int)(playerPixelNormalizedLocation[VERTICAL_AXIS] * (float)rawPlayerDimensions[VERTICAL_AXIS]);
 
-					obstaclePixelRawCoordinate[HORIZONTAL_AXIS] =
-						(int)(obstaclePixelNormalizedLocation[HORIZONTAL_AXIS] * (float)rawObstacleDimensions[HORIZONTAL_AXIS]);
+				obstaclePixelRawCoordinate[HORIZONTAL_AXIS] =
+					(int)(obstaclePixelNormalizedLocation[HORIZONTAL_AXIS] * (float)rawObstacleDimensions[HORIZONTAL_AXIS]);
 
-					obstaclePixelRawCoordinate[VERTICAL_AXIS] =
-						(int)((float)obstaclePixelNormalizedLocation[VERTICAL_AXIS] * (float)rawObstacleDimensions[VERTICAL_AXIS]);
+				obstaclePixelRawCoordinate[VERTICAL_AXIS] =
+					(int)((float)obstaclePixelNormalizedLocation[VERTICAL_AXIS] * (float)rawObstacleDimensions[VERTICAL_AXIS]);
 			
-					int rawPlayerPixelIndex =
-						(playerPixelRawCoordinate[VERTICAL_AXIS] * rawPlayerDimensions[HORIZONTAL_AXIS]) +
-						playerPixelRawCoordinate[HORIZONTAL_AXIS];
+				int rawPlayerPixelIndex =
+					(playerPixelRawCoordinate[VERTICAL_AXIS] * rawPlayerDimensions[HORIZONTAL_AXIS]) +
+					playerPixelRawCoordinate[HORIZONTAL_AXIS];
 
-					int rawObstaclePixelIndex =
-						(obstaclePixelRawCoordinate[VERTICAL_AXIS] * rawObstacleDimensions[HORIZONTAL_AXIS]) +
-						obstaclePixelRawCoordinate[HORIZONTAL_AXIS];
+				int rawObstaclePixelIndex =
+					(obstaclePixelRawCoordinate[VERTICAL_AXIS] * rawObstacleDimensions[HORIZONTAL_AXIS]) +
+					obstaclePixelRawCoordinate[HORIZONTAL_AXIS];
 
-					uint32_t * dPtrPlayer = reinterpret_cast<uint32_t*>(playerPixels);
-					uint32_t * dPtrObstacle = reinterpret_cast<uint32_t*>(obstaclePixels);
+				uint32_t * dPtrPlayer = reinterpret_cast<uint32_t*>(playerPixels);
+				uint32_t * dPtrObstacle = reinterpret_cast<uint32_t*>(obstaclePixels);
 
-					int playerResult =
-						(dPtrPlayer[rawPlayerPixelIndex] & 0xff000000) >> 24;
+				int playerResult =
+					(dPtrPlayer[rawPlayerPixelIndex] & 0xff000000) >> 24;
 
-					int obstacleResult =
-						(dPtrObstacle[rawObstaclePixelIndex] & 0xff000000) >> 24;
+				int obstacleResult =
+					(dPtrObstacle[rawObstaclePixelIndex] & 0xff000000) >> 24;
 
-					if (playerResult > 0 && obstacleResult > 0)
-					{
-						delete[] playerPixels;
-						delete[] obstaclePixels;
+				if (playerResult > 0 && obstacleResult > 0)
+				{
+					delete[] playerPixels;
+					delete[] obstaclePixels;
 
-						return COLLISION;
-					}
+					return COLLISION;
 				}
 			}
 		}
@@ -184,11 +174,13 @@ int NarrowCollisionStrategy::Detect(
 		delete[] obstaclePixels;
 		return INTERSECTION;
 	}
+	else
+	{
+		delete[] playerPixels;
+		delete[] obstaclePixels;
 
-	delete [] playerPixels;
-	delete [] obstaclePixels;
-
-	return NO_INTERSECTION;
+		return NO_INTERSECTION;
+	}
 }
 
 
