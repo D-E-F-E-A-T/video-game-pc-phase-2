@@ -142,23 +142,25 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 
 		playerLocation[1] = m_pPlayer->GetLocationRatio().y * m_fWindowHeight;
 
+		m_nCollisionState = NO_INTERSECTION;
+
 		m_broadCollisionDetectionStrategy->Detect(
 			m_pPlayer,
 			m_pSpaces,
 			m_pCollided);
 
-		//m_nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
-		//	DEVICE_CONTEXT_3D,
-		//	DEVICE_3D,
-		//	m_deviceResources->m_orchi.Get(),
-		//	m_deviceResources->m_tree.Get(),
-		//	m_pPlayer,
-		//	m_pCollided,
-		//	playerLocation,
-		//	&grid,
-		//	intersectRect,
-		//	float2(m_fWindowWidth, m_fWindowHeight));
-
+		if (m_pCollided->size() > 0)
+		{
+			m_nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
+				DEVICE_CONTEXT_3D,
+				DEVICE_3D,
+				m_pPlayer,
+				m_pCollided,
+				playerLocation,
+				&grid,
+				intersectRect,
+				float2(m_fWindowWidth, m_fWindowHeight));
+		}
 
 		// if the gamepad is not connected, check the keyboard.
 		if (m_isControllerConnected)
@@ -177,6 +179,8 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 				m_xinputState.Gamepad.sThumbLX,
 				m_xinputState.Gamepad.sThumbLY);
 		}
+
+
 	}
 }
 
@@ -264,9 +268,11 @@ void GameRenderer::Render()
 		HighlightRegion(
 			column, 
 			row, 
-			m_deviceResources->m_redBrush);
+			m_deviceResources->m_yellowBrush);
 	}
 
+	// Note: Only one collision is detected.
+	//	May need to detect all collisions.
 	if (m_nCollisionState == INTERSECTION ||
 		m_nCollisionState == COLLISION)
 		DrawSpriteIntersection();
@@ -658,13 +664,13 @@ void GameRenderer::DrawSpriteIntersection()
 	{
 		m_deviceResources->GetD2DDeviceContext()->FillRectangle(
 			rect,
-			m_deviceResources->m_yellowBrush.Get());
+			m_deviceResources->m_greenBrush.Get());
 	}
 	else if (m_nCollisionState == COLLISION)
 	{
 		m_deviceResources->GetD2DDeviceContext()->FillRectangle(
 			rect,
-			m_deviceResources->m_greenBrush.Get());
+			m_deviceResources->m_redBrush.Get());
 	}
 }
 

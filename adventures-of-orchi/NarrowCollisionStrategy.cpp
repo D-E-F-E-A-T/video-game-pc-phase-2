@@ -22,8 +22,8 @@ NarrowCollisionStrategy::~NarrowCollisionStrategy()
 int NarrowCollisionStrategy::Detect(
 	ID3D11DeviceContext2 * context,
 	ID3D11Device2 * device,
-	ID3D11Texture2D * texturePlayer,
-	ID3D11Texture2D * textureTree,	// Just checking for trees, for now.
+//	ID3D11Texture2D * texturePlayer,
+//	ID3D11Texture2D * textureTree,	// Just checking for trees, for now.
 	Player * pPlayer,
 	std::list<Space *> * collided,
 	float * playerLocation,
@@ -42,14 +42,10 @@ int NarrowCollisionStrategy::Detect(
 	playerPixels = readPixels(
 		context,
 		device,
-		texturePlayer,
+		pPlayer->GetTexture(),
 		rawPlayerDimensions);	// These are the dimensions of the raw sprite.
 
-	obstaclePixels = readPixels(
-		context,
-		device,
-		textureTree,
-		rawObstacleDimensions);	// These are the dimensions of the raw sprite.
+
 
 #ifdef DUMP_PIXELS
 	DumpPixels(rawPlayerDimensions[0], rawPlayerDimensions[1], playerPixels);
@@ -62,13 +58,21 @@ int NarrowCollisionStrategy::Detect(
 
 	// Should really use the dimensions of the sprite.
 	//	For now, using the dimensions of the grid space.
-	playerTopLeft[HORIZONTAL_AXIS] = (int)(playerLocation[HORIZONTAL_AXIS] - grid->GetColumnWidth() / 2.f);
-	playerTopLeft[VERTICAL_AXIS] = (int)(playerLocation[VERTICAL_AXIS] - grid->GetRowHeight() / 2.f);
+	//playerTopLeft[HORIZONTAL_AXIS] = (int)(playerLocation[HORIZONTAL_AXIS] - grid->GetColumnWidth() / 2.f);
+	//playerTopLeft[VERTICAL_AXIS] = (int)(playerLocation[VERTICAL_AXIS] - grid->GetRowHeight() / 2.f);
+	playerTopLeft[HORIZONTAL_AXIS] = (int)(pPlayer->GetLocationRatio().x * screenDimensions.x - grid->GetColumnWidth() / 2.f);
+	playerTopLeft[VERTICAL_AXIS] = (int)(pPlayer->GetLocationRatio().y * screenDimensions.y - grid->GetRowHeight() / 2.f);
 
 	for (iterator = collided->begin(); iterator != collided->end(); iterator++)
 	{
 		int renderedSpriteDimensions[2];
 		float obstacleCenterLocation[2];
+
+		obstaclePixels = readPixels(
+			context,
+			device,
+			(*iterator)->GetTexture(),
+			rawObstacleDimensions);	
 
 		obstacleCenterLocation[HORIZONTAL_AXIS] = (*iterator)->GetLocationRatio().x * screenDimensions.x;
 		obstacleCenterLocation[VERTICAL_AXIS] = (*iterator)->GetLocationRatio().y * screenDimensions.y;

@@ -33,6 +33,8 @@ public:
 
 	virtual float CalculateDistance(Space * space);
 
+	ID3D11Texture2D * GetTexture() { return m_pTexture.Get(); }
+
 protected:
 	float2 m_fLocationRatio;
 	float2 m_fDimensions;
