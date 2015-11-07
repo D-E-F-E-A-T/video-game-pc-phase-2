@@ -71,6 +71,9 @@
     <Filter Include="Controller">
       <UniqueIdentifier>{511fb2fb-1b46-4cb0-a6b0-3d72ea1db395}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{55aa0f64-9643-4ced-ba31-15afbd01a1bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -128,7 +131,6 @@
     <ClInclude Include="DirectXSample.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GridSpace.h" />
-    <ClInclude Include="BaseGridSpace.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ScreenBuilder.h" />
     <ClInclude Include="ScreenUtils.h" />
@@ -195,6 +197,18 @@
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Render\Renderer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\SpriteRenderer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites\Sprite.h">
+      <Filter>Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="IDeviceNotify.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

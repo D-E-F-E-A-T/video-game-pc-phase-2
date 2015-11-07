@@ -50,7 +50,7 @@ namespace ScreenRotation
 };
 
 // Constructor for DeviceResources.
-DX::DeviceResources::DeviceResources() : 
+DeviceResources::DeviceResources() : 
 	m_screenViewport(),
 	m_d3dFeatureLevel(D3D_FEATURE_LEVEL_9_1),
 	m_d3dRenderTargetSize(),
@@ -68,7 +68,7 @@ DX::DeviceResources::DeviceResources() :
 }
 
 // Configures resources that don't depend on the Direct3D device.
-void DX::DeviceResources::CreateDeviceIndependentResources()
+void DeviceResources::CreateDeviceIndependentResources()
 {
 	// Initialize Direct2D resources.
 	D2D1_FACTORY_OPTIONS options;
@@ -80,7 +80,7 @@ void DX::DeviceResources::CreateDeviceIndependentResources()
 #endif
 
 	// Initialize the Direct2D Factory.
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		D2D1CreateFactory(
 			D2D1_FACTORY_TYPE_SINGLE_THREADED,
 			__uuidof(ID2D1Factory2),
@@ -90,7 +90,7 @@ void DX::DeviceResources::CreateDeviceIndependentResources()
 		);
 
 	// Initialize the DirectWrite Factory.
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		DWriteCreateFactory(
 			DWRITE_FACTORY_TYPE_SHARED,
 			__uuidof(IDWriteFactory2),
@@ -99,7 +99,7 @@ void DX::DeviceResources::CreateDeviceIndependentResources()
 		);
 
 	// Initialize the Windows Imaging Component (WIC) Factory.
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		CoCreateInstance(
 			CLSID_WICImagingFactory2,
 			nullptr,
@@ -111,14 +111,14 @@ void DX::DeviceResources::CreateDeviceIndependentResources()
 }
 
 // Configures the Direct3D device, and stores handles to it and the device context.
-void DX::DeviceResources::CreateDeviceResources() 
+void DeviceResources::CreateDeviceResources() 
 {
 	// This flag adds support for surfaces with a different color channel ordering
 	// than the API default. It is required for compatibility with Direct2D.
 	UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
 #if defined(_DEBUG)
-	if (DX::SdkLayersAvailable())
+	if (SdkLayersAvailable())
 	{
 		// If the project is in a debug build, enable debugging via SDK Layers with this flag.
 		creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
@@ -162,7 +162,7 @@ void DX::DeviceResources::CreateDeviceResources()
 		// If the initialization fails, fall back to the WARP device.
 		// For more information on WARP, see: 
 		// http://go.microsoft.com/fwlink/?LinkId=286690
-		DX::ThrowIfFailed(
+		ThrowIfFailed(
 			D3D11CreateDevice(
 				nullptr,
 				D3D_DRIVER_TYPE_WARP, // Create a WARP device instead of a hardware device.
@@ -179,25 +179,25 @@ void DX::DeviceResources::CreateDeviceResources()
 	}
 
 	// Store pointers to the Direct3D 11.1 API device and immediate context.
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		device.As(&m_d3dDevice)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		context.As(&m_d3dContext)
 		);
 
 	// Create the Direct2D device object and a corresponding context.
 	ComPtr<IDXGIDevice3> dxgiDevice;
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d3dDevice.As(&dxgiDevice)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dFactory->CreateDevice(dxgiDevice.Get(), &m_d2dDevice)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dDevice->CreateDeviceContext(
 			D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
 			&m_d2dContext
@@ -209,7 +209,7 @@ void DX::DeviceResources::CreateDeviceResources()
 }
 
 // These resources need to be recreated every time the window size is changed.
-void DX::DeviceResources::CreateWindowSizeDependentResources() 
+void DeviceResources::CreateWindowSizeDependentResources() 
 {
 	// Clear the previous window size specific context.
 	ID3D11RenderTargetView* nullViews[] = {nullptr};
@@ -259,7 +259,7 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 		}
 		else
 		{
-			DX::ThrowIfFailed(hr);
+			ThrowIfFailed(hr);
 		}
 	}
 	else
@@ -282,22 +282,22 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 
 		// This sequence obtains the DXGI factory that was used to create the Direct3D device above.
 		ComPtr<IDXGIDevice3> dxgiDevice;
-		DX::ThrowIfFailed(
+		ThrowIfFailed(
 			m_d3dDevice.As(&dxgiDevice)
 			);
 
 		ComPtr<IDXGIAdapter> dxgiAdapter;
-		DX::ThrowIfFailed(
+		ThrowIfFailed(
 			dxgiDevice->GetAdapter(&dxgiAdapter)
 			);
 
 		ComPtr<IDXGIFactory2> dxgiFactory;
-		DX::ThrowIfFailed(
+		ThrowIfFailed(
 			dxgiAdapter->GetParent(IID_PPV_ARGS(&dxgiFactory))
 			);
 
 		// When using XAML interop, the swap chain must be created for composition.
-		DX::ThrowIfFailed(
+		ThrowIfFailed(
 			dxgiFactory->CreateSwapChainForComposition(
 				m_d3dDevice.Get(),
 				&swapChainDesc,
@@ -312,18 +312,18 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 		{
 			// Get backing native interface for SwapChainPanel
 			ComPtr<ISwapChainPanelNative> panelNative;
-			DX::ThrowIfFailed(
+			ThrowIfFailed(
 				reinterpret_cast<IUnknown*>(m_swapChainPanel)->QueryInterface(IID_PPV_ARGS(&panelNative))
 				);
 
-			DX::ThrowIfFailed(
+			ThrowIfFailed(
 				panelNative->SetSwapChain(m_swapChain.Get())
 				);
 		}, CallbackContext::Any));
 		
 		// Ensure that DXGI does not queue more than one frame at a time. This both reduces latency and
 		// ensures that the application will only render after each VSync, minimizing power consumption.
-		DX::ThrowIfFailed(
+		ThrowIfFailed(
 			dxgiDevice->SetMaximumFrameLatency(1)
 			);
 	}
@@ -366,7 +366,7 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 		throw ref new FailureException();
 	}
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_swapChain->SetRotation(displayRotation)
 		);
 
@@ -375,22 +375,22 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 	inverseScale._11 = 1.0f / m_compositionScaleX;
 	inverseScale._22 = 1.0f / m_compositionScaleY;
 	ComPtr<IDXGISwapChain2> spSwapChain2;
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_swapChain.As<IDXGISwapChain2>(&spSwapChain2)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		spSwapChain2->SetMatrixTransform(&inverseScale)
 		);
 	
 
 	// Create a render target view of the swap chain back buffer.
 	ComPtr<ID3D11Texture2D> backBuffer;
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer))
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d3dDevice->CreateRenderTargetView(
 			backBuffer.Get(),
 			nullptr,
@@ -409,7 +409,7 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 		);
 
 	ComPtr<ID3D11Texture2D> depthStencil;
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d3dDevice->CreateTexture2D(
 			&depthStencilDesc,
 			nullptr,
@@ -418,7 +418,7 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 		);
 
 	CD3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc(D3D11_DSV_DIMENSION_TEXTURE2D);
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d3dDevice->CreateDepthStencilView(
 			depthStencil.Get(),
 			&depthStencilViewDesc,
@@ -447,11 +447,11 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 			);
 
 	ComPtr<IDXGISurface2> dxgiBackBuffer;
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_swapChain->GetBuffer(0, IID_PPV_ARGS(&dxgiBackBuffer))
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dContext->CreateBitmapFromDxgiSurface(
 			dxgiBackBuffer.Get(),
 			&bitmapProperties,
@@ -466,7 +466,7 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 }
 
 // This method is called when the XAML control is created (or re-created).
-void DX::DeviceResources::SetSwapChainPanel(SwapChainPanel^ panel)
+void DeviceResources::SetSwapChainPanel(SwapChainPanel^ panel)
 {
 	DisplayInformation^ currentDisplayInformation = DisplayInformation::GetForCurrentView();
 
@@ -483,7 +483,7 @@ void DX::DeviceResources::SetSwapChainPanel(SwapChainPanel^ panel)
 }
 
 // This method is called in the event handler for the SizeChanged event.
-void DX::DeviceResources::SetLogicalSize(Windows::Foundation::Size logicalSize)
+void DeviceResources::SetLogicalSize(Windows::Foundation::Size logicalSize)
 {
 	if (m_logicalSize != logicalSize)
 	{
@@ -493,7 +493,7 @@ void DX::DeviceResources::SetLogicalSize(Windows::Foundation::Size logicalSize)
 }
 
 // This method is called in the event handler for the DpiChanged event.
-void DX::DeviceResources::SetDpi(float dpi)
+void DeviceResources::SetDpi(float dpi)
 {
 	if (dpi != m_dpi)
 	{
@@ -504,7 +504,7 @@ void DX::DeviceResources::SetDpi(float dpi)
 }
 
 // This method is called in the event handler for the OrientationChanged event.
-void DX::DeviceResources::SetCurrentOrientation(DisplayOrientations currentOrientation)
+void DeviceResources::SetCurrentOrientation(DisplayOrientations currentOrientation)
 {
 	if (m_currentOrientation != currentOrientation)
 	{
@@ -514,7 +514,7 @@ void DX::DeviceResources::SetCurrentOrientation(DisplayOrientations currentOrien
 }
 
 // This method is called in the event handler for the CompositionScaleChanged event.
-void DX::DeviceResources::SetCompositionScale(float compositionScaleX, float compositionScaleY)
+void DeviceResources::SetCompositionScale(float compositionScaleX, float compositionScaleY)
 {
 	if (m_compositionScaleX != compositionScaleX ||
 		m_compositionScaleY != compositionScaleY)
@@ -526,7 +526,7 @@ void DX::DeviceResources::SetCompositionScale(float compositionScaleX, float com
 }
 
 // This method is called in the event handler for the DisplayContentsInvalidated event.
-void DX::DeviceResources::ValidateDevice()
+void DeviceResources::ValidateDevice()
 {
 	// The D3D Device is no longer valid if the default adapter changed since the device
     // was created or if the device has been removed.
@@ -534,30 +534,30 @@ void DX::DeviceResources::ValidateDevice()
 	// First, get the information for the default adapter from when the device was created.
 
 	ComPtr<IDXGIDevice3> dxgiDevice;
-	DX::ThrowIfFailed(m_d3dDevice.As(&dxgiDevice));
+	ThrowIfFailed(m_d3dDevice.As(&dxgiDevice));
 
 	ComPtr<IDXGIAdapter> deviceAdapter;
-	DX::ThrowIfFailed(dxgiDevice->GetAdapter(&deviceAdapter));
+	ThrowIfFailed(dxgiDevice->GetAdapter(&deviceAdapter));
 
 	ComPtr<IDXGIFactory2> deviceFactory;
-	DX::ThrowIfFailed(deviceAdapter->GetParent(IID_PPV_ARGS(&deviceFactory)));
+	ThrowIfFailed(deviceAdapter->GetParent(IID_PPV_ARGS(&deviceFactory)));
 
 	ComPtr<IDXGIAdapter1> previousDefaultAdapter;
-	DX::ThrowIfFailed(deviceFactory->EnumAdapters1(0, &previousDefaultAdapter));
+	ThrowIfFailed(deviceFactory->EnumAdapters1(0, &previousDefaultAdapter));
 
 	DXGI_ADAPTER_DESC previousDesc;
-	DX::ThrowIfFailed(previousDefaultAdapter->GetDesc(&previousDesc));
+	ThrowIfFailed(previousDefaultAdapter->GetDesc(&previousDesc));
 
 	// Next, get the information for the current default adapter.
 
 	ComPtr<IDXGIFactory2> currentFactory;
-	DX::ThrowIfFailed(CreateDXGIFactory1(IID_PPV_ARGS(&currentFactory)));
+	ThrowIfFailed(CreateDXGIFactory1(IID_PPV_ARGS(&currentFactory)));
 
 	ComPtr<IDXGIAdapter1> currentDefaultAdapter;
-	DX::ThrowIfFailed(currentFactory->EnumAdapters1(0, &currentDefaultAdapter));
+	ThrowIfFailed(currentFactory->EnumAdapters1(0, &currentDefaultAdapter));
 
 	DXGI_ADAPTER_DESC currentDesc;
-	DX::ThrowIfFailed(currentDefaultAdapter->GetDesc(&currentDesc));
+	ThrowIfFailed(currentDefaultAdapter->GetDesc(&currentDesc));
 
 	// If the adapter LUIDs don't match, or if the device reports that it has been removed,
 	// a new D3D device must be created.
@@ -578,7 +578,7 @@ void DX::DeviceResources::ValidateDevice()
 }
 
 // Recreate all device resources and set them back to the current state.
-void DX::DeviceResources::HandleDeviceLost()
+void DeviceResources::HandleDeviceLost()
 {
 	m_swapChain = nullptr;
 
@@ -598,14 +598,14 @@ void DX::DeviceResources::HandleDeviceLost()
 }
 
 // Register our DeviceNotify to be informed on device lost and creation.
-void DX::DeviceResources::RegisterDeviceNotify(DX::IDeviceNotify* deviceNotify)
+void DeviceResources::RegisterDeviceNotify(IDeviceNotify* deviceNotify)
 {
 	m_deviceNotify = deviceNotify;
 }
 
 // Call this method when the app suspends. It provides a hint to the driver that the app 
 // is entering an idle state and that temporary buffers can be reclaimed for use by other apps.
-void DX::DeviceResources::Trim()
+void DeviceResources::Trim()
 {
 	ComPtr<IDXGIDevice3> dxgiDevice;
 	m_d3dDevice.As(&dxgiDevice);
@@ -614,7 +614,7 @@ void DX::DeviceResources::Trim()
 }
 
 // Present the contents of the swap chain to the screen.
-void DX::DeviceResources::Present() 
+void DeviceResources::Present() 
 {
 	// The first argument instructs DXGI to block until VSync, putting the application
 	// to sleep until the next VSync. This ensures we don't waste any cycles rendering
@@ -637,13 +637,13 @@ void DX::DeviceResources::Present()
 	}
 	else
 	{
-		DX::ThrowIfFailed(hr);
+		ThrowIfFailed(hr);
 	}
 }
 
 // This method determines the rotation between the display device's native Orientation and the
 // current display orientation.
-DXGI_MODE_ROTATION DX::DeviceResources::ComputeDisplayRotation()
+DXGI_MODE_ROTATION DeviceResources::ComputeDisplayRotation()
 {
 	DXGI_MODE_ROTATION rotation = DXGI_MODE_ROTATION_UNSPECIFIED;
 
@@ -698,66 +698,66 @@ DXGI_MODE_ROTATION DX::DeviceResources::ComputeDisplayRotation()
 
 void DeviceResources::CreateBrushes()
 {
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dContext->CreateSolidColorBrush(
 			D2D1::ColorF(D2D1::ColorF::Black),
 			&m_blackBrush
 			)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dContext->CreateSolidColorBrush(
 			D2D1::ColorF(D2D1::ColorF::White),
 			&m_whiteBrush
 			)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dContext->CreateSolidColorBrush(
 			D2D1::ColorF(D2D1::ColorF::Orange),
 			&m_orangeBrush
 			)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dContext->CreateSolidColorBrush(
 			D2D1::ColorF(D2D1::ColorF::Yellow),
 			&m_yellowBrush
 			)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dContext->CreateSolidColorBrush(
 			D2D1::ColorF(D2D1::ColorF::Green),
 			&m_greenBrush
 			)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dContext->CreateSolidColorBrush(
 			D2D1::ColorF(D2D1::ColorF::Green),
 			&m_greenBrush)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dContext->CreateSolidColorBrush(
 			D2D1::ColorF(D2D1::ColorF::Gray),
 			&m_grayBrush)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dContext->CreateSolidColorBrush(
 			D2D1::ColorF(D2D1::ColorF::SkyBlue),
 			&m_blueBrush)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dContext->CreateSolidColorBrush(
 			D2D1::ColorF(D2D1::ColorF::Red),
 			&m_redBrush)
 		);
 
-	DX::ThrowIfFailed(
+	ThrowIfFailed(
 		m_d2dContext->CreateSolidColorBrush(
 			D2D1::ColorF(D2D1::ColorF::Purple),
 			&m_purpleBrush)
@@ -766,65 +766,65 @@ void DeviceResources::CreateBrushes()
 
 void DeviceResources::LoadSprites()
 {
-	m_spriteBatch = ref new BasicSprites::SpriteBatch();
-	unsigned int capacity = SampleSettings::Performance::ParticleCountMax +
-		SampleSettings::NumTrees + 1;
+	//m_spriteBatch = ref new BasicSprites::SpriteBatch();
+	//unsigned int capacity = SampleSettings::Performance::ParticleCountMax +
+	//	SampleSettings::NumTrees + 1;
 
-	m_spriteBatch->Initialize(
-		m_d3dDevice.Get(),
-		capacity);
+	//m_spriteBatch->Initialize(
+	//	m_d3dDevice.Get(),
+	//	capacity);
 
-	BasicLoader ^ loader = ref new BasicLoader(m_d3dDevice.Get(), m_wicFactory.Get());
+	//BasicLoader ^ loader = ref new BasicLoader(m_d3dDevice.Get(), m_wicFactory.Get());
 
-	loader->LoadTexture(
-		"tree.dds",
-		&m_tree,
-		nullptr);
+	//loader->LoadTexture(
+	//	"tree.dds",
+	//	&m_tree,
+	//	nullptr);
 
-	m_spriteBatch->AddTexture(m_tree.Get());
+	//m_spriteBatch->AddTexture(m_tree.Get());
 
-	loader->LoadTexture(
-		"rock.dds",
-		&m_rock,
-		nullptr);
+	//loader->LoadTexture(
+	//	"rock.dds",
+	//	&m_rock,
+	//	nullptr);
 
-	m_spriteBatch->AddTexture(m_rock.Get());
+	//m_spriteBatch->AddTexture(m_rock.Get());
 
-	loader->LoadTexture(
-		"water.dds",
-		&m_water,
-		nullptr);
+	//loader->LoadTexture(
+	//	"water.dds",
+	//	&m_water,
+	//	nullptr);
 
-	m_spriteBatch->AddTexture(m_water.Get());
+	//m_spriteBatch->AddTexture(m_water.Get());
 
-	loader->LoadTexture(
-		"grass.dds",
-		&m_grass,
-		nullptr);
+	//loader->LoadTexture(
+	//	"grass.dds",
+	//	&m_grass,
+	//	nullptr);
 
-	m_spriteBatch->AddTexture(m_grass.Get());
+	//m_spriteBatch->AddTexture(m_grass.Get());
 
-	loader->LoadTexture(
-		"stonewall.dds",
-		&m_stoneWall,
-		nullptr);
+	//loader->LoadTexture(
+	//	"stonewall.dds",
+	//	&m_stoneWall,
+	//	nullptr);
 
-	m_spriteBatch->AddTexture(m_stoneWall.Get());
+	//m_spriteBatch->AddTexture(m_stoneWall.Get());
 
-	loader->LoadTexture(
-		"link.dds",
-		//		"test.dds",
-		&m_orchi,
-		nullptr);
+	//loader->LoadTexture(
+	//	"link.dds",
+	//	//		"test.dds",
+	//	&m_orchi,
+	//	nullptr);
 
-	m_spriteBatch->AddTexture(m_orchi.Get());
+	//m_spriteBatch->AddTexture(m_orchi.Get());
 
-	loader->LoadTexture(
-		"heart.dds",
-		&m_heart,
-		nullptr);
+	//loader->LoadTexture(
+	//	"heart.dds",
+	//	&m_heart,
+	//	nullptr);
 
-	m_spriteBatch->AddTexture(m_heart.Get());
+	//m_spriteBatch->AddTexture(m_heart.Get());
 }
 
 /*

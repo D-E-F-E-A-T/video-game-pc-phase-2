@@ -13,22 +13,15 @@ public:
 	void MoveSouth(int nCollisionState, float fVelocity);
 	void MoveWest(int nCollisionState, float fVelocity);
 
-	// Grid square where the player is currently located.
-	//int * GetGridLocation()
-	//{
-	//	return m_pGridLocation;
-	//}
+	// TODO: Don't do this.
+	int GetType() { return 1; }
 
 protected:
-	//void UpdateGridLocation();
 
 private:
-
 	int m_pGridLocation[NUM_DIMENSIONS];
-
 	int m_nUnitsPerGridSquare[NUM_DIMENSIONS];
 
-	//Grid * m_grid;
 
 	int m_nPreviousMoveDirection;
 };

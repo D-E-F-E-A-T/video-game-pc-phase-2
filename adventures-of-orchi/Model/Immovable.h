@@ -11,14 +11,16 @@ public:
 		bool bIsVisible,
 		bool bIsActionable,
 		bool bIsCollidable,
-		ID3D11Texture2D * spriteData)
+		const shared_ptr<DeviceResources>& deviceResources)
+//		ID3D11Texture2D * spriteData)
 		: Space(
 			pfLocationRatio,
 			pfDimensions,
 			bIsVisible,
 			bIsActionable,
 			bIsCollidable,
-			spriteData)
+			deviceResources)
+//			spriteData)
 	{
 
 	}

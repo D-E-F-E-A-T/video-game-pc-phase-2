@@ -12,7 +12,9 @@ ScreenBuilder::ScreenBuilder(float screenWidth, float screenHeight)
 	m_fScreenHeight = screenHeight;
 }
 
-void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tree)
+void ScreenBuilder::BuildScreen1(
+	vector<Space *> * spaces, 
+	const shared_ptr<DeviceResources>& deviceResources)
 {
 	spaces->clear();
 
@@ -30,9 +32,9 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 
 			spaces->push_back(new Tree(
 				float2(x, y),
-				float2(0.f, 0.f),
+				float2(1.f, 1.f),
 				true,
-				tree));
+				deviceResources));
 		}
 	}
 
@@ -47,9 +49,9 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 
 			spaces->push_back(new Tree(
 				float2(x, y),
-				float2(0.f, 0.f),
+				float2(1.f, 1.f),
 				true,
-				tree));
+				deviceResources));
 		}
 	}
 
@@ -62,9 +64,9 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 		
 		spaces->push_back(new Tree(
 			float2(x, y),
-			float2(0.f, 0.f),
+			float2(1.f, 1.f),
 			true,
-			tree));
+			deviceResources));
 	}
 
 	for (int i = 0; i < 4; i++)
@@ -76,9 +78,9 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 
 		spaces->push_back(new Tree(
 			float2(x, y),
-			float2(0.f, 0.f),
+			float2(1.f, 1.f),
 			true,
-			tree));
+			deviceResources));
 	}
 
 	for (int i = 0; i < 3; i++)
@@ -90,9 +92,9 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 		
 		spaces->push_back(new Tree(
 			float2(x, y),
-			float2(0.f, 0.f),
+			float2(1.f, 1.f),
 			true,
-			tree));
+			deviceResources));
 	}
 
 
@@ -105,9 +107,9 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 
 		spaces->push_back(new Tree(
 			float2(x, y),
-			float2(0.f, 0.f),
+			float2(1.f, 1.f),
 			true,
-			tree));
+			deviceResources));
 	}
 
 
@@ -120,9 +122,9 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 
 		spaces->push_back(new Tree(
 			float2(x, y),
-			float2(0.f, 0.f),
+			float2(1.f, 1.f),
 			true,
-			tree));
+			deviceResources));
 	}
 
 	
@@ -135,9 +137,9 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 
 		spaces->push_back(new Tree(
 			float2(x, y),
-			float2(0.f, 0.f),
+			float2(1.f, 1.f),
 			true,
-			tree));
+			deviceResources));
 	}
 
 
@@ -150,9 +152,9 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 
 		spaces->push_back(new Tree(
 			float2(x, y),
-			float2(0.f, 0.f),
+			float2(1.f, 1.f),
 			true,
-			tree));
+			deviceResources));
 	}
 
 
@@ -167,9 +169,9 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 
 			spaces->push_back(new Tree(
 				float2(x, y),
-				float2(0.f, 0.f),
+				float2(1.f, 1.f),
 				true,
-				tree));
+				deviceResources));
 		}
 	}
 
@@ -183,9 +185,9 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 
 		spaces->push_back(new Tree(
 			float2(x, y),
-			float2(0.f, 0.f),
+			float2(1.f, 1.f),
 			true,
-			tree));
+			deviceResources));
 	}
 
 	for (int i = 0; i < 8; i++)
@@ -199,13 +201,21 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 
 			spaces->push_back(new Tree(
 				float2(x, y),
-				float2(0.f, 0.f),
+				float2(1.f, 1.f),
 				true,
-				tree));
+				deviceResources));
 		}
 	}
 
-	//spaces->push_back(new Portal(0, 7, WEST, 2));
+	//ScreenUtils::CalculateSquareCenter(
+	//	m_fScreenWidth,
+	//	m_fScreenHeight,
+	//	0, 0, &x, &y);
+
+	//spaces->push_back(
+	//	new Portal(float2(x, y), float2(50.f, 50.f), WEST, 2));
+
+
 	//portals->push_back(new Portal(0, 8, WEST, 2));
 	//portals->push_back(new Portal(0, 9, WEST, 2));
 
@@ -223,4 +233,17 @@ void ScreenBuilder::BuildScreen1(vector<Space *> * spaces, ID3D11Texture2D * tre
 	//portals->push_back(new Portal(9, 14, SOUTH, 5));
 	//portals->push_back(new Portal(10, 14, SOUTH, 5));
 
+
+/*
+	ScreenUtils::CalculateSquareCenter(
+		m_fScreenWidth,
+		m_fScreenHeight,
+		0, 0, &x, &y);
+
+	spaces->push_back(new Tree(
+		float2(x, y),
+		float2(0.f, 0.f),
+		true,
+		deviceResources));
+*/
 }

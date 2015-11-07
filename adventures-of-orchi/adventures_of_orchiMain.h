@@ -9,11 +9,11 @@
 // Renders Direct2D and 3D content on the screen.
 namespace adventures_of_orchi
 {
-	class adventures_of_orchiMain : public DX::IDeviceNotify
+	class adventures_of_orchiMain : public IDeviceNotify
 	{
 	public:
 		adventures_of_orchiMain(
-			const std::shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window);
+			const std::shared_ptr<DeviceResources>& deviceResources, CoreWindow ^ window);
 		~adventures_of_orchiMain();
 		void CreateWindowSizeDependentResources();
 		void StartTracking() 
@@ -47,7 +47,7 @@ namespace adventures_of_orchi
 		bool Render();
 
 		// Cached pointer to device resources.
-		std::shared_ptr<DX::DeviceResources> m_deviceResources;
+		std::shared_ptr<DeviceResources> m_deviceResources;
 
 		// TODO: Replace with your own content renderers.
 		std::unique_ptr<Sample3DSceneRenderer> m_sceneRenderer;

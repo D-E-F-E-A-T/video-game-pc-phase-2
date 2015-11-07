@@ -8,14 +8,14 @@ public:
 		float2 pfLocationRatio,
 		float2 pfDimensions,
 		bool bIsVisible,
-		ID3D11Texture2D * treeData) :
+		const shared_ptr<DeviceResources>& deviceResources) :
 		Thing(
 			pfLocationRatio,
 			pfDimensions,
 			true,
 			false,
 			true,
-			treeData)
+			deviceResources)
 	{
 
 	}

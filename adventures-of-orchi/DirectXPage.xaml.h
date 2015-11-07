@@ -54,7 +54,7 @@ namespace adventures_of_orchi
 		void OnPointerReleased(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
 
 		// Resources used to render the DirectX content in the XAML page background.
-		std::shared_ptr<DX::DeviceResources> m_deviceResources;
+		std::shared_ptr<DeviceResources> m_deviceResources;
 		std::unique_ptr<adventures_of_orchiMain> m_main; 
 		bool m_windowVisible;
 	};

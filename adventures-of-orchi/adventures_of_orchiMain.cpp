@@ -9,7 +9,8 @@ using namespace Concurrency;
 using namespace Windows::UI::Core;
 
 // Loads and initializes application assets when the application is loaded.
-adventures_of_orchiMain::adventures_of_orchiMain(const std::shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window) :
+adventures_of_orchiMain::adventures_of_orchiMain(
+	const std::shared_ptr<DeviceResources>& deviceResources, CoreWindow ^ window) :
 	m_deviceResources(deviceResources), m_pointerLocationX(0.0f)
 {
 	// Register to be notified if the Device is lost or recreated

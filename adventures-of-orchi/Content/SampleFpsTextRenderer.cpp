@@ -6,7 +6,7 @@
 using namespace adventures_of_orchi;
 
 // Initializes D2D resources used for text rendering.
-SampleFpsTextRenderer::SampleFpsTextRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) : 
+SampleFpsTextRenderer::SampleFpsTextRenderer(const std::shared_ptr<DeviceResources>& deviceResources) : 
 	m_text(L""),
 	m_deviceResources(deviceResources)
 {

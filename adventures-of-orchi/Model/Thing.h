@@ -10,14 +10,14 @@ public:
 		bool bIsVisible,
 		bool bIsActionable,
 		bool bIsCollidable,
-		ID3D11Texture2D * spriteData)
+		const shared_ptr<DeviceResources>& deviceResources)
 		: Immovable(
 			pfLocationRatio,
 			pfDimensions,
 			bIsVisible,
 			bIsActionable,
 			bIsCollidable,
-			spriteData)
+			deviceResources)
 	{
 
 	}

@@ -10,7 +10,7 @@ namespace adventures_of_orchi
 	class SampleFpsTextRenderer
 	{
 	public:
-		SampleFpsTextRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources);
+		SampleFpsTextRenderer(const std::shared_ptr<DeviceResources>& deviceResources);
 		void CreateDeviceDependentResources();
 		void ReleaseDeviceDependentResources();
 		void Update(DX::StepTimer const& timer);
@@ -18,7 +18,7 @@ namespace adventures_of_orchi
 
 	private:
 		// Cached pointer to device resources.
-		std::shared_ptr<DX::DeviceResources> m_deviceResources;
+		std::shared_ptr<DeviceResources> m_deviceResources;
 
 		// Resources related to text rendering.
 		std::wstring                                    m_text;

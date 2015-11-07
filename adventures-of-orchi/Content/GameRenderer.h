@@ -13,6 +13,7 @@
 using namespace Windows::UI::Core;
 using namespace std;
 using namespace Microsoft::WRL;
+using namespace DX;
 
 namespace adventures_of_orchi
 {
@@ -20,7 +21,7 @@ namespace adventures_of_orchi
 	class GameRenderer
 	{
 	public:
-		GameRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window);
+		GameRenderer(const std::shared_ptr<DeviceResources>& deviceResources, CoreWindow ^ window);
 		void CreateDeviceDependentResources();
 		void CreateWindowSizeDependentResources();
 		void ReleaseDeviceDependentResources();
@@ -58,7 +59,7 @@ namespace adventures_of_orchi
 		Platform::Agile<CoreWindow> m_window;
 
 		// Cached pointer to device resources.
-		std::shared_ptr<DX::DeviceResources> m_deviceResources;
+		std::shared_ptr<DeviceResources> m_deviceResources;
 
 		// Direct3D resources for cube geometry.
 		ComPtr<ID3D11InputLayout>	m_inputLayout;
@@ -120,11 +121,13 @@ namespace adventures_of_orchi
 		NarrowCollisionStrategy * m_pNarrowCollisionDetectionStrategy;
 
 		list<Space *> * m_pCollided;
-		void HighlightSprite(int column, int row, ComPtr<ID2D1SolidColorBrush> brush);
-		void HighlightSprite(int * pLocation, ComPtr<ID2D1SolidColorBrush> brush);
+		void HighlightRegion(int column, int row, ComPtr<ID2D1SolidColorBrush> brush);
+		void HighlightRegion(int * pLocation, ComPtr<ID2D1SolidColorBrush> brush);
 
 		DWRITE_TEXT_RANGE m_textRange;
 		ComPtr<IDWriteTextFormat>                       m_textFormat;
+
+		//void DrawPortals();
 	};
 }
 

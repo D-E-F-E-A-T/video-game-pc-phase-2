@@ -16,9 +16,11 @@ using namespace Windows::Foundation;
 
 using namespace std;
 
+using namespace DX;
+
 
 // Loads vertex and pixel shaders from files and instantiates the cube geometry.
-GameRenderer::GameRenderer(const shared_ptr<DX::DeviceResources>& deviceResources, CoreWindow ^ window) :
+GameRenderer::GameRenderer(const shared_ptr<DeviceResources>& deviceResources, CoreWindow ^ window) :
 	m_loadingComplete(false),
 	m_degreesPerSecond(45),
 	m_indexCount(0),
@@ -78,7 +80,7 @@ void GameRenderer::CreateWindowSizeDependentResources()
 
 	XMMATRIX orientationMatrix = XMLoadFloat4x4(&orientation);
 
-	XMStoreFloat4x4(
+	DirectX::XMStoreFloat4x4(
 		&m_constantBufferData.projection,
 		XMMatrixTranspose(perspectiveMatrix * orientationMatrix)
 		);
@@ -88,7 +90,7 @@ void GameRenderer::CreateWindowSizeDependentResources()
 	static const XMVECTORF32 at = { 0.0f, -0.1f, 0.0f, 0.0f };
 	static const XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
 
-	XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
+	DirectX::XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
 
 	// TODO: Create panels for each of these.
 	//CreateLifeText();
@@ -104,78 +106,78 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 {
 	// DO NOT USE m_window HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-	if (!m_tracking)
-	{
-		// Convert degrees to radians, then convert seconds to rotation angle
-		//float radiansPerSecond = XMConvertToRadians(m_degreesPerSecond);
-		//double totalRotation = timer.GetTotalSeconds() * radiansPerSecond;
-		//float radians = static_cast<float>(fmod(totalRotation, XM_2PI));
+	//if (!m_tracking)
+	//{
+	//	// Convert degrees to radians, then convert seconds to rotation angle
+	//	//float radiansPerSecond = XMConvertToRadians(m_degreesPerSecond);
+	//	//double totalRotation = timer.GetTotalSeconds() * radiansPerSecond;
+	//	//float radians = static_cast<float>(fmod(totalRotation, XM_2PI));
 
-		//Rotate(radians);
+	//	//Rotate(radians);
 
-		FetchControllerInput();
-
-
-		float2 playerSize = m_deviceResources->m_spriteBatch->GetSpriteSize(
-			m_deviceResources->m_orchi.Get());
-		float2 spriteSize = m_deviceResources->m_spriteBatch->GetSpriteSize(
-			m_deviceResources->m_tree.Get());
-
-		float playerLocation[2];
-
-		// These are within the range of screen pixel size.
-		playerLocation[0] = (m_fWindowWidth -
-			(m_fWindowWidth * LEFT_MARGIN_RATIO) -
-			(m_fWindowWidth * RIGHT_MARGIN_RATIO)) *
-			m_pPlayer->GetLocationRatio().x +
-			(m_fWindowWidth * LEFT_MARGIN_RATIO);
-
-		playerLocation[1] = m_pPlayer->GetLocationRatio().y * m_fWindowHeight;
-
-		m_broadCollisionDetectionStrategy->Detect(
-			grid,
-			m_pCollided,
-			playerSize,
-			spriteSize,
-			m_pPlayer,
-			m_pSpaces,
-			m_fWindowWidth,
-			m_fWindowHeight,
-			playerLocation);
-
-		m_nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
-			DEVICE_CONTEXT_3D,
-			DEVICE_3D,
-			m_deviceResources->m_orchi.Get(),
-			m_deviceResources->m_tree.Get(),
-			m_pPlayer,
-			m_pCollided,
-			playerLocation,
-			&grid,
-			intersectRect,
-			float2(m_fWindowWidth, m_fWindowHeight));
+	//	FetchControllerInput();
 
 
-		// if the gamepad is not connected, check the keyboard.
-		if (m_isControllerConnected)
-		{
-			// This would actually, detect a collision one interation
-			//	too late.  Consider detection earlier since
-			//	this could lead to weird behavior, depending
-			//	on how fast the sprites are moving.
-			//	For example, if sprites are moving very quickly,
-			//	collision would occur when the sprites 
-			//	have deeply intersected each other.
-			//  For slow moving sprites, this would not be 
-			//	much of a problem.
-			MovePlayer(
-				m_xinputState.Gamepad.wButtons,
-				m_xinputState.Gamepad.sThumbLX,
-				m_xinputState.Gamepad.sThumbLY);
-		}
+	//	float2 playerSize = m_deviceResources->m_spriteBatch->GetSpriteSize(
+	//		m_deviceResources->m_orchi.Get());
+	//	float2 spriteSize = m_deviceResources->m_spriteBatch->GetSpriteSize(
+	//		m_deviceResources->m_tree.Get());
 
-		UpdatePlayer();
-	}
+	//	float playerLocation[2];
+
+	//	// These are within the range of screen pixel size.
+	//	playerLocation[0] = (m_fWindowWidth -
+	//		(m_fWindowWidth * LEFT_MARGIN_RATIO) -
+	//		(m_fWindowWidth * RIGHT_MARGIN_RATIO)) *
+	//		m_pPlayer->GetLocationRatio().x +
+	//		(m_fWindowWidth * LEFT_MARGIN_RATIO);
+
+	//	playerLocation[1] = m_pPlayer->GetLocationRatio().y * m_fWindowHeight;
+
+	//	m_broadCollisionDetectionStrategy->Detect(
+	//		grid,
+	//		m_pCollided,
+	//		playerSize,
+	//		spriteSize,
+	//		m_pPlayer,
+	//		m_pSpaces,
+	//		m_fWindowWidth,
+	//		m_fWindowHeight,
+	//		playerLocation);
+
+	//	m_nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
+	//		DEVICE_CONTEXT_3D,
+	//		DEVICE_3D,
+	//		m_deviceResources->m_orchi.Get(),
+	//		m_deviceResources->m_tree.Get(),
+	//		m_pPlayer,
+	//		m_pCollided,
+	//		playerLocation,
+	//		&grid,
+	//		intersectRect,
+	//		float2(m_fWindowWidth, m_fWindowHeight));
+
+
+	//	// if the gamepad is not connected, check the keyboard.
+	//	if (m_isControllerConnected)
+	//	{
+	//		// This would actually, detect a collision one interation
+	//		//	too late.  Consider detection earlier since
+	//		//	this could lead to weird behavior, depending
+	//		//	on how fast the sprites are moving.
+	//		//	For example, if sprites are moving very quickly,
+	//		//	collision would occur when the sprites 
+	//		//	have deeply intersected each other.
+	//		//  For slow moving sprites, this would not be 
+	//		//	much of a problem.
+	//		MovePlayer(
+	//			m_xinputState.Gamepad.wButtons,
+	//			m_xinputState.Gamepad.sThumbLX,
+	//			m_xinputState.Gamepad.sThumbLY);
+	//	}
+
+	//	UpdatePlayer();
+	//}
 }
 
 // Rotate the 3D cube model a set amount of radians.
@@ -250,7 +252,7 @@ void GameRenderer::Render()
 
 		::ConvertRatioToGridLocations(grid, (*iterator)->GetLocationRatio(), &column, &row);
 
-		HighlightSprite(
+		HighlightRegion(
 			column, 
 			row, 
 			m_deviceResources->m_redBrush);
@@ -259,19 +261,23 @@ void GameRenderer::Render()
 	if (m_nCollisionState == INTERSECTION ||
 		m_nCollisionState == COLLISION)
 		DrawSpriteIntersection();
+
+	//DrawPortals();
 #endif // RENDER_DIAGNOSTICS
+
+
 
 	HRESULT hr = DEVICE_CONTEXT_2D->EndDraw();
 
 
 
-	ID3D11RenderTargetView * renderTargets = m_deviceResources->m_d3dRenderTargetView.Get();
+	//ID3D11RenderTargetView * renderTargets = m_deviceResources->m_d3dRenderTargetView.Get();
 
 
-	DEVICE_CONTEXT_3D->OMSetRenderTargets(
-		1,
-		&renderTargets,
-		NULL);// m_deviceResources->m_d3dDepthStencilView.Get());
+	//DEVICE_CONTEXT_3D->OMSetRenderTargets(
+	//	1,
+	//	&renderTargets,
+	//	NULL);// m_deviceResources->m_d3dDepthStencilView.Get());
 
 	// Without this, the player renders on top of the trees.
 	//DEVICE_CONTEXT_3D->ClearDepthStencilView(
@@ -440,20 +446,19 @@ void GameRenderer::BuildScreen()
 			m_window->Bounds.Height);
 
 	// Use chain-of-responsibility?
-	m_screenBuilder->BuildScreen1(
-		m_pSpaces,
-		m_deviceResources->m_tree.Get());
+	m_screenBuilder->BuildScreen1(m_pSpaces, m_deviceResources);
+		//m_deviceResources->m_tree.Get());
 
-	LifePanel lifePanel(
-		m_window->Bounds.Width - m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
-		m_window->Bounds.Height * HEART_PANEL_HEIGHT_RATIO,
-		m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
-		HEART_PANEL_HEIGHT);
+	//LifePanel lifePanel(
+	//	m_window->Bounds.Width - m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
+	//	m_window->Bounds.Height * HEART_PANEL_HEIGHT_RATIO,
+	//	m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
+	//	HEART_PANEL_HEIGHT);
 
 //	lifePanel.BuildPanel(&m_heartData);
 }
 
-
+// TODO: Each Space must know how to render itself.
 void GameRenderer::DrawSprites()
 {
 	ComPtr<ID3D11RenderTargetView> renderTargetView;
@@ -466,9 +471,6 @@ void GameRenderer::DrawSprites()
 		nullptr
 		);
 
-	m_deviceResources->m_spriteBatch->Begin(renderTargetView, m_deviceResources->m_dpi);
-
-
 	// @see: http://www.gamedev.net/topic/603359-c-dx11-how-to-get-texture-size/
 
 
@@ -479,18 +481,17 @@ void GameRenderer::DrawSprites()
 	// This is a sprite run.
 	for (iterator = m_pSpaces->begin(); iterator != m_pSpaces->end(); iterator++)
 	{
+
+
 		float fColumnWidth = grid.GetColumnWidth();
 		float fRowHeight = grid.GetRowHeight();
 
-		m_deviceResources->m_spriteBatch->Draw(
-			(*iterator)->GetSpriteTexture(),
-			(*iterator)->GetLocationRatio() * float2(m_fWindowWidth, m_fWindowHeight),
-			BasicSprites::PositionUnits::DIPs,
+		float dpi = m_deviceResources->GetDpi();
+
+		(*iterator)->Render(
+			float2(m_fWindowWidth, m_fWindowHeight), 
 			float2(fColumnWidth, fRowHeight),
-			BasicSprites::SizeUnits::DIPs,
-			float4(0.8f, 0.8f, 1.0f, 1.0f),
-			0.f
-			);
+			dpi);
 	}
 
 	//m_deviceResources->m_heart.Get()->QueryInterface<ID3D11Texture2D>(&pTextureInterface);
@@ -513,23 +514,23 @@ void GameRenderer::DrawSprites()
 	//		);
 	//}
 
-	float fCurrentX = m_pPlayer->GetLocationRatio().x;
+	//float fCurrentX = m_pPlayer->GetLocationRatio().x;
 
-	float fBoardWidth = m_fWindowWidth - (m_fWindowWidth * LEFT_MARGIN_RATIO) - (m_fWindowWidth * RIGHT_MARGIN_RATIO);
-	float fBoardLocation = fCurrentX * fBoardWidth;
-	float fX = fBoardLocation + (m_fWindowWidth * LEFT_MARGIN_RATIO);
+	//float fBoardWidth = m_fWindowWidth - (m_fWindowWidth * LEFT_MARGIN_RATIO) - (m_fWindowWidth * RIGHT_MARGIN_RATIO);
+	//float fBoardLocation = fCurrentX * fBoardWidth;
+	//float fX = fBoardLocation + (m_fWindowWidth * LEFT_MARGIN_RATIO);
 
-	m_deviceResources->m_spriteBatch->Draw(
-		m_deviceResources->m_orchi.Get(),
-		float2(fX, m_pPlayer->GetLocationRatio().y * m_fWindowHeight),
-		BasicSprites::PositionUnits::DIPs,
-		float2(grid.GetColumnWidth(), grid.GetRowHeight()),	// This will stretch or shrink orchi.
-		BasicSprites::SizeUnits::DIPs,
-		float4(0.8f, 0.8f, 1.0f, 1.0f),
-		0.f
-		);
+	//m_deviceResources->m_spriteBatch->Draw(
+	//	m_deviceResources->m_orchi.Get(),
+	//	float2(fX, m_pPlayer->GetLocationRatio().y * m_fWindowHeight),
+	//	BasicSprites::PositionUnits::DIPs,
+	//	float2(grid.GetColumnWidth(), grid.GetRowHeight()),	// This will stretch or shrink orchi.
+	//	BasicSprites::SizeUnits::DIPs,
+	//	float4(0.8f, 0.8f, 1.0f, 1.0f),
+	//	0.f
+	//	);
 
-	m_deviceResources->m_spriteBatch->End();
+	//m_deviceResources->m_spriteBatch->End();
 
 	// Copy from the scratch buffer to the back buffer.
 	// Create a bitmap and copy??? http://xboxforums.create.msdn.com/forums/p/84925/511738.aspx
@@ -737,10 +738,10 @@ void GameRenderer::DrawSpriteIntersection()
 	}
 }
 
-void GameRenderer::HighlightSprite(int * pLocation, ComPtr<ID2D1SolidColorBrush> brush)
+void GameRenderer::HighlightRegion(int * pLocation, ComPtr<ID2D1SolidColorBrush> brush)
 {
 	if (pLocation)
-		HighlightSprite(
+		HighlightRegion(
 			pLocation[HORIZONTAL_AXIS],
 			pLocation[VERTICAL_AXIS], brush);
 }
@@ -748,7 +749,7 @@ void GameRenderer::HighlightSprite(int * pLocation, ComPtr<ID2D1SolidColorBrush>
 /*
 Highlight the sprite that is being collided with.
 */
-void GameRenderer::HighlightSprite(int column, int row, ComPtr<ID2D1SolidColorBrush> brush)
+void GameRenderer::HighlightRegion(int column, int row, ComPtr<ID2D1SolidColorBrush> brush)
 {
 	float x = 0.0f;
 	float y = 0.0f;
@@ -1077,3 +1078,29 @@ void GameRenderer::CreatePackText()
 	m_textLayoutPack->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 }
 
+// TODO: Don't do this!
+//void GameRenderer::DrawPortals()
+//{
+//	std::vector<Space *>::const_iterator iterator;
+//
+//	for (iterator = m_pSpaces->begin(); iterator != m_pSpaces->end(); iterator++)
+//	{
+//		if ((*iterator)->GetType() == 5)
+//		{
+//			int column;
+//			int row;
+//
+//			::ConvertRatioToGridLocations(grid, (*iterator)->GetLocationRatio(), &column, &row);
+//
+//			HighlightRegion(
+//				column,
+//				row,
+//				m_deviceResources->m_purpleBrush);
+//		}
+//	}
+//}
+
+//std::list<Space *>::const_iterator iterator;
+//
+//for (iterator = m_pCollided->begin(); iterator != m_pCollided->end(); iterator++)
+//{

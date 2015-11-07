@@ -212,7 +212,6 @@
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="BaseGridSpace.h" />
     <ClInclude Include="BasicMath.h" />
     <ClInclude Include="BasicReaderWriter.h" />
     <ClInclude Include="BasicShapes.h" />
@@ -236,6 +235,7 @@
     <ClInclude Include="DirectXSample.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GridSpace.h" />
+    <ClInclude Include="IDeviceNotify.h" />
     <ClInclude Include="LeftMargin.h" />
     <ClInclude Include="LifePanel.h" />
     <ClInclude Include="MathUtils.h" />
@@ -255,6 +255,8 @@
     <ClInclude Include="NarrowCollisionStrategy.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Model\Portal.h" />
+    <ClInclude Include="Render\Renderer.h" />
+    <ClInclude Include="Render\SpriteRenderer.h" />
     <ClInclude Include="RightMargin.h" />
     <ClInclude Include="ScreenBuilder.h" />
     <ClInclude Include="ScreenUtils.h" />
@@ -264,6 +266,7 @@
     <ClInclude Include="Sprites\SimpleSprites.h" />
     <ClInclude Include="Model\Immovable.h" />
     <ClInclude Include="Model\Tool.h" />
+    <ClInclude Include="Sprites\Sprite.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>

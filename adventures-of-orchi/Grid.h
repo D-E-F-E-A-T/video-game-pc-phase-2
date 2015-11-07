@@ -1,6 +1,5 @@
 #pragma once
 #include "pch.h"
-#include "BaseGridSpace.h"
 #include "Constants.h"
 
 using namespace Microsoft::WRL;

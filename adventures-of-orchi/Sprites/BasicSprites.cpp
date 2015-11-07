@@ -420,7 +420,7 @@ void SpriteBatch::Begin(ComPtr<ID3D11RenderTargetView> renderTargetView, float d
         static_cast<float>(renderTargetTextureDesc.Height)
         );
 
-	m_dpi = dpi; //Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->LogicalDpi;
+	m_dpi = dpi; // Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->LogicalDpi;
 }
 
 void SpriteBatch::End()
