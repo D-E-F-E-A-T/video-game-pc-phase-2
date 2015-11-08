@@ -2,6 +2,7 @@
 #include "ScreenUtils.h"
 #include "Constants.h"
 
+// To easily allow for resizing, this should return ratios.
 void ScreenUtils::CalculateSquareCenter(
 	float screenWidth,
 	float screenHeight,

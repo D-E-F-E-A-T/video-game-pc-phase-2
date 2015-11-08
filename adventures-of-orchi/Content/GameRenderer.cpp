@@ -211,67 +211,59 @@ void GameRenderer::Render()
 		return;
 	}
 
-	ID2D1DeviceContext1 * deviceContext = m_deviceResources->GetD2DDeviceContext();
-	if (deviceContext != nullptr)
-	{
-		D2D1_SIZE_F renderTargetSize = deviceContext->GetSize();
+	D2D1_SIZE_F renderTargetSize = DEVICE_CONTEXT_2D->GetSize();
 
-		deviceContext->BeginDraw();
+	DEVICE_CONTEXT_2D->BeginDraw();
 
-		deviceContext->Clear(D2D1::ColorF(D2D1::ColorF::CornflowerBlue));
-		deviceContext->SetTransform(D2D1::Matrix3x2F::Identity());
+	DEVICE_CONTEXT_2D->Clear(D2D1::ColorF(D2D1::ColorF::CornflowerBlue));
+	DEVICE_CONTEXT_2D->SetTransform(D2D1::Matrix3x2F::Identity());
 
-		DrawLeftMargin();
-		DrawRightMargin();
+	DrawLeftMargin();
+	DrawRightMargin();
 
-		//DrawLifeText();
-		//DrawButtonsText();
+	//DrawLifeText();
+	//DrawButtonsText();
 
-		//DrawMapText();
-		//DrawInventoryText();
-		//DrawPackText();
+	//DrawMapText();
+	//DrawInventoryText();
+	//DrawPackText();
 
-		grid.SetVisibility(true);
-
-		grid.Draw(deviceContext, m_deviceResources->m_blackBrush);
-
-
+	grid.SetVisibility(true);
+	grid.Draw(DEVICE_CONTEXT_2D, m_deviceResources->m_blackBrush);
 
 
 #ifdef RENDER_DIAGNOSTICS
 
-		std::list<Space *>::const_iterator iterator;
+	std::list<Space *>::const_iterator iterator;
 
-		for (iterator = m_pCollided->begin(); iterator != m_pCollided->end(); iterator++)
-		{
-			int column = 0;
-			int row = 0;
+	for (iterator = m_pCollided->begin(); iterator != m_pCollided->end(); iterator++)
+	{
+		int column = 0;
+		int row = 0;
 
-			float fX = 0.f;
-			float fY = 0.f;
+		float fX = 0.f;
+		float fY = 0.f;
 
-			ScreenUtils::ConvertGlobalToGridLocation((*iterator)->GetLocationRatio(), &fX, &fY);
+		ScreenUtils::ConvertGlobalToGridLocation((*iterator)->GetLocationRatio(), &fX, &fY);
 
-			::ConvertRatioToGridLocations(
-				grid,
-				float2{ fX, fY },
-				&column,
-				&row);
+		::ConvertRatioToGridLocations(
+			grid,
+			float2{ fX, fY },
+			&column,
+			&row);
 
-			HighlightRegion(
-				column,
-				row,
-				m_deviceResources->m_yellowBrush);
-		}
-
-		DrawSpriteIntersection();
-
-		//DrawPortals();
-#endif // RENDER_DIAGNOSTICS
-
-		HRESULT hr = deviceContext->EndDraw();
+		HighlightRegion(
+			column,
+			row,
+			m_deviceResources->m_yellowBrush);
 	}
 
+	DrawSpriteIntersection();
+
+	//DrawPortals();
+#endif // RENDER_DIAGNOSTICS
+
+	HRESULT hr = DEVICE_CONTEXT_2D->EndDraw();
 	
 	RenderSpaces();
 
@@ -726,6 +718,9 @@ void GameRenderer::OnSizeChanged(WindowSizeChangedEventArgs^ args)
 {
 	grid.SetWindowWidth(m_window->Bounds.Width);
 	grid.SetWindowHeight(m_window->Bounds.Height);
+
+	m_fWindowWidth = m_window->Bounds.Width;
+	m_fWindowHeight = m_window->Bounds.Height;
 }
 
 
@@ -983,21 +978,4 @@ void GameRenderer::CreatePackText()
 	m_textLayoutPack->SetFontSize(SECTION_HEADER_FONT_SIZE, m_textRange);
 	m_textLayoutPack->SetCharacterSpacing(0.5f, 0.5f, 0, m_textRange);
 	m_textLayoutPack->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-}
-
-void GameRenderer::UpdateForWindowSizeChange()
-{
-	//OutputDebugStringA("GameRenderer::UpdateForWindowSizeChange\n");
-
-	//// Only handle window size changed if there is no pending DPI change.
-	//if (m_deviceResources->GetDpi() != Windows::Graphics::Display::DisplayInformation::GetForCurrentView()->LogicalDpi)
-	//{
-	//	return;
-	//}
-
-	//if (m_window->Bounds.Width != m_fWindowWidth ||
-	//	m_window->Bounds.Height != m_fWindowHeight)
-	//{
-	//	m_deviceResources->Reset();
-	//}
 }

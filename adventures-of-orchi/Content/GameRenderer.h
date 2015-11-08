@@ -123,8 +123,6 @@ namespace adventures_of_orchi
 		DWRITE_TEXT_RANGE m_textRange;
 		ComPtr<IDWriteTextFormat>                       m_textFormat;
 
-		void UpdateForWindowSizeChange();
-
 #ifdef RENDER_DIAGNOSTICS
 		vector<D2D1_RECT_F> m_collidedRects;
 		vector<int> m_collidedRectStatuses;
