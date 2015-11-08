@@ -61,8 +61,7 @@ DeviceResources::DeviceResources() :
 	m_dpi(-1.0f),
 	m_compositionScaleX(1.0f),
 	m_compositionScaleY(1.0f),
-	m_deviceNotify(nullptr),
-	m_windowSizeChangeInProgress(false)
+	m_deviceNotify(nullptr)
 {
 	CreateDeviceIndependentResources();
 	CreateDeviceResources();
@@ -626,17 +625,10 @@ void DeviceResources::Present()
 	// Discard the contents of the render target.
 	// This is a valid operation only when the existing contents will be entirely
 	// overwritten. If dirty or scroll rects are used, this call should be removed.
-	
-	ID3D11RenderTargetView * renderTargetView = m_d3dRenderTargetView.Get();
-
-	if (renderTargetView != nullptr)
-		m_d3dContext->DiscardView(m_d3dRenderTargetView.Get());
+	m_d3dContext->DiscardView(m_d3dRenderTargetView.Get());
 
 	// Discard the contents of the depth stencil.
-	ID3D11DepthStencilView * depthStencilView = m_d3dDepthStencilView.Get();
-
-	if (depthStencilView != nullptr)
-		m_d3dContext->DiscardView(m_d3dDepthStencilView.Get());
+	m_d3dContext->DiscardView(m_d3dDepthStencilView.Get());
 
 	// If the device was removed either by a disconnection or a driver upgrade, we 
 	// must recreate all device resources.
@@ -648,15 +640,6 @@ void DeviceResources::Present()
 	{
 		ThrowIfFailed(hr);
 	}
-
-	//if (m_windowSizeChangeInProgress)
-	//{
-		// A window size change has been initiated and the app has just completed presenting
-		// the first frame with the new size. Notify the resize manager so we can short
-		// circuit any resize animation and prevent unnecessary delays.
-//		CoreWindowResizeManager::GetForCurrentView()->NotifyLayoutCompleted();
-		
-	//}
 }
 
 // This method determines the rotation between the display device's native Orientation and the
@@ -868,18 +851,3 @@ void DeviceResources::UpdateForWindowSizeChange()
 	}
 }
 */
-
-
-void DeviceResources::Reset()
-{
-	OutputDebugStringA("DeviceResources::Reset()\n");
-	//m_d2dContext->SetTarget(nullptr);
-	//m_d2dTargetBitmap = nullptr;
-
-	//m_d3dRenderTargetView = nullptr;
-
-	//m_d3dDepthStencilView = nullptr;
-	//m_windowSizeChangeInProgress = true;
-	//CreateWindowSizeDependentResources();
-	//m_windowSizeChangeInProgress = false;
-}

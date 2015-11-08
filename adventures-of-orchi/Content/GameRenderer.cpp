@@ -205,8 +205,6 @@ void GameRenderer::StopTracking()
 // Renders one frame using the vertex and pixel shaders.
 void GameRenderer::Render()
 {
-//	OutputDebugStringA("GameRenderer::Render()\n");
-
 	// Loading is asynchronous. Only draw geometry after it's loaded.
 	if (!m_loadingComplete)
 	{
@@ -726,17 +724,8 @@ void GameRenderer::OnKeyDown(Windows::UI::Core::KeyEventArgs^ args)
 
 void GameRenderer::OnSizeChanged(WindowSizeChangedEventArgs^ args)
 {
-	OutputDebugStringA("GameRenderer::OnSizeChanged\n");
-
-	//if (m_deviceResources->IsWindowSizeChangeInProgress() == false)
-	//{
-	//	UpdateForWindowSizeChange();
-
-		grid.SetWindowWidth(m_window->Bounds.Width);
-		grid.SetWindowHeight(m_window->Bounds.Height);
-
-		BuildScreen();
-	//}
+	grid.SetWindowWidth(m_window->Bounds.Width);
+	grid.SetWindowHeight(m_window->Bounds.Height);
 }
 
 
