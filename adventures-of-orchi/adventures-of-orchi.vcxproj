@@ -268,6 +268,7 @@
     <ClInclude Include="Model\Immovable.h" />
     <ClInclude Include="Model\Tool.h" />
     <ClInclude Include="Sprites\Sprite.h" />
+    <ClInclude Include="Sprites\SpriteUtils.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +306,7 @@
     <ClCompile Include="ScreenUtils.cpp" />
     <ClCompile Include="Sprites\BasicLoader.cpp" />
     <ClCompile Include="Sprites\BasicSprites.cpp" />
+    <ClCompile Include="Sprites\SpriteUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

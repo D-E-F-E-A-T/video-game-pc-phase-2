@@ -1,10 +1,12 @@
 #include "pch.h"
 #include "Space.h"
 #include "..\MathUtils.h"
+#include "..\Sprites\SpriteUtils.h"
 
 
 using namespace std;
 
+map<ID3D11Texture2D *, uint8_t *> Space::m_pixelMap;
 
 Space::Space(
 	String ^ strTextureName,
@@ -45,7 +47,18 @@ Space::Space(
 			nullptr);
 
 		m_spriteBatch->AddTexture(m_pTexture.Get());
+
+		m_pixelMap[m_pTexture.Get()] = SpriteUtils::ReadPixels(
+			DEVICE_CONTEXT_3D,
+			DEVICE_3D,
+			m_pTexture.Get(),
+			m_pTextureDimensions);
 	}
+}
+
+Space::~Space()
+{
+	delete m_pPixels;
 }
 
 void Space::Render(
@@ -69,6 +82,8 @@ void Space::Render(
 
 	m_spriteBatch->End();
 }
+
+
 
 float2 Space::GetLocationRatio()
 {

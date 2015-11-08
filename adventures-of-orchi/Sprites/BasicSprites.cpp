@@ -437,7 +437,7 @@ void SpriteBatch::End()
     runInfo.textureView = m_currentTextureView;
     runInfo.blendState = m_currentBlendState;
     runInfo.numSprites = m_spritesInRun;
-    m_spriteRuns.push_back(runInfo);
+//    m_spriteRuns.push_back(runInfo);
 
     // Update the buffer data.
 
@@ -597,25 +597,25 @@ void SpriteBatch::End()
 
     unsigned int indexBase = 0;
 	int counter = 0;
-    for (auto runIterator = m_spriteRuns.begin(); runIterator != m_spriteRuns.end(); runIterator++)
+//    for (auto runIterator = m_spriteRuns.begin(); runIterator != m_spriteRuns.end(); runIterator++)
     {
 			m_d3dContext->PSSetShaderResources(
 				0,
 				1,
-				&runIterator->textureView
+				&runInfo.textureView
 				);
 
 			const FLOAT blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 			m_d3dContext->OMSetBlendState(
-				runIterator->blendState,
+				runInfo.blendState,
 				nullptr,
 				0xFFFFFFFF
 				);
 
 			if (m_technique == RenderTechnique::GeometryShader)
 			{
-				unsigned int instancesToDraw = runIterator->numSprites;
+				unsigned int instancesToDraw = runInfo.numSprites;
 
 //				if (counter == 1)
 				{
@@ -843,11 +843,11 @@ void SpriteBatch::Draw(
             )
         )
     {
-        SpriteRunInfo runInfo;
-        runInfo.textureView = m_currentTextureView;
-        runInfo.blendState = m_currentBlendState;
-        runInfo.numSprites = m_spritesInRun;
-        m_spriteRuns.push_back(runInfo);
+        //SpriteRunInfo runInfo;
+        //runInfo.textureView = m_currentTextureView;
+        //runInfo.blendState = m_currentBlendState;
+        //runInfo.numSprites = m_spritesInRun;
+        //m_spriteRuns.push_back(runInfo);
         m_spritesInRun = 0; // Reset for the next sprite run.
     }
     m_currentTextureView = textureView;

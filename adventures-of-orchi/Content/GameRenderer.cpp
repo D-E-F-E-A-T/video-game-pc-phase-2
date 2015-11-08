@@ -137,6 +137,7 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 					intersectRect,
 					float2(m_fWindowWidth, m_fWindowHeight));
 
+#ifdef RENDER_DIAGNOSTICS
 				if (nCollisionState != NO_INTERSECTION)
 				{
 					D2D1_RECT_F rect
@@ -150,6 +151,7 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 					m_collidedRects.push_back(rect);
 					m_collidedRectStatuses.push_back(nCollisionState);
 				}
+#endif // RENDER_DIAGNOSTICS
 			}
 		}
 

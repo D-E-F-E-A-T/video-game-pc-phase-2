@@ -4,6 +4,7 @@
 #include "MathUtils.h"
 #include <iostream>
 #include <Windows.h>
+#include "..\Sprites\SpriteUtils.h"
 
 // @see http://www.gamedev.net/page/resources/_/technical/directx-and-xna/pixel-perfect-collision-detection-in-directx-r2939
 // @see http://gamedev.stackexchange.com/questions/27690/reading-from-a-staging-2d-texture-array-in-directx10
@@ -30,19 +31,11 @@ int NarrowCollisionStrategy::Detect(
 {
 	bool bIntersection = false;
 
-	int rawPlayerDimensions[2];
-	int rawObstacleDimensions[2];
+	uint8_t * playerPixels = pPlayer->GetPixels();
+	uint8_t * obstaclePixels = collided->GetPixels();
 
-	uint8_t * playerPixels = NULL;
-	uint8_t * obstaclePixels = NULL;
-
-	playerPixels = readPixels(
-		context,
-		device,
-		pPlayer->GetTexture(),
-		rawPlayerDimensions);	// These are the dimensions of the raw sprite.
-
-
+	int * rawPlayerDimensions = pPlayer->GetTextureDimensions();
+	int * rawObstacleDimensions = collided->GetTextureDimensions();
 
 #ifdef DUMP_PIXELS
 	DumpPixels(rawPlayerDimensions[0], rawPlayerDimensions[1], playerPixels);
@@ -58,12 +51,6 @@ int NarrowCollisionStrategy::Detect(
 
 	int renderedSpriteDimensions[2];
 	float obstacleCenterLocation[2];
-
-	obstaclePixels = readPixels(
-		context,
-		device,
-		collided->GetTexture(), 
-		rawObstacleDimensions);	
 
 	obstacleCenterLocation[HORIZONTAL_AXIS] = collided->GetLocationRatio().x * screenDimensions.x;
 	obstacleCenterLocation[VERTICAL_AXIS] = collided->GetLocationRatio().y * screenDimensions.y;
@@ -161,128 +148,24 @@ int NarrowCollisionStrategy::Detect(
 					(dPtrObstacle[rawObstaclePixelIndex] & 0xff000000) >> 24;
 
 				if (playerResult > 0 && obstacleResult > 0)
-				{
-					delete[] playerPixels;
-					delete[] obstaclePixels;
-
+				{				
 					return COLLISION;
 				}
 			}
 		}
 
-		delete[] playerPixels;
-		delete[] obstaclePixels;
 		return INTERSECTION;
 	}
 	else
 	{
-		delete[] playerPixels;
-		delete[] obstaclePixels;
-
 		return NO_INTERSECTION;
 	}
+
+	return NO_INTERSECTION;
 }
 
 
-uint8_t * NarrowCollisionStrategy::readPixels(
-	ID3D11DeviceContext2 * context,
-	ID3D11Device2 * device,
-	ID3D11Texture2D * texture,
-	int * dimensions)
-{
-	HBITMAP	hBitmapTexture = NULL;
-//	HGDIOBJ hBitmap;
 
-	ID3D11Texture2D* d3dtex = (ID3D11Texture2D*)texture;
-	D3D11_TEXTURE2D_DESC desc;
-	d3dtex->GetDesc(&desc);
-
-	ID3D11Texture2D* pNewTexture = NULL;
-	D3D11_TEXTURE2D_DESC description;
-	d3dtex->GetDesc(&description);
-
-	description.BindFlags = 0;
-
-	description.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
-	description.Usage = D3D11_USAGE_STAGING;
-	HRESULT hr = device->CreateTexture2D(&description, NULL, &pNewTexture);
-
-	ID3D11DeviceContext* ctx = NULL;
-	device->GetImmediateContext(&ctx);
-
-	ctx->CopyResource(pNewTexture, d3dtex);
-
-	D3D11_MAPPED_SUBRESOURCE resource;
-	UINT subresource = D3D11CalcSubresource(0, 0, 0);
-	ctx->Map(pNewTexture, subresource, D3D11_MAP_READ_WRITE, 0, &resource);
-
-	// COPY from texture to bitmap buffer
-	uint8_t* sptr = reinterpret_cast<uint8_t*>(resource.pData);
-	uint8_t* dptr = new uint8_t[desc.Width * desc.Height * 4];
-
-	for (size_t h = 0; h < desc.Height; ++h)
-	{
-		size_t msize = std::min<size_t>(desc.Width * 4, resource.RowPitch);
-		memcpy_s(dptr, desc.Width * 4, sptr, msize);
-		sptr += resource.RowPitch;
-		dptr += desc.Width * 4;
-	}
-
-	dptr -= desc.Width*desc.Height * 4;
-
-	// SWAP BGR to RGB bitmap
-	// Notice the capital "P". dptr vs dPtr.
-	uint32_t * dPtr = reinterpret_cast<uint32_t*>(dptr);
-
-//	int size = 0;
-
-/*
-	for (size_t count = 0; count < desc.Width * desc.Height; count++)
-	{
-		uint32_t t = *(dPtr);
-		uint32_t alpha = (t & 0xff000000) >> 24;
-		uint32_t red = (t & 0x00ff0000) >> 16;
-		uint32_t green = (t & 0x0000ff00) >> 8;
-		uint32_t blue = (t & 0x000000ff);
-
-
-				//char buf[64];
-				//sprintf_s(buf, "%02x %02x %02x %02x\n", red, green, blue, alpha);
-				//OutputDebugStringA(buf);
-
-
-				//if (red > 0 || green > 0 || blue > 0)
-				//{
-				//	*(dPtr++) = 0xffffffff;
-				//}
-				//else
-				//{
-				//	*(dPtr++) = 0x00000000;
-				//}
-
-		*(dPtr++) = red | green | blue | alpha;
-
-//		size++;
-	}
-*/
-
-/*
-	char buf[128];
-	sprintf_s(buf, "num sprite pixels = %d\n", size);
-	OutputDebugStringA(buf);
-*/
-
-	/*
-		hBitmapTexture = CreateCompatibleBitmap(GetDC(NULL), desc.Width, desc.Height);
-		SetBitmapBits(hBitmapTexture, desc.Width*desc.Height * 4, dptr);
-
-		hBitmap = CopyImage(hBitmapTexture, IMAGE_BITMAP, desc.Width, desc.Height, LR_CREATEDIBSECTION);
-	*/
-	*(dimensions + WIDTH_INDEX) = desc.Width;
-	*(dimensions + HEIGHT_INDEX) = desc.Height;
-
-	return dptr;
-}
 
 
 // Project the coordinates of each rectangle to the

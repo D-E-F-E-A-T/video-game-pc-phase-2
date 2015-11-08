@@ -109,6 +109,9 @@
     <ClCompile Include="Model\Space.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+    <ClCompile Include="Sprites\SpriteUtils.cpp">
+      <Filter>Sprites</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="Model\Diagnostic.h">
       <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites\SpriteUtils.h">
+      <Filter>Sprites</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,8 @@ public:
 		bool bIsCollidable,
 		const shared_ptr<DeviceResources>& deviceResources);
 
+	~Space();
+
 	void Render(
 		ComPtr<ID3D11RenderTargetView> renderTargetView,
 		float2 fWindowDimensions,
@@ -35,6 +37,9 @@ public:
 
 	ID3D11Texture2D * GetTexture() { return m_pTexture.Get(); }
 
+	uint8_t * GetPixels() { return m_pixelMap[m_pTexture.Get()]; }
+
+	int * GetTextureDimensions() { return m_pTextureDimensions;  }
 protected:
 	float2 m_fLocationRatio;
 	float2 m_fDimensions;
@@ -47,6 +52,11 @@ protected:
 	ID3D11Texture2D * m_pSprite;
 
 	ComPtr<ID3D11Texture2D> m_pTexture;
+
+	uint8_t * m_pPixels;
+	int m_pTextureDimensions[2];
+
+	static map<ID3D11Texture2D *, uint8_t *> m_pixelMap;
 	
 private:
 	shared_ptr<DeviceResources> m_deviceResources;
