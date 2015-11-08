@@ -79,7 +79,7 @@ namespace adventures_of_orchi
 		bool	m_tracking;
 
 		Stack * m_pStack;
-		vector<Space *> * m_pSpaces;
+		Stack m_stack;
 
 		ComPtr<IDWriteTextLayout1> m_textLayoutLife;
 		ComPtr<IDWriteTextLayout1> m_textLayoutButtons;

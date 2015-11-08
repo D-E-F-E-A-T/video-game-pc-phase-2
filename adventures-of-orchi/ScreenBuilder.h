@@ -3,6 +3,7 @@
 #include <vector>
 #include "Model\Portal.h"
 #include "Model\Space.h"
+#include "Model\Stack.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ public:
 
 	// TODO: This will just have 1 argument.
 	void BuildScreen1(
-		vector<Space *> * m_spaceData,
+		Stack * stack,
 		const shared_ptr<DeviceResources>& deviceResources);
 
 protected:

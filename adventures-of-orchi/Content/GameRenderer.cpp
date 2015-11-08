@@ -30,7 +30,7 @@ GameRenderer::GameRenderer(const shared_ptr<DeviceResources>& deviceResources, C
 
 	m_window = window;
 
-	m_pSpaces = new vector<Space *>;
+	//m_pSpaces = new vector<Space *>;
 
 	m_fWindowWidth = m_window->Bounds.Width;
 	m_fWindowHeight = m_window->Bounds.Height;
@@ -48,7 +48,7 @@ GameRenderer::GameRenderer(const shared_ptr<DeviceResources>& deviceResources, C
 		true,
 		deviceResources);
 
-	m_pSpaces->push_back(m_pPlayer);
+	m_stack.Add(0, m_pPlayer);
 
 	m_pCollided = new list<Space *>;
 }
@@ -115,9 +115,10 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 	{
 		FetchControllerInput();
 
+
 		m_broadCollisionDetectionStrategy->Detect(
 			m_pPlayer,
-			m_pSpaces,
+			&m_stack,
 			m_pCollided);
 
 		if (m_pCollided->size() > 0)
@@ -430,7 +431,7 @@ void GameRenderer::BuildScreen()
 			m_window->Bounds.Height);
 
 	// Use chain-of-responsibility?
-	m_screenBuilder->BuildScreen1(m_pSpaces, m_deviceResources);
+	m_screenBuilder->BuildScreen1(&m_stack, m_deviceResources);
 		//m_deviceResources->m_tree.Get());
 
 	//LifePanel lifePanel(
@@ -457,21 +458,30 @@ void GameRenderer::RenderSpaces()
 	// @see: http://www.gamedev.net/topic/603359-c-dx11-how-to-get-texture-size/
 
 
-	std::vector<Space *>::const_iterator iterator;
+	int numPlanes = m_stack.GetNumPlanes();
 
-	// This is a sprite run.
-	for (iterator = m_pSpaces->begin(); iterator != m_pSpaces->end(); iterator++)
+	for (int i = 0; i < numPlanes; i++)
 	{
-		float fColumnWidth = grid.GetColumnWidth();
-		float fRowHeight = grid.GetRowHeight();
+		Plane * currentPlane = m_stack.Get(i);
 
-		float dpi = m_deviceResources->GetDpi();
+		vector<Space *>::const_iterator iterator;
 
-		(*iterator)->Render(
-			renderTargetView,
-			float2(m_fWindowWidth, m_fWindowHeight), 
-			float2(fColumnWidth, fRowHeight),
-			dpi);
+		// This is a sprite run.
+		for (iterator = currentPlane->GetSpaces()->begin(); 
+			iterator != currentPlane->GetSpaces()->end(); 
+			iterator++)
+		{
+			float fColumnWidth = grid.GetColumnWidth();
+			float fRowHeight = grid.GetRowHeight();
+
+			float dpi = m_deviceResources->GetDpi();
+
+			(*iterator)->Render(
+				renderTargetView,
+				float2(m_fWindowWidth, m_fWindowHeight),
+				float2(fColumnWidth, fRowHeight),
+				dpi);
+		}
 	}
 
 	// Copy from the scratch buffer to the back buffer.

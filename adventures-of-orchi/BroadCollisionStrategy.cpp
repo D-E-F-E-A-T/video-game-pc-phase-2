@@ -5,6 +5,7 @@
 #include "MathUtils.h"
 #include <iostream>
 #include "Utils.h"
+#include "Model\Stack.h"
 
 // @see http://www.gamedev.net/page/resources/_/technical/directx-and-xna/pixel-perfect-collision-detection-in-directx-r2939
 BroadCollisionStrategy::BroadCollisionStrategy()
@@ -19,28 +20,35 @@ bool BroadCollisionStrategy::Detect(CollisionDetectionInfo * info)
 
 void BroadCollisionStrategy::Detect(
 	Player * pPlayer,
-	vector<Space *> * spaces,
+	Stack * stack,
 	list<Space *> * retVal)
 {
 	// Determine the 9 grid spaces around the player's location.
 	Calculate(
 		pPlayer, 
-		spaces, 
+		stack, 
 		retVal);
 }
 
 int BroadCollisionStrategy::Calculate(
 	Player * player, 
-	vector<Space *> * spaces, 
+	Stack * stack, // vector<Space *> * spaces, 
 	list<Space *> * retVal)
 {
-	std::vector<Space *>::const_iterator iterator;
+	int numPlanes = stack->GetNumPlanes();
 
-	for (iterator = spaces->begin(); iterator != spaces->end(); iterator++)
+	for (int i = 0; i < numPlanes; i++)
 	{
-		if (IsClose(player, *(iterator)))
+		std::vector<Space *>::const_iterator iterator;
+
+		for (iterator = stack->Get(i)->GetSpaces()->begin(); 
+			iterator != stack->Get(i)->GetSpaces()->end(); 
+			iterator++)
 		{
-			retVal->push_back(*(iterator));
+			if (IsClose(player, *(iterator)))
+			{
+				retVal->push_back(*(iterator));
+			}
 		}
 	}
 

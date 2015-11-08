@@ -9,7 +9,7 @@ public:
 	Immovable(
 		String ^ strTextureName,
 		float2 pfLocationRatio,
-		float2 pfDimensions,
+		float2 pfDimensionRatio,
 		bool bIsVisible,
 		bool bIsActionable,
 		bool bIsCollidable,
@@ -17,7 +17,7 @@ public:
 		: Space(
 			strTextureName,
 			pfLocationRatio,
-			pfDimensions,
+			pfDimensionRatio,
 			bIsVisible,
 			bIsActionable,
 			bIsCollidable,

@@ -112,6 +112,9 @@
     <ClCompile Include="Sprites\SpriteUtils.cpp">
       <Filter>Sprites</Filter>
     </ClCompile>
+    <ClCompile Include="Model\Stack.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />

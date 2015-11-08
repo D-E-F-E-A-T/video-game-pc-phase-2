@@ -21,6 +21,7 @@
         <AppBarButton AutomationProperties.Name="Sample Button"
                       AutomationProperties.AutomationId="SampleAppBarButton"
                       Click="AppBarButton_Click"/>
+          
       </StackPanel>
     </AppBar>
   </Page.BottomAppBar>

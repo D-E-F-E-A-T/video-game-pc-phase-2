@@ -3,6 +3,8 @@
 #include "ScreenUtils.h"
 #include "Constants.h"
 #include "Model\Tree.h"
+#include "Model\Player.h"
+#include "Model\Stack.h"
 
 using namespace std;
 
@@ -14,11 +16,9 @@ ScreenBuilder::ScreenBuilder(float screenWidth, float screenHeight)
 
 // TODO: Remove deviceResources from this function.
 void ScreenBuilder::BuildScreen1(
-	vector<Space *> * spaces, 
+	Stack * stack,
 	const shared_ptr<DeviceResources>& deviceResources)
 {
-	spaces->clear();
-
 	float x = 0.0f;
 	float y = 0.0f;
 
@@ -31,7 +31,7 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				j, i, &x, &y);
 
-			spaces->push_back(new Tree(
+			stack->Add(1, new Tree(
 				float2(x, y),
 				float2(1.f, 1.f),
 				true,
@@ -48,7 +48,7 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				j, i, &x, &y);
 
-			spaces->push_back(new Tree(
+			stack->Add(1, new Tree(
 				float2(x, y),
 				float2(1.f, 1.f),
 				true,
@@ -63,7 +63,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 4, &x, &y);
 		
-		spaces->push_back(new Tree(
+		stack->Add(1, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -77,7 +77,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 5, &x, &y);
 
-		spaces->push_back(new Tree(
+		stack->Add(1, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -91,7 +91,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 6, &x, &y);
 		
-		spaces->push_back(new Tree(
+		stack->Add(1, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -106,7 +106,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 4, &x, &y);
 
-		spaces->push_back(new Tree(
+		stack->Add(1, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -121,7 +121,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 9, &x, &y);
 
-		spaces->push_back(new Tree(
+		stack->Add(1, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -136,7 +136,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 10, &x, &y);
 
-		spaces->push_back(new Tree(
+		stack->Add(1, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -151,7 +151,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 10, &x, &y);
 
-		spaces->push_back(new Tree(
+		stack->Add(1, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -168,7 +168,7 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				i, j, &x, &y);
 
-			spaces->push_back(new Tree(
+			stack->Add(1, new Tree(
 				float2(x, y),
 				float2(1.f, 1.f),
 				true,
@@ -184,7 +184,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 11, &x, &y);
 
-		spaces->push_back(new Tree(
+		stack->Add(1, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -200,7 +200,7 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				i, j, &x, &y);
 
-			spaces->push_back(new Tree(
+			stack->Add(1, new Tree(
 				float2(x, y),
 				float2(1.f, 1.f),
 				true,
@@ -211,10 +211,13 @@ void ScreenBuilder::BuildScreen1(
 	//ScreenUtils::CalculateSquareCenter(
 	//	m_fScreenWidth,
 	//	m_fScreenHeight,
-	//	0, 0, &x, &y);
+	//	0, 7, &x, &y);
 
-	//spaces->push_back(
-	//	new Portal(float2(x, y), float2(50.f, 50.f), WEST, 2));
+	//spaces->push_back(new Portal(
+	//	float2(x, y), 
+	//	float2(1.f, 1.f), 
+	//	WEST, 
+	//	2));
 
 
 	//portals->push_back(new Portal(0, 8, WEST, 2));

@@ -4,9 +4,15 @@
 class Stack
 {
 public:
+	Stack();
+
+	void Add(int depth, Space * space);
+	Plane * Get(int depth);
+	int GetNumPlanes() { return m_planes.size(); }
+
 
 protected:
 
 private:
-	vector<Plane *> m_planes;
+	map<int, Plane *> m_planes;
 };

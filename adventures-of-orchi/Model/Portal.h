@@ -4,8 +4,8 @@
 class Portal : public Immovable
 {
 public:
-	Portal(float2 pfLocationRatio, float2 pfDimensions, int nDirection, int nDestination) :
-		Immovable(nullptr, pfLocationRatio, pfDimensions, false, true, true, NULL)
+	Portal(float2 pfLocationRatio, float2 pfDimensionRatio, int nDirection, int nDestination) :
+		Immovable(nullptr, pfLocationRatio, pfDimensionRatio, false, true, true, NULL)
 	{
 	}
 
