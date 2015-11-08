@@ -20,7 +20,7 @@ adventures_of_orchiMain::adventures_of_orchiMain(
 	m_gameRenderer = std::unique_ptr<GameRenderer>(new GameRenderer(m_deviceResources, window));
 //	m_sceneRenderer = std::unique_ptr<Sample3DSceneRenderer>(new Sample3DSceneRenderer(m_deviceResources));
 
-	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
+	//m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
 
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
 	// e.g. for 60 FPS fixed timestep update logic, call:
@@ -86,7 +86,7 @@ void adventures_of_orchiMain::Update()
 		// TODO: Replace this with your app's content update functions.
 		m_gameRenderer->Update(m_timer);
 //		m_sceneRenderer->Update(m_timer);
-		m_fpsTextRenderer->Update(m_timer);
+		//m_fpsTextRenderer->Update(m_timer);
 	});
 }
 
@@ -108,30 +108,41 @@ bool adventures_of_orchiMain::Render()
 		return false;
 	}
 
-	auto context = m_deviceResources->GetD3DDeviceContext();
+	if (m_deviceResources->IsWindowSizeChangeInProgress() == false)
+	{
+		ID3D11DeviceContext2 * context = m_deviceResources->GetD3DDeviceContext();
 
-	// Reset the viewport to target the whole screen.
-	auto viewport = m_deviceResources->GetScreenViewport();
-	context->RSSetViewports(1, &viewport);
+		if (context != nullptr)
+		{
+			// Reset the viewport to target the whole screen.
+			auto viewport = m_deviceResources->GetScreenViewport();
+			context->RSSetViewports(1, &viewport);
 
-	// Reset render targets to the screen.
-	ID3D11RenderTargetView *const targets[1] = { m_deviceResources->GetBackBufferRenderTargetView() };
-	context->OMSetRenderTargets(1, targets, m_deviceResources->GetDepthStencilView());
+			ID3D11RenderTargetView * renderTargetView = m_deviceResources->GetBackBufferRenderTargetView();
+			ID3D11DepthStencilView * depthStencilView = m_deviceResources->GetDepthStencilView();
 
-	// Clear the back buffer and depth stencil view.
-	context->ClearRenderTargetView(m_deviceResources->GetBackBufferRenderTargetView(), DirectX::Colors::Tan);
-	context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+			if (renderTargetView != nullptr && depthStencilView != nullptr)
+			{
+				// Reset render targets to the screen.
+				ID3D11RenderTargetView *const targets[1] = { m_deviceResources->GetBackBufferRenderTargetView() };
+				context->OMSetRenderTargets(1, targets, m_deviceResources->GetDepthStencilView());
 
-	// Render the scene objects.
-	// TODO: Replace this with your app's content rendering functions.
+				// Clear the back buffer and depth stencil view.
+				context->ClearRenderTargetView(m_deviceResources->GetBackBufferRenderTargetView(), DirectX::Colors::Tan);
+				context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	
-	m_gameRenderer->Render();
-	//m_sceneRenderer->Render();
+				// Render the scene objects.
+				// TODO: Replace this with your app's content rendering functions.
+				m_gameRenderer->Render();
+				//m_sceneRenderer->Render();
+			//	m_fpsTextRenderer->Render();
 
-	m_fpsTextRenderer->Render();
+				return true;
+			}
+		}
+	}
 
-	return true;
+	return false;
 }
 
 void adventures_of_orchiMain::OnKeyDown(Windows::UI::Core::KeyEventArgs ^ args)
@@ -141,6 +152,7 @@ void adventures_of_orchiMain::OnKeyDown(Windows::UI::Core::KeyEventArgs ^ args)
 
 void adventures_of_orchiMain::OnSizeChanged(Windows::UI::Core::WindowSizeChangedEventArgs ^ args)
 {
+	OutputDebugStringA("adventures_of_orchiMain::OnSizeChanged\n");
 	m_gameRenderer->OnSizeChanged(args);
 }
 
@@ -149,7 +161,7 @@ void adventures_of_orchiMain::OnDeviceLost()
 {
 //	m_sceneRenderer->ReleaseDeviceDependentResources();
 	m_gameRenderer->ReleaseDeviceDependentResources();
-	m_fpsTextRenderer->ReleaseDeviceDependentResources();
+	//m_fpsTextRenderer->ReleaseDeviceDependentResources();
 }
 
 // Notifies renderers that device resources may now be recreated.
@@ -157,6 +169,6 @@ void adventures_of_orchiMain::OnDeviceRestored()
 {
 //	m_sceneRenderer->CreateDeviceDependentResources();
 	m_gameRenderer->CreateDeviceDependentResources();
-	m_fpsTextRenderer->CreateDeviceDependentResources();
+	//m_fpsTextRenderer->CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
 }

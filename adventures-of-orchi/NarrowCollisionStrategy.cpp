@@ -77,11 +77,11 @@ int NarrowCollisionStrategy::Detect(
 	int obstacleTopLeft[2];
 	obstacleTopLeft[HORIZONTAL_AXIS] = 
 		(int)obstacleCenterLocation[HORIZONTAL_AXIS] -
-		renderedSpriteDimensions[WIDTH_INDEX] / 2;
+		renderedSpriteDimensions[WIDTH_INDEX] >> 1;
 
 	obstacleTopLeft[VERTICAL_AXIS] = 
 		(int)obstacleCenterLocation[VERTICAL_AXIS] -
-		renderedSpriteDimensions[HEIGHT_INDEX] / 2;
+		renderedSpriteDimensions[HEIGHT_INDEX] >> 1;
 
 	bIntersection = IntersectRect(
 		playerTopLeft,

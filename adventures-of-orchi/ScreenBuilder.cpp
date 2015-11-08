@@ -12,6 +12,7 @@ ScreenBuilder::ScreenBuilder(float screenWidth, float screenHeight)
 	m_fScreenHeight = screenHeight;
 }
 
+// TODO: Remove deviceResources from this function.
 void ScreenBuilder::BuildScreen1(
 	vector<Space *> * spaces, 
 	const shared_ptr<DeviceResources>& deviceResources)
@@ -234,16 +235,14 @@ void ScreenBuilder::BuildScreen1(
 	//portals->push_back(new Portal(10, 14, SOUTH, 5));
 
 
-/*
-	ScreenUtils::CalculateSquareCenter(
-		m_fScreenWidth,
-		m_fScreenHeight,
-		0, 0, &x, &y);
+	//ScreenUtils::CalculateSquareCenter(
+	//	m_fScreenWidth,
+	//	m_fScreenHeight,
+	//	0, 0, &x, &y);
 
-	spaces->push_back(new Tree(
-		float2(x, y),
-		float2(0.f, 0.f),
-		true,
-		deviceResources));
-*/
+	//spaces->push_back(new Tree(
+	//	float2(x, y),
+	//	float2(1.f, 1.f),
+	//	true,
+	//	deviceResources));
 }

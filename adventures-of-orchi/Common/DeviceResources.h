@@ -22,6 +22,7 @@ public:
 	void RegisterDeviceNotify(IDeviceNotify* deviceNotify);
 	void Trim();
 	void Present();
+	void Reset();
 
 	// Device Accessors.
 	Windows::Foundation::Size GetOutputSize() const					{ return m_outputSize; }
@@ -45,6 +46,8 @@ public:
 	IDWriteFactory2*		GetDWriteFactory() const				{ return m_dwriteFactory.Get();	 }
 	IWICImagingFactory2*	GetWicImagingFactory() const			{ return m_wicFactory.Get(); }
 	D2D1::Matrix3x2F		GetOrientationTransform2D() const		{ return m_orientationTransform2D; }
+
+	bool IsWindowSizeChangeInProgress() { return m_windowSizeChangeInProgress; }
 
 //	private:
 	void CreateDeviceIndependentResources();
@@ -121,4 +124,5 @@ public:
 
 //		void UpdateForWindowSizeChange();
 
+	bool m_windowSizeChangeInProgress;
 };

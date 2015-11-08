@@ -104,7 +104,7 @@ namespace adventures_of_orchi
 		void FetchControllerInput();
 		void MovePlayer(uint16 buttons, short horizontal, short vertical);
 		void HandleLeftThumbStick(short horizontal, short vertical);
-		int intersectRect[4];
+
 		void DrawSpriteIntersection();
 		int m_nCollisionState;
 
@@ -122,6 +122,8 @@ namespace adventures_of_orchi
 
 		DWRITE_TEXT_RANGE m_textRange;
 		ComPtr<IDWriteTextFormat>                       m_textFormat;
+
+		void UpdateForWindowSizeChange();
 
 #ifdef RENDER_DIAGNOSTICS
 		vector<D2D1_RECT_F> m_collidedRects;

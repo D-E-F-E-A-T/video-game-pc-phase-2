@@ -201,6 +201,9 @@ void DirectXPage::OnSwapChainPanelSizeChanged(Object^ sender, SizeChangedEventAr
 
 void DirectXPage::OnSizeChanged(CoreWindow^ sender, WindowSizeChangedEventArgs^ args)
 {
+	critical_section::scoped_lock lock(m_main->GetCriticalSection());
+	OutputDebugStringA("OnSizeChanged\n");
+	m_deviceResources->CreateWindowSizeDependentResources();
 	m_main->OnSizeChanged(args);
 }
 

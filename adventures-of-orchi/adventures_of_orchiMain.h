@@ -51,7 +51,7 @@ namespace adventures_of_orchi
 
 		// TODO: Replace with your own content renderers.
 		std::unique_ptr<Sample3DSceneRenderer> m_sceneRenderer;
-		std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
+		//std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
 		std::unique_ptr<GameRenderer> m_gameRenderer;
 
 		Windows::Foundation::IAsyncAction^ m_renderLoopWorker;
