@@ -3,6 +3,9 @@
 #include "Constants.h"
 
 // To easily allow for resizing, this should return ratios.
+// The return values are relative to the entire screen.
+//	Thus, 0.f = left edge of the screen.
+//			1.f = right edge of the screen.
 void ScreenUtils::CalculateSquareCenter(
 	float screenWidth,
 	float screenHeight,

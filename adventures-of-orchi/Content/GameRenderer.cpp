@@ -115,6 +115,11 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 	{
 		FetchControllerInput();
 
+		m_broadCollisionDetectionStrategy->Detect(
+			m_pPlayer,
+			&m_stack,
+			m_pCollided);
+
 		// Idea: Precedence order of collided objects.
 		//	For example, if colliding with a tree
 		//	and a portal, then the Portal takes precedence.
@@ -123,7 +128,7 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 
 		m_pPortalCollisionDetectionStrategy->Detect(
 			m_pPlayer,
-			&m_stack,
+			m_pCollided,
 			&collidedPortals,
 			&collidedPortalsDistances);
 
@@ -134,6 +139,7 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 			::GetMaxValue(collidedPortalsDistances, &maxIndex);
 
 			m_screenBuilder->BuildScreen2(&m_stack, m_deviceResources);
+			m_pPlayer->SkipWest();
 
 			m_pCollided->clear();
 			m_collidedRects.clear();
@@ -141,11 +147,6 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 
 			return 0;
 		}
-
-		m_broadCollisionDetectionStrategy->Detect(
-			m_pPlayer,
-			&m_stack,
-			m_pCollided);
 
 		if (m_pCollided->size() > 0)
 		{

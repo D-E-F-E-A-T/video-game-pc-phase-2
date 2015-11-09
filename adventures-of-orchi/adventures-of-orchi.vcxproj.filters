@@ -119,6 +119,7 @@
       <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="PortalCollisionStrategy.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -229,6 +230,7 @@
     <ClInclude Include="Model\Layer.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

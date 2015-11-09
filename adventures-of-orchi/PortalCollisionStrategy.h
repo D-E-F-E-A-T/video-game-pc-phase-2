@@ -9,16 +9,11 @@ class PortalCollisionStrategy
 public:
 	void Detect(
 		Player * pPlayer, 
-		Stack * stack, 
+		list<Space *> * spaces, 
 		list<Space *> * retVal,
 		vector<float> * distances);
 
 protected:
-	int Calculate(
-		Player * player, 
-		Stack * stack, 
-		list<Space *> * retVal, 
-		vector<float> * distances);
 
 	bool IsClose(Player * player, Space * obstacle, float * pfDistance);
 

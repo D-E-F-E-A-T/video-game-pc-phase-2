@@ -271,6 +271,7 @@
     <ClInclude Include="Sprites\Sprite.h" />
     <ClInclude Include="Sprites\SpriteUtils.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.xaml.cpp">
@@ -311,6 +312,7 @@
     <ClCompile Include="Sprites\BasicLoader.cpp" />
     <ClCompile Include="Sprites\BasicSprites.cpp" />
     <ClCompile Include="Sprites\SpriteUtils.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

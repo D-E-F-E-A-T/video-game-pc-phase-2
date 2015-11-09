@@ -3,46 +3,25 @@
 #include "..\Model\Space.h"
 #include "..\Model\Stack.h"
 
+
 void PortalCollisionStrategy::Detect(
-	Player * pPlayer, 
-	Stack * stack,
-	list<Space *> * retVal,
-	vector<float> * distances)
-{
-	Calculate(
-		pPlayer,
-		stack,
-		retVal,
-		distances);
-}
-
-int PortalCollisionStrategy::Calculate(
 	Player * player,
-	Stack * stack,
+	list<Space *> * spaces,
 	list<Space *> * retVal,
 	vector<float> * distances)
 {
-	int numLayers = stack->GetNumLayers();
+	std::list<Space *>::const_iterator iterator;
 
-	for (int i = 0; i < numLayers; i++)
+	for (iterator = spaces->begin(); iterator != spaces->end(); iterator++)
 	{
-		std::vector<Space *>::const_iterator iterator;
+		float fDistance;
 
-		for (iterator = stack->Get(i)->GetSpaces()->begin();
-		iterator != stack->Get(i)->GetSpaces()->end();
-			iterator++)
+		if (IsClose(player, *(iterator), &fDistance))
 		{
-			float fDistance;
-
-			if (IsClose(player, *(iterator), &fDistance))
-			{
-				retVal->push_back(*(iterator));
-				distances->push_back(fDistance);
-			}
+			retVal->push_back(*(iterator));
+			distances->push_back(fDistance);
 		}
 	}
-
-	return 1;
 }
 
 bool PortalCollisionStrategy::IsClose(

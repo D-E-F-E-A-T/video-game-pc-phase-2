@@ -26,6 +26,11 @@ public:
 	void MoveSouth(int nCollisionState, float fVelocity);
 	void MoveWest(int nCollisionState, float fVelocity);
 
+	void SkipNorth();
+	void SkipEast();
+	void SkipSouth();
+	void SkipWest();
+
 	// The distance between the Player and itself is 0.
 	// The case would be different if there were other Players.
 	virtual float CalculateDistance(Space * space) { return 10000000.f; }
