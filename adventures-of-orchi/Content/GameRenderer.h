@@ -4,12 +4,12 @@
 #include "ShaderStructures.h"
 #include "..\Common\StepTimer.h"
 #include "Grid.h"
-#include "ScreenBuilder.h"
 #include "Model\Player.h"
 #include "BroadCollisionStrategy.h"
 #include "NarrowCollisionStrategy.h"
 #include "Model\Stack.h"
 #include "..\PortalCollisionStrategy.h"
+#include "..\World.h"
 
 using namespace Windows::UI::Core;
 using namespace std;
@@ -37,7 +37,6 @@ namespace adventures_of_orchi
 		void OnSizeChanged(WindowSizeChangedEventArgs ^ args);
 
 		Grid grid;
-		ScreenBuilder * m_screenBuilder;
 
 		void CreateLifeText();
 		void CreateMapText();
@@ -79,8 +78,8 @@ namespace adventures_of_orchi
 		float	m_degreesPerSecond;
 		bool	m_tracking;
 
-		Stack * m_pStack;
-		Stack m_stack;
+		Stack * m_pCurrentStack;
+		//Stack m_stack;
 
 		ComPtr<IDWriteTextLayout1> m_textLayoutLife;
 		ComPtr<IDWriteTextLayout1> m_textLayoutButtons;
@@ -90,7 +89,7 @@ namespace adventures_of_orchi
 
 		void RenderSpaces2D();
 		void RenderSpaces3D();
-		void BuildScreen();
+		//void BuildScreen();
 
 		Player * m_pPlayer;
 
@@ -125,6 +124,8 @@ namespace adventures_of_orchi
 
 		DWRITE_TEXT_RANGE m_textRange;
 		ComPtr<IDWriteTextFormat>                       m_textFormat;
+
+		World * m_pWorld;
 
 #ifdef RENDER_DIAGNOSTICS
 		vector<D2D1_RECT_F> m_collidedRects;

@@ -7,7 +7,7 @@
 void PortalCollisionStrategy::Detect(
 	Player * player,
 	list<Space *> * spaces,
-	list<Space *> * retVal,
+	vector<Space *> * retVal,
 	vector<float> * distances)
 {
 	std::list<Space *>::const_iterator iterator;

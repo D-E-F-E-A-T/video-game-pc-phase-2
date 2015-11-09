@@ -95,7 +95,6 @@
     <ClCompile Include="BasicReaderWriter.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
     <ClCompile Include="Grid.cpp" />
-    <ClCompile Include="ScreenBuilder.cpp" />
     <ClCompile Include="ScreenUtils.cpp" />
     <ClCompile Include="BroadCollisionStrategy.cpp" />
     <ClCompile Include="NarrowCollisionStrategy.cpp" />
@@ -146,7 +145,6 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GridSpace.h" />
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="ScreenBuilder.h" />
     <ClInclude Include="ScreenUtils.h" />
     <ClInclude Include="BroadCollisionStrategy.h" />
     <ClInclude Include="NarrowCollisionStrategy.h" />

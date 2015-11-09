@@ -37,18 +37,15 @@ int BroadCollisionStrategy::Calculate(
 {
 	int numLayers = stack->GetNumLayers();
 
-	for (int i = 0; i < numLayers; i++)
-	{
-		std::vector<Space *>::const_iterator iterator;
+	std::vector<Space *>::const_iterator iterator;
 
-		for (iterator = stack->Get(i)->GetSpaces()->begin(); 
-			iterator != stack->Get(i)->GetSpaces()->end(); 
-			iterator++)
+	for (iterator = stack->Get(LAYER_COLLIDABLES)->GetSpaces()->begin();
+		iterator != stack->Get(LAYER_COLLIDABLES)->GetSpaces()->end();
+		iterator++)
+	{
+		if (IsClose(player, *(iterator)))
 		{
-			if (IsClose(player, *(iterator)))
-			{
-				retVal->push_back(*(iterator));
-			}
+			retVal->push_back(*(iterator));
 		}
 	}
 

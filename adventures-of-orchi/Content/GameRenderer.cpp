@@ -40,7 +40,12 @@ GameRenderer::GameRenderer(const shared_ptr<DeviceResources>& deviceResources, C
 	grid.SetNumColumns(NUM_GRID_COLUMNS);
 	grid.SetNumRows(NUM_GRID_ROWS);
 
-	BuildScreen();
+	m_pWorld = new World();
+	m_pWorld->Build(
+		float2{ m_fWindowWidth, m_fWindowHeight },
+		m_deviceResources);
+
+	m_pCurrentStack = m_pWorld->LoadScreen(0, 0);
 
 	m_pPlayer = new Player(
 		float2(0.5f, 0.5f),
@@ -48,7 +53,7 @@ GameRenderer::GameRenderer(const shared_ptr<DeviceResources>& deviceResources, C
 		true,
 		deviceResources);
 
-	m_stack.Add(LAYER_PLAYERS, m_pPlayer);
+	m_pCurrentStack->Add(LAYER_PLAYERS, m_pPlayer);
 
 	m_pCollided = new list<Space *>;
 }
@@ -117,15 +122,16 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 
 		m_broadCollisionDetectionStrategy->Detect(
 			m_pPlayer,
-			&m_stack,
+			m_pCurrentStack,
 			m_pCollided);
 
 		// Idea: Precedence order of collided objects.
 		//	For example, if colliding with a tree
 		//	and a portal, then the Portal takes precedence.
-		list<Space *> collidedPortals;
+		vector<Space *> collidedPortals;
 		vector<float> collidedPortalsDistances;
 
+#ifdef USE_PORTALS
 		m_pPortalCollisionDetectionStrategy->Detect(
 			m_pPlayer,
 			m_pCollided,
@@ -138,8 +144,16 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 
 			::GetMaxValue(collidedPortalsDistances, &maxIndex);
 
-			m_screenBuilder->BuildScreen2(&m_stack, m_deviceResources);
-			m_pPlayer->SkipWest();
+			int nDirection = ((Portal *)(collidedPortals.at(maxIndex)))->GetDirection();
+
+			if (nDirection == NORTH)
+				m_pPlayer->SkipNorth();
+			else if (nDirection == EAST)
+				m_pPlayer->SkipEast();
+			else if (nDirection == SOUTH)
+				m_pPlayer->SkipSouth();
+			else
+				m_pPlayer->SkipWest();
 
 			m_pCollided->clear();
 			m_collidedRects.clear();
@@ -147,6 +161,7 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 
 			return 0;
 		}
+#endif // USE_PORTALS
 
 		if (m_pCollided->size() > 0)
 		{
@@ -451,27 +466,27 @@ void GameRenderer::ReleaseDeviceDependentResources()
 	m_indexBuffer.Reset();
 }
 
-void GameRenderer::BuildScreen()
-{
-	delete m_screenBuilder;
-
-	m_screenBuilder =
-		new ScreenBuilder(
-			m_window->Bounds.Width,
-			m_window->Bounds.Height);
-
-	// Use chain-of-responsibility?
-	m_screenBuilder->BuildScreen1(&m_stack, m_deviceResources);
-		//m_deviceResources->m_tree.Get());
-
-	//LifePanel lifePanel(
-	//	m_window->Bounds.Width - m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
-	//	m_window->Bounds.Height * HEART_PANEL_HEIGHT_RATIO,
-	//	m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
-	//	HEART_PANEL_HEIGHT);
-
-//	lifePanel.BuildPanel(&m_heartData);
-}
+//void GameRenderer::BuildScreen()
+//{
+//	delete m_screenBuilder;
+//
+//	m_screenBuilder =
+//		new ScreenBuilder(
+//			m_window->Bounds.Width,
+//			m_window->Bounds.Height);
+//
+//	// Use chain-of-responsibility?
+//	m_screenBuilder->BuildScreen1(&m_stack, m_deviceResources);
+//		//m_deviceResources->m_tree.Get());
+//
+//	//LifePanel lifePanel(
+//	//	m_window->Bounds.Width - m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
+//	//	m_window->Bounds.Height * HEART_PANEL_HEIGHT_RATIO,
+//	//	m_window->Bounds.Width * RIGHT_MARGIN_RATIO,
+//	//	HEART_PANEL_HEIGHT);
+//
+////	lifePanel.BuildPanel(&m_heartData);
+//}
 
 // @see: http://www.gamedev.net/topic/603359-c-dx11-how-to-get-texture-size/
 void GameRenderer::RenderSpaces3D()
@@ -486,11 +501,11 @@ void GameRenderer::RenderSpaces3D()
 		nullptr
 		);
 
-	int numLayers = m_stack.GetNumLayers();
+	int numLayers = m_pCurrentStack->GetNumLayers();
 
 	for (int i = 0; i < numLayers; i++)
 	{
-		Layer * currentLayer = m_stack.Get(i);
+		Layer * currentLayer = m_pCurrentStack->Get(i);
 
 		vector<Space *>::const_iterator iterator;
 
@@ -1023,11 +1038,11 @@ void GameRenderer::CreatePackText()
 // Only Spaces on Layer #3 should be 2D.
 void GameRenderer::RenderSpaces2D()
 {
-	int numLayers = m_stack.GetNumLayers();
+	int numLayers = m_pCurrentStack->GetNumLayers();
 
 	for (int i = 0; i < numLayers; i++)
 	{
-		Layer * currentLayer = m_stack.Get(i);
+		Layer * currentLayer = m_pCurrentStack->Get(i);
 
 		vector<Space *>::const_iterator iterator;
 

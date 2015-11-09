@@ -10,7 +10,7 @@ public:
 	void Detect(
 		Player * pPlayer, 
 		list<Space *> * spaces, 
-		list<Space *> * retVal,
+		vector<Space *> * retVal,
 		vector<float> * distances);
 
 protected:

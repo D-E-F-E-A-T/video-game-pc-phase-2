@@ -28,6 +28,10 @@ public:
 		float2 fWindowDimensions,
 		float2 fScaleDimensions, float dpi);
 
+	int GetDirection() { return m_nDirection; }
+
+	int GetDestination() { return m_nDestination; }
+
 protected:
 
 private:
