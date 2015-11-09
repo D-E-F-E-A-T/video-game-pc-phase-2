@@ -28,16 +28,18 @@ void World::Build(float2 fScreenDimensions, const shared_ptr<DeviceResources>& d
 		float x;
 		float y;
 
-		ScreenUtils::CalculateSquareCenter(
-			fScreenDimensions.x,
-			fScreenDimensions.y,
-			command->X, 
-			command->Y, 
-			&x, 
-			&y);
+
 
 		if (command->Type == 1)
 		{
+			ScreenUtils::CalculateSquareCenter(
+				fScreenDimensions.x,
+				fScreenDimensions.y,
+				((ServiceProxy::AddTreeCommand ^)command)->X,
+				((ServiceProxy::AddTreeCommand ^)command)->Y,
+				&x,
+				&y);
+
 			m_pStack->Add(LAYER_COLLIDABLES, new Tree(
 				float2(x, y),
 				float2(1.f, 1.f),
@@ -46,6 +48,14 @@ void World::Build(float2 fScreenDimensions, const shared_ptr<DeviceResources>& d
 		}
 		else if (command->Type == 0)
 		{
+			ScreenUtils::CalculateSquareCenter(
+				fScreenDimensions.x,
+				fScreenDimensions.y,
+				((ServiceProxy::AddPortalCommand ^)command)->X,
+				((ServiceProxy::AddPortalCommand ^)command)->Y,
+				&x,
+				&y);
+
 			m_pStack->Add(LAYER_2D, new Portal(
 				float2(x, y),
 				float2(1.f, 1.f),

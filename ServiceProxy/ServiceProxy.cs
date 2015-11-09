@@ -13,6 +13,10 @@ namespace ServiceProxy
             LinkedList<WorldBuilderCommand> commands =
                 new LinkedList<WorldBuilderCommand>();
 
+            commands.AddLast(new DeclareWorldCommand(5, 5));
+
+            commands.AddLast(new DeclareScreenCommand(2, 2));
+
             // Upper-left forest. Think Composite!!!
             commands.AddLast(new AddTreeCommand(2, 0, 0));
             commands.AddLast(new AddTreeCommand(2, 1, 0));

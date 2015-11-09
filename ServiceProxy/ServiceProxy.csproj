@@ -111,7 +111,8 @@
     <Compile Include="AddForestCommand.cs" />
     <Compile Include="AddPortalCommand.cs" />
     <Compile Include="AddTreeCommand.cs" />
-    <Compile Include="InitializeWorldCommand.cs" />
+    <Compile Include="DeclareScreenCommand.cs" />
+    <Compile Include="DeclareWorldCommand.cs" />
     <Compile Include="ServiceProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorldBuilderCommand.cs" />

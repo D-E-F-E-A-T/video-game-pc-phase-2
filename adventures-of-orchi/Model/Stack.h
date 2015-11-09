@@ -8,7 +8,7 @@ public:
 
 	void Add(int depth, Space * space);
 	Layer * Get(int depth);
-	int GetNumLayers() { return m_layers.size(); }
+	size_t GetNumLayers() { return m_layers.size(); }
 	void Clear();
 
 

@@ -200,7 +200,6 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
     <Image Include="grass.dds" />
     <Image Include="heart.dds" />
-    <Image Include="ida.dds" />
     <Image Include="link.dds" />
     <Image Include="rock.dds" />
     <Image Include="stonewall.dds" />
