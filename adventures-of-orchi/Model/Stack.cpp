@@ -1,24 +1,31 @@
 #include "pch.h"
 #include "Stack.h"
+#include "..\Constants.h"
 
 Stack::Stack()
 {
-
+	for (int i = 0; i < NUM_LAYERS; i++)
+	{
+		m_layers[i] = new Layer();
+	}
 }
 
 void Stack::Add(int depth, Space * space)
 {
-	Plane * plane = m_planes[depth];
+	Layer * layer = m_layers[depth];
 
-	if (plane == nullptr)
-	{
-		m_planes[depth] = new Plane();
-	}
-
-	m_planes[depth]->Add(space);
+	m_layers[depth]->Add(space);
 }
 
-Plane * Stack::Get(int depth)
+Layer * Stack::Get(int depth)
 {
-	return m_planes[depth];
+	return m_layers[depth];
+}
+
+void Stack::Clear()
+{
+	for (int i = LAYER_MOVABLES; i < NUM_LAYERS; i++)
+	{
+		m_layers[i]->Clear();
+	}
 }

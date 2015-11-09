@@ -58,10 +58,12 @@ void adventures_of_orchiMain::StartRenderLoop()
 		while (action->Status == AsyncStatus::Started)
 		{
 			critical_section::scoped_lock lock(m_criticalSection);
-			Update();
-			if (Render())
+			if (Update() == 1)
 			{
-				m_deviceResources->Present();
+				if (Render())
+				{
+					m_deviceResources->Present();
+				}
 			}
 		}
 	});
@@ -76,18 +78,22 @@ void adventures_of_orchiMain::StopRenderLoop()
 }
 
 // Updates the application state once per frame.
-void adventures_of_orchiMain::Update() 
+int adventures_of_orchiMain::Update() 
 {
 	ProcessInput();
+
+	int retVal = 0;
 
 	// Update scene objects.
 	m_timer.Tick([&]()
 	{
-		// TODO: Replace this with your app's content update functions.
-		m_gameRenderer->Update(m_timer);
-//		m_sceneRenderer->Update(m_timer);
 		m_fpsTextRenderer->Update(m_timer);
+		retVal = m_gameRenderer->Update(m_timer);
+//		m_sceneRenderer->Update(m_timer);
+
 	});
+
+	return retVal;
 }
 
 // Process all input from the user before updating game state

@@ -43,7 +43,7 @@ namespace adventures_of_orchi
 
 	private:
 		void ProcessInput();
-		void Update();
+		int Update();
 		bool Render();
 
 		// Cached pointer to device resources.

@@ -36,7 +36,5 @@ private:
 		int height,
 		int * retVal);
 
-	void InsertionSort(int values[], int length);
-
 	void DumpPixels(int width, int height, uint8_t * data);
 };

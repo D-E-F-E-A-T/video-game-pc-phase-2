@@ -24,7 +24,9 @@ public:
 
 	~Space();
 
-	void Render(
+	virtual void Render2D(float2 fWindowDimensions) {}
+
+	virtual void Render3D(
 		ComPtr<ID3D11RenderTargetView> renderTargetView,
 		float2 fWindowDimensions,
 		float2 fScaleDimensions, float dpi);
@@ -40,6 +42,9 @@ public:
 	uint8_t * GetPixels() { return m_pixelMap[m_pTexture.Get()]; }
 
 	int * GetTextureDimensions() { return m_pTextureDimensions;  }
+
+	vector<Space *> DetectCollisions() {}
+
 protected:
 	float2 m_fLocationRatio;
 	float2 m_fDimensions;
@@ -57,7 +62,9 @@ protected:
 	int m_pTextureDimensions[2];
 
 	static map<ID3D11Texture2D *, uint8_t *> m_pixelMap;
-	
-private:
+
 	shared_ptr<DeviceResources> m_deviceResources;
+
+private:
+
 };

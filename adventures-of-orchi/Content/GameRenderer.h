@@ -9,6 +9,7 @@
 #include "BroadCollisionStrategy.h"
 #include "NarrowCollisionStrategy.h"
 #include "Model\Stack.h"
+#include "..\PortalCollisionStrategy.h"
 
 using namespace Windows::UI::Core;
 using namespace std;
@@ -25,7 +26,7 @@ namespace adventures_of_orchi
 		void CreateDeviceDependentResources();
 		void CreateWindowSizeDependentResources();
 		void ReleaseDeviceDependentResources();
-		void Update(DX::StepTimer const& timer);
+		int Update(DX::StepTimer const& timer);
 		void Render();
 		void StartTracking();
 		void TrackingUpdate(float positionX);
@@ -87,7 +88,8 @@ namespace adventures_of_orchi
 		ComPtr<IDWriteTextLayout1> m_textLayoutInventory;
 		ComPtr<IDWriteTextLayout1> m_textLayoutPack;
 
-		void RenderSpaces();
+		void RenderSpaces2D();
+		void RenderSpaces3D();
 		void BuildScreen();
 
 		Player * m_pPlayer;
@@ -115,6 +117,7 @@ namespace adventures_of_orchi
 
 		BroadCollisionStrategy * m_broadCollisionDetectionStrategy;
 		NarrowCollisionStrategy * m_pNarrowCollisionDetectionStrategy;
+		PortalCollisionStrategy * m_pPortalCollisionDetectionStrategy;
 
 		list<Space *> * m_pCollided;
 		void HighlightRegion(int column, int row, ComPtr<ID2D1SolidColorBrush> brush);

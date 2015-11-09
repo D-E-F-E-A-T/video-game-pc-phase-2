@@ -224,5 +224,26 @@
 #define DEVICE_3D m_deviceResources->GetD3DDevice()
 #endif // DEVICE_3D
 
+#ifndef NUM_LAYERS
+#define NUM_LAYERS 5
+#endif // NUM_LAYERS
 
+#ifndef LAYER_PLAYERS
+#define LAYER_PLAYERS 0
+#endif // LAYER_PLAYERS
 
+#ifndef LAYER_MOVABLES
+#define LAYER_MOVABLES 1
+#endif // LAYER_MOVABLES
+
+#ifndef LAYER_COLLIDABLES
+#define LAYER_COLLIDABLES 2
+#endif // LAYER_COLLIDABLES
+
+#ifndef LAYER_BACKGROUND
+#define LAYER_BACKGROUND 3
+#endif // LAYER_BACKGROUND 
+
+#ifndef LAYER_2D
+#define LAYER_2D 4
+#endif // LAYER_2D

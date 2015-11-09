@@ -17,6 +17,10 @@ public:
 		Stack * stack,
 		const shared_ptr<DeviceResources>& deviceResources);
 
+	void BuildScreen2(
+		Stack * stack,
+		const shared_ptr<DeviceResources>& deviceResources);
+
 protected:
 
 private:

@@ -115,6 +115,10 @@
     <ClCompile Include="Model\Stack.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+    <ClCompile Include="Model\Portal.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="PortalCollisionStrategy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -190,9 +194,6 @@
     <ClInclude Include="Model\Water.h">
       <Filter>Model</Filter>
     </ClInclude>
-    <ClInclude Include="Model\Plane.h">
-      <Filter>Model</Filter>
-    </ClInclude>
     <ClInclude Include="Model\Stack.h">
       <Filter>Model</Filter>
     </ClInclude>
@@ -223,6 +224,10 @@
     </ClInclude>
     <ClInclude Include="Sprites\SpriteUtils.h">
       <Filter>Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="PortalCollisionStrategy.h" />
+    <ClInclude Include="Model\Layer.h">
+      <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

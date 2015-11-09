@@ -61,7 +61,7 @@ Space::~Space()
 	delete m_pPixels;
 }
 
-void Space::Render(
+void Space::Render3D(
 	ComPtr<ID3D11RenderTargetView> renderTargetView,
 	float2 fWindowDimensions,
 	float2 fScaleDimensions, float dpi)

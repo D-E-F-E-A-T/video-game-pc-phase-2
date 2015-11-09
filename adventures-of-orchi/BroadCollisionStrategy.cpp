@@ -35,9 +35,9 @@ int BroadCollisionStrategy::Calculate(
 	Stack * stack, // vector<Space *> * spaces, 
 	list<Space *> * retVal)
 {
-	int numPlanes = stack->GetNumPlanes();
+	int numLayers = stack->GetNumLayers();
 
-	for (int i = 0; i < numPlanes; i++)
+	for (int i = 0; i < numLayers; i++)
 	{
 		std::vector<Space *>::const_iterator iterator;
 

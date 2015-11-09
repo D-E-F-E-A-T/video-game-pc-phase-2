@@ -5,6 +5,7 @@
 #include <iostream>
 #include <Windows.h>
 #include "..\Sprites\SpriteUtils.h"
+#include "Utils.h"
 
 // @see http://www.gamedev.net/page/resources/_/technical/directx-and-xna/pixel-perfect-collision-detection-in-directx-r2939
 // @see http://gamedev.stackexchange.com/questions/27690/reading-from-a-staging-2d-texture-array-in-directx10
@@ -236,8 +237,8 @@ bool NarrowCollisionStrategy::IntersectRect(
 
 	if (verticalOverlap == true && horizontalOverlap == true)
 	{
-		InsertionSort(horizontalCoords, 4);
-		InsertionSort(verticalCoords, 4);
+		::InsertionSortI(horizontalCoords, 4);
+		::InsertionSortI(verticalCoords, 4);
 
 		retVal[0] = horizontalCoords[1];	// left
 		retVal[1] = horizontalCoords[2];	// right
@@ -251,23 +252,7 @@ bool NarrowCollisionStrategy::IntersectRect(
 	return false;
 }
 
-void NarrowCollisionStrategy::InsertionSort(int values [], int length)
-{
-	int j, temp;
 
-	for (int i = 0; i < length; i++) 
-	{
-		j = i;
-
-		while (j > 0 && values[j] < values[j - 1]) 
-		{
-			temp = values[j];
-			values[j] = values[j - 1];
-			values[j - 1] = temp;
-			j--;
-		}
-	}
-}
 
 void NarrowCollisionStrategy::DumpPixels(int width, int height, uint8_t * data)
 {

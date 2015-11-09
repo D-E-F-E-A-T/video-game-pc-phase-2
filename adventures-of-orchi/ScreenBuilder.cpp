@@ -22,6 +22,8 @@ void ScreenBuilder::BuildScreen1(
 	float x = 0.0f;
 	float y = 0.0f;
 
+	stack->Clear();
+
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 7; j++)
@@ -31,7 +33,7 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				j, i, &x, &y);
 
-			stack->Add(1, new Tree(
+			stack->Add(LAYER_COLLIDABLES, new Tree(
 				float2(x, y),
 				float2(1.f, 1.f),
 				true,
@@ -48,7 +50,7 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				j, i, &x, &y);
 
-			stack->Add(1, new Tree(
+			stack->Add(LAYER_COLLIDABLES, new Tree(
 				float2(x, y),
 				float2(1.f, 1.f),
 				true,
@@ -63,7 +65,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 4, &x, &y);
 		
-		stack->Add(1, new Tree(
+		stack->Add(LAYER_COLLIDABLES, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -77,7 +79,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 5, &x, &y);
 
-		stack->Add(1, new Tree(
+		stack->Add(LAYER_COLLIDABLES, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -91,7 +93,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 6, &x, &y);
 		
-		stack->Add(1, new Tree(
+		stack->Add(LAYER_COLLIDABLES, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -106,7 +108,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 4, &x, &y);
 
-		stack->Add(1, new Tree(
+		stack->Add(LAYER_COLLIDABLES, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -121,7 +123,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 9, &x, &y);
 
-		stack->Add(1, new Tree(
+		stack->Add(LAYER_COLLIDABLES, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -136,7 +138,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 10, &x, &y);
 
-		stack->Add(1, new Tree(
+		stack->Add(LAYER_COLLIDABLES, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -151,7 +153,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 10, &x, &y);
 
-		stack->Add(1, new Tree(
+		stack->Add(LAYER_COLLIDABLES, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -168,7 +170,7 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				i, j, &x, &y);
 
-			stack->Add(1, new Tree(
+			stack->Add(LAYER_COLLIDABLES, new Tree(
 				float2(x, y),
 				float2(1.f, 1.f),
 				true,
@@ -184,7 +186,7 @@ void ScreenBuilder::BuildScreen1(
 			m_fScreenHeight, 
 			i, 11, &x, &y);
 
-		stack->Add(1, new Tree(
+		stack->Add(LAYER_COLLIDABLES, new Tree(
 			float2(x, y),
 			float2(1.f, 1.f),
 			true,
@@ -200,7 +202,7 @@ void ScreenBuilder::BuildScreen1(
 				m_fScreenHeight,
 				i, j, &x, &y);
 
-			stack->Add(1, new Tree(
+			stack->Add(LAYER_COLLIDABLES, new Tree(
 				float2(x, y),
 				float2(1.f, 1.f),
 				true,
@@ -208,44 +210,93 @@ void ScreenBuilder::BuildScreen1(
 		}
 	}
 
-	//ScreenUtils::CalculateSquareCenter(
-	//	m_fScreenWidth,
-	//	m_fScreenHeight,
-	//	0, 7, &x, &y);
 
-	//spaces->push_back(new Portal(
-	//	float2(x, y), 
-	//	float2(1.f, 1.f), 
-	//	WEST, 
-	//	2));
+	for (int i = 0; i < 3; i++)
+	{
+		ScreenUtils::CalculateSquareCenter(
+			m_fScreenWidth,
+			m_fScreenHeight,
+			0, 7 + i, &x, &y);
+
+		stack->Add(LAYER_2D, new Portal(
+			float2(x, y),
+			float2(1.f, 1.f),
+			WEST,
+			2,
+			deviceResources));
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		ScreenUtils::CalculateSquareCenter(
+			m_fScreenWidth,
+			m_fScreenHeight,
+			7 + i, 0, &x, &y);
+
+		stack->Add(LAYER_2D, new Portal(
+			float2(x, y),
+			float2(1.f, 1.f),
+			NORTH,
+			3,
+			deviceResources));
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		ScreenUtils::CalculateSquareCenter(
+			m_fScreenWidth,
+			m_fScreenHeight,
+			16, 5 + i, &x, &y);
+
+		stack->Add(LAYER_2D, new Portal(
+			float2(x, y),
+			float2(1.f, 1.f),
+			EAST,
+			4,
+			deviceResources));
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		ScreenUtils::CalculateSquareCenter(
+			m_fScreenWidth,
+			m_fScreenHeight,
+			8 + i, 14, &x, &y);
+
+		stack->Add(LAYER_2D, new Portal(
+			float2(x, y),
+			float2(1.f, 1.f),
+			SOUTH,
+			5,
+			deviceResources));
+	}
+}
+
+void ScreenBuilder::BuildScreen2(
+	Stack * stack,
+	const shared_ptr<DeviceResources>& deviceResources)
+{
+	float x = 0.0f;
+	float y = 0.0f;
+
+	stack->Clear();
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 7; j++)
+		{
+			ScreenUtils::CalculateSquareCenter(
+				m_fScreenWidth,
+				m_fScreenHeight,
+				j, i, &x, &y);
+
+			stack->Add(LAYER_COLLIDABLES, new Tree(
+				float2(x, y),
+				float2(1.f, 1.f),
+				true,
+				deviceResources));
+		}
+	}
 
 
-	//portals->push_back(new Portal(0, 8, WEST, 2));
-	//portals->push_back(new Portal(0, 9, WEST, 2));
-
-	//portals->push_back(new Portal(7, 0, NORTH, 3));
-	//portals->push_back(new Portal(8, 0, NORTH, 3));
-	//portals->push_back(new Portal(9, 0, NORTH, 3));
-	//portals->push_back(new Portal(10, 0, NORTH, 3));
-
-	//portals->push_back(new Portal(16, 5, EAST, 4));
-	//portals->push_back(new Portal(16, 6, EAST, 4));
-	//portals->push_back(new Portal(16, 7, EAST, 4));
-	//portals->push_back(new Portal(16, 8, EAST, 4));
-
-	//portals->push_back(new Portal(8, 14, SOUTH, 5));
-	//portals->push_back(new Portal(9, 14, SOUTH, 5));
-	//portals->push_back(new Portal(10, 14, SOUTH, 5));
-
-
-	//ScreenUtils::CalculateSquareCenter(
-	//	m_fScreenWidth,
-	//	m_fScreenHeight,
-	//	0, 0, &x, &y);
-
-	//spaces->push_back(new Tree(
-	//	float2(x, y),
-	//	float2(1.f, 1.f),
-	//	true,
-	//	deviceResources));
 }

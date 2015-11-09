@@ -3,12 +3,13 @@
 
 using namespace std;
 
-class Plane
+class Layer
 {
 public:
-	Plane() { m_spaces = new vector<Space *>(); }
+	Layer() { m_spaces = new vector<Space *>(); }
 	void Add(Space * space) { m_spaces->push_back(space); }
 	vector<Space *> * GetSpaces() { return m_spaces; }
+	void Clear() { m_spaces->clear(); }
 
 protected:
 

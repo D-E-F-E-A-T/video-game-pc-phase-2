@@ -48,7 +48,7 @@ GameRenderer::GameRenderer(const shared_ptr<DeviceResources>& deviceResources, C
 		true,
 		deviceResources);
 
-	m_stack.Add(0, m_pPlayer);
+	m_stack.Add(LAYER_PLAYERS, m_pPlayer);
 
 	m_pCollided = new list<Space *>;
 }
@@ -107,7 +107,7 @@ void GameRenderer::CreateWindowSizeDependentResources()
 }
 
 // Called once per frame, rotates the cube and calculates the model and view matrices.
-void GameRenderer::Update(DX::StepTimer const& timer)
+int GameRenderer::Update(DX::StepTimer const& timer)
 {
 	// DO NOT USE m_window HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -115,6 +115,32 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 	{
 		FetchControllerInput();
 
+		// Idea: Precedence order of collided objects.
+		//	For example, if colliding with a tree
+		//	and a portal, then the Portal takes precedence.
+		list<Space *> collidedPortals;
+		vector<float> collidedPortalsDistances;
+
+		m_pPortalCollisionDetectionStrategy->Detect(
+			m_pPlayer,
+			&m_stack,
+			&collidedPortals,
+			&collidedPortalsDistances);
+
+		if (collidedPortals.size() > 0)
+		{
+			int maxIndex = 0;
+
+			::GetMaxValue(collidedPortalsDistances, &maxIndex);
+
+			m_screenBuilder->BuildScreen2(&m_stack, m_deviceResources);
+
+			m_pCollided->clear();
+			m_collidedRects.clear();
+			m_collidedRectStatuses.clear();
+
+			return 0;
+		}
 
 		m_broadCollisionDetectionStrategy->Detect(
 			m_pPlayer,
@@ -176,6 +202,8 @@ void GameRenderer::Update(DX::StepTimer const& timer)
 
 
 	}
+
+	return 1;
 }
 
 // Rotate the 3D cube model a set amount of radians.
@@ -234,6 +262,7 @@ void GameRenderer::Render()
 	grid.SetVisibility(true);
 	grid.Draw(DEVICE_CONTEXT_2D, m_deviceResources->m_blackBrush);
 
+	RenderSpaces2D();
 
 #ifdef RENDER_DIAGNOSTICS
 
@@ -268,7 +297,7 @@ void GameRenderer::Render()
 
 	HRESULT hr = DEVICE_CONTEXT_2D->EndDraw();
 	
-	RenderSpaces();
+	RenderSpaces3D();
 
 	m_pCollided->clear();
 
@@ -443,7 +472,8 @@ void GameRenderer::BuildScreen()
 //	lifePanel.BuildPanel(&m_heartData);
 }
 
-void GameRenderer::RenderSpaces()
+// @see: http://www.gamedev.net/topic/603359-c-dx11-how-to-get-texture-size/
+void GameRenderer::RenderSpaces3D()
 {
 	ComPtr<ID3D11RenderTargetView> renderTargetView;
 
@@ -455,20 +485,17 @@ void GameRenderer::RenderSpaces()
 		nullptr
 		);
 
-	// @see: http://www.gamedev.net/topic/603359-c-dx11-how-to-get-texture-size/
+	int numLayers = m_stack.GetNumLayers();
 
-
-	int numPlanes = m_stack.GetNumPlanes();
-
-	for (int i = 0; i < numPlanes; i++)
+	for (int i = 0; i < numLayers; i++)
 	{
-		Plane * currentPlane = m_stack.Get(i);
+		Layer * currentLayer = m_stack.Get(i);
 
 		vector<Space *>::const_iterator iterator;
 
 		// This is a sprite run.
-		for (iterator = currentPlane->GetSpaces()->begin(); 
-			iterator != currentPlane->GetSpaces()->end(); 
+		for (iterator = currentLayer->GetSpaces()->begin(); 
+			iterator != currentLayer->GetSpaces()->end(); 
 			iterator++)
 		{
 			float fColumnWidth = grid.GetColumnWidth();
@@ -476,7 +503,7 @@ void GameRenderer::RenderSpaces()
 
 			float dpi = m_deviceResources->GetDpi();
 
-			(*iterator)->Render(
+			(*iterator)->Render3D(
 				renderTargetView,
 				float2(m_fWindowWidth, m_fWindowHeight),
 				float2(fColumnWidth, fRowHeight),
@@ -639,13 +666,13 @@ void GameRenderer::DrawSpriteIntersection()
 	{
 		if ((*iterator2) == INTERSECTION)
 		{
-			m_deviceResources->GetD2DDeviceContext()->FillRectangle(
+			DEVICE_CONTEXT_2D->FillRectangle(
 				(*iterator),
 				m_deviceResources->m_greenBrush.Get());
 		}
 		else if ((*iterator2) == COLLISION)
 		{
-			m_deviceResources->GetD2DDeviceContext()->FillRectangle(
+			DEVICE_CONTEXT_2D->FillRectangle(
 				(*iterator),
 				m_deviceResources->m_redBrush.Get());
 		}
@@ -990,4 +1017,30 @@ void GameRenderer::CreatePackText()
 	m_textLayoutPack->SetFontSize(SECTION_HEADER_FONT_SIZE, m_textRange);
 	m_textLayoutPack->SetCharacterSpacing(0.5f, 0.5f, 0, m_textRange);
 	m_textLayoutPack->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+}
+
+// Only Spaces on Layer #3 should be 2D.
+void GameRenderer::RenderSpaces2D()
+{
+	int numLayers = m_stack.GetNumLayers();
+
+	for (int i = 0; i < numLayers; i++)
+	{
+		Layer * currentLayer = m_stack.Get(i);
+
+		vector<Space *>::const_iterator iterator;
+
+		// This is a sprite run.
+		for (iterator = currentLayer->GetSpaces()->begin();
+		iterator != currentLayer->GetSpaces()->end();
+			iterator++)
+		{
+			float fColumnWidth = grid.GetColumnWidth();
+			float fRowHeight = grid.GetRowHeight();
+
+			float dpi = m_deviceResources->GetDpi();
+
+			(*iterator)->Render2D(float2{ m_fWindowWidth, m_fWindowHeight });
+		}
+	}
 }
