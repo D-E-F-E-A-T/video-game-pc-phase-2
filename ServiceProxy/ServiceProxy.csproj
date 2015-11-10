@@ -110,6 +110,7 @@
   <ItemGroup>
     <Compile Include="AddForestCommand.cs" />
     <Compile Include="AddPortalCommand.cs" />
+    <Compile Include="AddWaterCommand.cs" />
     <Compile Include="AddTreeCommand.cs" />
     <Compile Include="DeclareScreenCommand.cs" />
     <Compile Include="DeclareWorldCommand.cs" />

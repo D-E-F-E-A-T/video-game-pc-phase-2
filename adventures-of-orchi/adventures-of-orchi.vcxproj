@@ -215,8 +215,6 @@
     <ClInclude Include="BasicReaderWriter.h" />
     <ClInclude Include="BasicShapes.h" />
     <ClInclude Include="BroadCollisionStrategy.h" />
-    <ClInclude Include="CollisionDetectionInfo.h" />
-    <ClInclude Include="CollisionDetectionStrategy.h" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="adventures_of_orchiMain.h" />
     <ClInclude Include="Constants.h" />

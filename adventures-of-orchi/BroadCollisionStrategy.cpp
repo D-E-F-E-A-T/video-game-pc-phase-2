@@ -13,34 +13,31 @@ BroadCollisionStrategy::BroadCollisionStrategy()
 
 }
 
-bool BroadCollisionStrategy::Detect(CollisionDetectionInfo * info)
-{
-	return false;
-}
-
 void BroadCollisionStrategy::Detect(
+	int nLayer,
 	Player * pPlayer,
 	Stack * stack,
 	list<Space *> * retVal)
 {
-	// Determine the 9 grid spaces around the player's location.
 	Calculate(
+		nLayer,
 		pPlayer, 
 		stack, 
 		retVal);
 }
 
 int BroadCollisionStrategy::Calculate(
+	int nLayer, 
 	Player * player, 
-	Stack * stack, // vector<Space *> * spaces, 
+	Stack * stack,
 	list<Space *> * retVal)
 {
 	int numLayers = stack->GetNumLayers();
 
 	std::vector<Space *>::const_iterator iterator;
 
-	for (iterator = stack->Get(LAYER_COLLIDABLES)->GetSpaces()->begin();
-		iterator != stack->Get(LAYER_COLLIDABLES)->GetSpaces()->end();
+	for (iterator = stack->Get(nLayer)->GetSpaces()->begin();
+		iterator != stack->Get(nLayer)->GetSpaces()->end();
 		iterator++)
 	{
 		if (IsClose(player, *(iterator)))

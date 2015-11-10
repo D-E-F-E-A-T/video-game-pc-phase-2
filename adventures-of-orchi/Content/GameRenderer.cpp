@@ -45,7 +45,9 @@ GameRenderer::GameRenderer(const shared_ptr<DeviceResources>& deviceResources, C
 		float2{ m_fWindowWidth, m_fWindowHeight },
 		m_deviceResources);
 
-	m_pCurrentStack = m_pWorld->LoadScreen(0, 0);
+	m_pWorld->SetScreen(2, 2);
+
+	m_pCurrentStack = m_pWorld->LoadScreen(2, 2);
 
 	m_pPlayer = new Player(
 		float2(0.5f, 0.5f),
@@ -120,7 +122,9 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 	{
 		FetchControllerInput();
 
+#ifdef USE_PORTALS
 		m_broadCollisionDetectionStrategy->Detect(
+			LAYER_2D,
 			m_pPlayer,
 			m_pCurrentStack,
 			m_pCollided);
@@ -131,7 +135,6 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 		vector<Space *> collidedPortals;
 		vector<float> collidedPortalsDistances;
 
-#ifdef USE_PORTALS
 		m_pPortalCollisionDetectionStrategy->Detect(
 			m_pPlayer,
 			m_pCollided,
@@ -147,13 +150,27 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 			int nDirection = ((Portal *)(collidedPortals.at(maxIndex)))->GetDirection();
 
 			if (nDirection == NORTH)
+			{
 				m_pPlayer->SkipNorth();
+				m_pCurrentStack = m_pWorld->Move(NORTH);
+			}
 			else if (nDirection == EAST)
+			{
 				m_pPlayer->SkipEast();
+				m_pCurrentStack = m_pWorld->Move(EAST);
+			}
 			else if (nDirection == SOUTH)
+			{
 				m_pPlayer->SkipSouth();
+				m_pCurrentStack = m_pWorld->Move(SOUTH);
+			}
 			else
+			{
 				m_pPlayer->SkipWest();
+				m_pCurrentStack = m_pWorld->Move(WEST);
+			}
+
+			m_pCurrentStack->Add(LAYER_PLAYERS, m_pPlayer);
 
 			m_pCollided->clear();
 			m_collidedRects.clear();
@@ -162,6 +179,12 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 			return 0;
 		}
 #endif // USE_PORTALS
+
+		m_broadCollisionDetectionStrategy->Detect(
+			LAYER_COLLIDABLES,
+			m_pPlayer,
+			m_pCurrentStack,
+			m_pCollided);
 
 		if (m_pCollided->size() > 0)
 		{
@@ -307,8 +330,6 @@ void GameRenderer::Render()
 	}
 
 	DrawSpriteIntersection();
-
-	//DrawPortals();
 #endif // RENDER_DIAGNOSTICS
 
 	HRESULT hr = DEVICE_CONTEXT_2D->EndDraw();

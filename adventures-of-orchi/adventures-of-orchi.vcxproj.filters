@@ -148,8 +148,6 @@
     <ClInclude Include="ScreenUtils.h" />
     <ClInclude Include="BroadCollisionStrategy.h" />
     <ClInclude Include="NarrowCollisionStrategy.h" />
-    <ClInclude Include="CollisionDetectionStrategy.h" />
-    <ClInclude Include="CollisionDetectionInfo.h" />
     <ClInclude Include="MathUtils.h" />
     <ClInclude Include="LeftMargin.h" />
     <ClInclude Include="RightMargin.h" />

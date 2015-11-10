@@ -13,14 +13,17 @@ public:
 		float2 fScreenDimensions, 
 		const shared_ptr<DeviceResources>& deviceResources);
 
+	void SetScreen(int x, int y);
 	Stack * LoadScreen(int x, int y);
-	void GetDimensions(int * x, int * y);
+	Stack * Move(int nDirection);
 
 protected:
 	int m_lpnWorldDimensions[2];
 
 private:
-	//vector<Stack *> m_stacks;
-	Stack * m_pStack;
+	Stack * m_lpStacks;
+	int m_lpnDimensions[2];
+	int m_nCurrentStackIndex;
+
 
 };
