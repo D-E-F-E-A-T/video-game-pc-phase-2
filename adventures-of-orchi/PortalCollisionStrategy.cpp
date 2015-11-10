@@ -31,5 +31,5 @@ bool PortalCollisionStrategy::IsClose(
 {
 	*pfDistance = obstacle->CalculateDistance(player);
 
-	return (*pfDistance < 0.05f);
+	return (*pfDistance < 0.075f);
 }

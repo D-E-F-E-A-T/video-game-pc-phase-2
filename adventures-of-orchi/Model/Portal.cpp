@@ -7,10 +7,10 @@ void Portal::Render2D(float2 fWindowDimensions)
 
 	D2D1_RECT_F rect
 	{
-		fScreenLocation.x - (fWindowDimensions.x / 50.f),
-		fScreenLocation.y - (fWindowDimensions.y / 50.f),
-		fScreenLocation.x + (fWindowDimensions.x / 50.f),
-		fScreenLocation.y + (fWindowDimensions.y / 50.f)
+		fScreenLocation.x - (fWindowDimensions.x / 100.f),
+		fScreenLocation.y - (fWindowDimensions.y / 100.f),
+		fScreenLocation.x + (fWindowDimensions.x / 100.f),
+		fScreenLocation.y + (fWindowDimensions.y / 100.f)
 	};
 
 	DEVICE_CONTEXT_2D->FillRectangle(

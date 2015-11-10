@@ -293,7 +293,7 @@ void GameRenderer::Render()
 
 	DEVICE_CONTEXT_2D->BeginDraw();
 
-	DEVICE_CONTEXT_2D->Clear(D2D1::ColorF(D2D1::ColorF::CornflowerBlue));
+	DEVICE_CONTEXT_2D->Clear(D2D1::ColorF(D2D1::ColorF::Tan));
 	DEVICE_CONTEXT_2D->SetTransform(D2D1::Matrix3x2F::Identity());
 
 	DrawLeftMargin();

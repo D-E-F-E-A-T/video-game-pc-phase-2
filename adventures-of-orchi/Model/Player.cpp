@@ -95,7 +95,7 @@ void Player::MoveWest(int nCollisionState, float fVelocity)
 
 void Player::SkipNorth()
 {
-	m_fLocationRatio = float2{ m_fLocationRatio.x , 0.90f };
+	m_fLocationRatio = float2{ m_fLocationRatio.x , 0.85f };
 }
 
 void Player::SkipEast()
@@ -105,7 +105,7 @@ void Player::SkipEast()
 
 void Player::SkipSouth()
 {
-	m_fLocationRatio = float2{ m_fLocationRatio.x, 0.1f };
+	m_fLocationRatio = float2{ m_fLocationRatio.x, 0.15f };
 }
 
 void Player::SkipWest()
