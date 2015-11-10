@@ -133,5 +133,11 @@ Stack * World::Move(int nDirection)
 		nColumn -= 1;
 	}
 
+	m_nCurrentStackIndex = nRow * m_lpnDimensions[WIDTH_INDEX] + nColumn;
+
+	char buffer[32];
+	sprintf_s(buffer, "Moving to screen %d %d\n", nColumn, nRow);
+	OutputDebugStringA(buffer);
+
 	return LoadScreen(nColumn, nRow);
 }

@@ -253,7 +253,7 @@ bool NarrowCollisionStrategy::IntersectRect(
 }
 
 
-
+#ifdef _DEBUG
 void NarrowCollisionStrategy::DumpPixels(int width, int height, uint8_t * data)
 {
 	uint32_t * dPtr = reinterpret_cast<uint32_t*>(data);
@@ -273,3 +273,4 @@ void NarrowCollisionStrategy::DumpPixels(int width, int height, uint8_t * data)
 		dPtr++;
 	}
 }
+#endif // _DEBUG

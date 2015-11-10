@@ -15,7 +15,7 @@ public:
 		ID3D11DeviceContext2 * context,
 		ID3D11Device2 * device,
 		Player * player,
-		Space * collided, //std::list<Space *> * collided,
+		Space * collided, 
 		Grid * grid,
 		int * intersectRect,
 		float2 screenDimensions);
@@ -36,5 +36,7 @@ private:
 		int height,
 		int * retVal);
 
+#ifdef _DEBUG
 	void DumpPixels(int width, int height, uint8_t * data);
+#endif // _DEBUG
 };

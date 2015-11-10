@@ -143,11 +143,11 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 
 		if (collidedPortals.size() > 0)
 		{
-			int maxIndex = 0;
+			int minIndex = 0;
 
-			::GetMaxValue(collidedPortalsDistances, &maxIndex);
+			::GetMinValue(collidedPortalsDistances, &minIndex);
 
-			int nDirection = ((Portal *)(collidedPortals.at(maxIndex)))->GetDirection();
+			int nDirection = ((Portal *)(collidedPortals.at(minIndex)))->GetDirection();
 
 			if (nDirection == NORTH)
 			{
@@ -164,10 +164,18 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 				m_pPlayer->SkipSouth();
 				m_pCurrentStack = m_pWorld->Move(SOUTH);
 			}
-			else
+			else if (nDirection == WEST)
 			{
 				m_pPlayer->SkipWest();
 				m_pCurrentStack = m_pWorld->Move(WEST);
+			}
+			else
+			{
+#ifdef _DEBUG
+				char buffer[32];
+				sprintf_s(buffer, "Invalid move direction %d\n", nDirection);
+				OutputDebugStringA(buffer);
+#endif // _DEBUG
 			}
 
 			m_pCurrentStack->Add(LAYER_PLAYERS, m_pPlayer);

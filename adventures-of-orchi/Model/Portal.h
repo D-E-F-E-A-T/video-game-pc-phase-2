@@ -19,6 +19,8 @@ public:
 			true, 
 			deviceResources)
 	{
+		m_nDirection = nDirection;
+		m_nDestination = nDestination;
 	}
 
 	void Render2D(float2 fWindowDimensions);

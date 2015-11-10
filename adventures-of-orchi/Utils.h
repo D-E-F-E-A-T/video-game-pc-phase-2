@@ -59,16 +59,16 @@ static void InsertionSortF(float values[], int length)
 	}
 }
 
-static float GetMaxValue(vector<float> values, int * index)
+static float GetMinValue(vector<float> values, int * index)
 {
-	float retVal = -99999999.f;
+	float retVal = 99999999.f;
 
 	vector<float>::const_iterator iterator;
 	int counter = 0;
 
 	for (iterator = values.begin(); iterator != values.end(); iterator++)
 	{
-		if ((*iterator) > retVal)
+		if ((*iterator) < retVal)
 		{
 			retVal = *iterator;
 			*index = counter;
