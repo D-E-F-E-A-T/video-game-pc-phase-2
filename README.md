@@ -1,5 +1,5 @@
 # The Adventures Of Orchi
-An 2D adventure game.
+An 2D/3D adventure game.
 
 
 
