@@ -227,6 +227,12 @@
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="World.h" />
+    <ClInclude Include="Model\StoneWall.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Rock.h">
+      <Filter>Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

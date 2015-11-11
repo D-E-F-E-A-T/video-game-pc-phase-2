@@ -15,8 +15,11 @@ namespace ServiceProxy
 
             commands.AddLast(new DeclareWorldCommand(5, 5));
 
-
+            BuildScreen0(commands);
+            BuildScreen1(commands);
+            BuildScreen2(commands);
             BuildScreen5(commands);
+            BuildScreen6(commands);
 
             BuildScreen10(commands);
             BuildScreen11(commands);
@@ -36,6 +39,681 @@ namespace ServiceProxy
 
             return commands;
         }
+
+        private void BuildScreen0(LinkedList<WorldBuilderCommand> commands)
+        {
+            commands.AddLast(new DeclareScreenCommand(0, 0));
+
+            // Upper-left forest. Think Composite!!!
+            commands.AddLast(new AddTreeCommand(2, 0, 0));
+            commands.AddLast(new AddTreeCommand(2, 1, 0));
+            commands.AddLast(new AddTreeCommand(2, 2, 0));
+            commands.AddLast(new AddTreeCommand(2, 3, 0));
+            commands.AddLast(new AddTreeCommand(2, 4, 0));
+            commands.AddLast(new AddTreeCommand(2, 5, 0));
+            commands.AddLast(new AddTreeCommand(2, 6, 0));
+            commands.AddLast(new AddTreeCommand(2, 7, 0));
+            commands.AddLast(new AddTreeCommand(2, 8, 0));
+            commands.AddLast(new AddTreeCommand(2, 9, 0));
+            commands.AddLast(new AddTreeCommand(2, 10, 0));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 1));
+            commands.AddLast(new AddTreeCommand(2, 1, 1));
+            commands.AddLast(new AddTreeCommand(2, 2, 1));
+            commands.AddLast(new AddTreeCommand(2, 3, 1));
+            commands.AddLast(new AddTreeCommand(2, 4, 1));
+            commands.AddLast(new AddTreeCommand(2, 5, 1));
+            commands.AddLast(new AddTreeCommand(2, 6, 1));
+            commands.AddLast(new AddTreeCommand(2, 7, 1));
+            commands.AddLast(new AddTreeCommand(2, 8, 1));
+            commands.AddLast(new AddTreeCommand(2, 9, 1));
+            commands.AddLast(new AddTreeCommand(2, 10, 1));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 2));
+            commands.AddLast(new AddTreeCommand(2, 1, 2));
+            commands.AddLast(new AddTreeCommand(2, 2, 2));
+            commands.AddLast(new AddTreeCommand(2, 3, 2));
+            commands.AddLast(new AddTreeCommand(2, 4, 2));
+            commands.AddLast(new AddTreeCommand(2, 5, 2));
+            commands.AddLast(new AddTreeCommand(2, 6, 2));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 3));
+            commands.AddLast(new AddTreeCommand(2, 1, 3));
+            commands.AddLast(new AddTreeCommand(2, 2, 3));
+            commands.AddLast(new AddTreeCommand(2, 3, 3));
+            commands.AddLast(new AddTreeCommand(2, 4, 3));
+            commands.AddLast(new AddTreeCommand(2, 5, 3));
+            commands.AddLast(new AddTreeCommand(2, 6, 3));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 4));
+            commands.AddLast(new AddTreeCommand(2, 1, 4));
+            commands.AddLast(new AddTreeCommand(2, 2, 4));
+            commands.AddLast(new AddTreeCommand(2, 3, 4));
+            commands.AddLast(new AddTreeCommand(2, 4, 4));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 5));
+            commands.AddLast(new AddTreeCommand(2, 1, 5));
+            commands.AddLast(new AddTreeCommand(2, 2, 5));
+            commands.AddLast(new AddTreeCommand(2, 3, 5));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 6));
+            commands.AddLast(new AddTreeCommand(2, 1, 6));
+            commands.AddLast(new AddTreeCommand(2, 2, 6));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 7));
+            commands.AddLast(new AddTreeCommand(2, 0, 8));
+
+            commands.AddLast(new AddTreeCommand(2, 1, 7));
+            commands.AddLast(new AddTreeCommand(2, 1, 8));
+
+
+
+            // Upper-right forest
+            commands.AddLast(new AddTreeCommand(2, 11, 0));
+            commands.AddLast(new AddTreeCommand(2, 12, 0));
+            commands.AddLast(new AddTreeCommand(2, 13, 0));
+            commands.AddLast(new AddTreeCommand(2, 14, 0));
+            commands.AddLast(new AddTreeCommand(2, 15, 0));
+            commands.AddLast(new AddTreeCommand(2, 16, 0));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 1));
+            commands.AddLast(new AddTreeCommand(2, 12, 1));
+            commands.AddLast(new AddTreeCommand(2, 13, 1));
+            commands.AddLast(new AddTreeCommand(2, 14, 1));
+            commands.AddLast(new AddTreeCommand(2, 15, 1));
+            commands.AddLast(new AddTreeCommand(2, 16, 1));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 2));
+            commands.AddLast(new AddTreeCommand(2, 12, 2));
+            commands.AddLast(new AddTreeCommand(2, 13, 2));
+            commands.AddLast(new AddTreeCommand(2, 14, 2));
+            commands.AddLast(new AddTreeCommand(2, 15, 2));
+            commands.AddLast(new AddTreeCommand(2, 16, 2));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 3));
+            commands.AddLast(new AddTreeCommand(2, 12, 3));
+            commands.AddLast(new AddTreeCommand(2, 13, 3));
+            commands.AddLast(new AddTreeCommand(2, 14, 3));
+            commands.AddLast(new AddTreeCommand(2, 15, 3));
+            commands.AddLast(new AddTreeCommand(2, 16, 3));
+
+            commands.AddLast(new AddTreeCommand(2, 12, 4));
+            commands.AddLast(new AddTreeCommand(2, 13, 4));
+            commands.AddLast(new AddTreeCommand(2, 14, 4));
+            commands.AddLast(new AddTreeCommand(2, 15, 4));
+            commands.AddLast(new AddTreeCommand(2, 16, 4));
+
+            commands.AddLast(new AddTreeCommand(2, 13, 5));
+            commands.AddLast(new AddTreeCommand(2, 14, 5));
+            commands.AddLast(new AddTreeCommand(2, 15, 5));
+            commands.AddLast(new AddTreeCommand(2, 16, 5));
+
+
+            // Lower-left forest
+            commands.AddLast(new AddTreeCommand(2, 0, 9));
+            commands.AddLast(new AddTreeCommand(2, 1, 9));
+            commands.AddLast(new AddTreeCommand(2, 2, 9));
+            commands.AddLast(new AddTreeCommand(2, 3, 9));
+            commands.AddLast(new AddTreeCommand(2, 4, 9));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 10));
+            commands.AddLast(new AddTreeCommand(2, 1, 10));
+            commands.AddLast(new AddTreeCommand(2, 2, 10));
+            commands.AddLast(new AddTreeCommand(2, 3, 10));
+            commands.AddLast(new AddTreeCommand(2, 4, 10));
+            commands.AddLast(new AddTreeCommand(2, 5, 10));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 11));
+            commands.AddLast(new AddTreeCommand(2, 1, 11));
+            commands.AddLast(new AddTreeCommand(2, 2, 11));
+            commands.AddLast(new AddTreeCommand(2, 3, 11));
+            commands.AddLast(new AddTreeCommand(2, 4, 11));
+            commands.AddLast(new AddTreeCommand(2, 5, 11));
+            commands.AddLast(new AddTreeCommand(2, 6, 11));
+
+            commands.AddLast(new AddWaterCommand(2, 0, 12));
+            commands.AddLast(new AddTreeCommand(2, 1, 12));
+            commands.AddLast(new AddTreeCommand(2, 2, 12));
+            commands.AddLast(new AddTreeCommand(2, 3, 12));
+            commands.AddLast(new AddTreeCommand(2, 4, 12));
+            commands.AddLast(new AddTreeCommand(2, 5, 12));
+            commands.AddLast(new AddTreeCommand(2, 6, 12));
+
+            commands.AddLast(new AddWaterCommand(2, 0, 13));
+            commands.AddLast(new AddWaterCommand(2, 1, 13));
+            commands.AddLast(new AddWaterCommand(2, 2, 13));
+            commands.AddLast(new AddTreeCommand(2, 3, 13));
+            commands.AddLast(new AddTreeCommand(2, 4, 13));
+            commands.AddLast(new AddTreeCommand(2, 5, 13));
+            commands.AddLast(new AddTreeCommand(2, 6, 13));
+
+            commands.AddLast(new AddWaterCommand(2, 0, 14));
+            commands.AddLast(new AddWaterCommand(2, 1, 14));
+            commands.AddLast(new AddWaterCommand(2, 2, 14));
+            commands.AddLast(new AddTreeCommand(2, 3, 14));
+            commands.AddLast(new AddTreeCommand(2, 4, 14));
+            commands.AddLast(new AddTreeCommand(2, 5, 14));
+            commands.AddLast(new AddTreeCommand(2, 6, 14));
+
+
+            // Lower-right forest
+            commands.AddLast(new AddTreeCommand(2, 12, 9));
+            commands.AddLast(new AddTreeCommand(2, 13, 9));
+            commands.AddLast(new AddTreeCommand(2, 14, 9));
+            commands.AddLast(new AddTreeCommand(2, 15, 9));
+            commands.AddLast(new AddTreeCommand(2, 16, 9));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 10));
+            commands.AddLast(new AddTreeCommand(2, 12, 10));
+            commands.AddLast(new AddTreeCommand(2, 13, 10));
+            commands.AddLast(new AddTreeCommand(2, 14, 10));
+            commands.AddLast(new AddTreeCommand(2, 15, 10));
+            commands.AddLast(new AddTreeCommand(2, 16, 10));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 11));
+            commands.AddLast(new AddTreeCommand(2, 12, 11));
+            commands.AddLast(new AddTreeCommand(2, 13, 11));
+            commands.AddLast(new AddTreeCommand(2, 14, 11));
+            commands.AddLast(new AddTreeCommand(2, 15, 11));
+            commands.AddLast(new AddTreeCommand(2, 16, 11));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 12));
+            commands.AddLast(new AddTreeCommand(2, 12, 12));
+            commands.AddLast(new AddTreeCommand(2, 13, 12));
+            commands.AddLast(new AddTreeCommand(2, 14, 12));
+            commands.AddLast(new AddTreeCommand(2, 15, 12));
+            commands.AddLast(new AddTreeCommand(2, 16, 12));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 13));
+            commands.AddLast(new AddTreeCommand(2, 12, 13));
+            commands.AddLast(new AddTreeCommand(2, 13, 13));
+            commands.AddLast(new AddTreeCommand(2, 14, 13));
+            commands.AddLast(new AddTreeCommand(2, 15, 13));
+            commands.AddLast(new AddTreeCommand(2, 16, 13));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 14));
+            commands.AddLast(new AddTreeCommand(2, 12, 14));
+            commands.AddLast(new AddTreeCommand(2, 13, 14));
+            commands.AddLast(new AddTreeCommand(2, 14, 14));
+            commands.AddLast(new AddTreeCommand(2, 15, 14));
+            commands.AddLast(new AddTreeCommand(2, 16, 14));
+
+
+            commands.AddLast(new AddPortalCommand(4, 16, 6, 5, 1));
+            commands.AddLast(new AddPortalCommand(4, 16, 7, 5, 1));
+            commands.AddLast(new AddPortalCommand(4, 16, 8, 5, 1));
+
+            commands.AddLast(new AddPortalCommand(4, 7, 14, 7, 5));
+            commands.AddLast(new AddPortalCommand(4, 8, 14, 7, 5));
+            commands.AddLast(new AddPortalCommand(4, 9, 14, 7, 5));
+            commands.AddLast(new AddPortalCommand(4, 10, 14, 7, 5));
+        }
+
+        private void BuildScreen1(LinkedList<WorldBuilderCommand> commands)
+        {
+            commands.AddLast(new DeclareScreenCommand(1, 0));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 2, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 3, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 4, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 5, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 6, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 7, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 8, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 9, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 10, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 11, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 12, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 13, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 14, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 0));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 2, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 3, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 4, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 5, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 6, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 7, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 8, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 9, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 10, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 11, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 12, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 13, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 14, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 1));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 2));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 2));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 2));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 2));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 3));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 3));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 3));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 3));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 4));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 4));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 4));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 4));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 5));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 5));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 5));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 5));
+
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 9));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 9));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 9));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 9));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 10));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 10));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 10));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 10));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 11));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 11));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 11));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 11));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 12));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 12));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 12));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 12));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 13));
+
+
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 2, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 3, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 4, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 5, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 6, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 10, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 11, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 12, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 13, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 14, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 13));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 2, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 3, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 4, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 5, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 6, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 10, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 11, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 12, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 13, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 14, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 14));
+
+            commands.AddLast(new AddTreeCommand(2, 3, 3));
+            commands.AddLast(new AddTreeCommand(2, 5, 3));
+            commands.AddLast(new AddTreeCommand(2, 7, 3));
+            commands.AddLast(new AddTreeCommand(2, 9, 3));
+            commands.AddLast(new AddTreeCommand(2, 11, 3));
+            commands.AddLast(new AddTreeCommand(2, 13, 3));
+
+            commands.AddLast(new AddTreeCommand(2, 3, 5));
+            commands.AddLast(new AddTreeCommand(2, 5, 5));
+            commands.AddLast(new AddTreeCommand(2, 7, 5));
+            commands.AddLast(new AddTreeCommand(2, 9, 5));
+            commands.AddLast(new AddTreeCommand(2, 11, 5));
+            commands.AddLast(new AddTreeCommand(2, 13, 5));
+
+            commands.AddLast(new AddTreeCommand(2, 3, 9));
+            commands.AddLast(new AddTreeCommand(2, 5, 9));
+            commands.AddLast(new AddTreeCommand(2, 7, 9));
+            commands.AddLast(new AddTreeCommand(2, 9, 9));
+            commands.AddLast(new AddTreeCommand(2, 11, 9));
+            commands.AddLast(new AddTreeCommand(2, 13, 9));
+
+            commands.AddLast(new AddTreeCommand(2, 3, 11));
+            commands.AddLast(new AddTreeCommand(2, 5, 11));
+            commands.AddLast(new AddTreeCommand(2, 7, 11));
+            commands.AddLast(new AddTreeCommand(2, 9, 11));
+            commands.AddLast(new AddTreeCommand(2, 11, 11));
+            commands.AddLast(new AddTreeCommand(2, 13, 11));
+
+
+
+            commands.AddLast(new AddPortalCommand(4, 0, 6, 3, 0));
+            commands.AddLast(new AddPortalCommand(4, 0, 7, 3, 0));
+            commands.AddLast(new AddPortalCommand(4, 0, 8, 3, 0));
+
+            commands.AddLast(new AddPortalCommand(4, 7, 14, 7, 6));
+            commands.AddLast(new AddPortalCommand(4, 8, 14, 7, 6));
+            commands.AddLast(new AddPortalCommand(4, 9, 14, 7, 6));
+
+            commands.AddLast(new AddPortalCommand(4, 16, 6, 5, 2));
+            commands.AddLast(new AddPortalCommand(4, 16, 7, 5, 2));
+            commands.AddLast(new AddPortalCommand(4, 16, 8, 5, 2));
+        }
+
+        private void BuildScreen2(LinkedList<WorldBuilderCommand> commands)
+        {
+            commands.AddLast(new DeclareScreenCommand(2, 0));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 2, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 3, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 4, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 5, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 6, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 7, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 8, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 9, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 10, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 11, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 12, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 13, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 14, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 0));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 2, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 3, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 4, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 5, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 6, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 7, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 8, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 9, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 10, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 11, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 12, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 13, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 14, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 1));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 2));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 2));
+            commands.AddLast(new AddWaterCommand(2, 15, 2));
+            commands.AddLast(new AddWaterCommand(2, 16, 2));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 3));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 3));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 3));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 3));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 4));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 4));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 4));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 4));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 5));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 5));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 5));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 5));
+
+            commands.AddLast(new AddStoneWallCommand(2, 15, 6));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 6));
+
+            commands.AddLast(new AddStoneWallCommand(2, 15, 7));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 7));
+
+            commands.AddLast(new AddStoneWallCommand(2, 15, 8));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 8));
+
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 9));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 9));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 9));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 9));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 10));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 10));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 10));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 10));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 11));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 11));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 11));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 11));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 12));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 12));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 12));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 12));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 13));
+
+
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 2, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 3, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 4, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 5, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 6, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 7, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 8, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 9, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 10, 13));
+            commands.AddLast(new AddWaterCommand(2, 11, 13));
+            commands.AddLast(new AddWaterCommand(2, 12, 13));
+            commands.AddLast(new AddWaterCommand(2, 13, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 14, 13));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 13));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 2, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 3, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 4, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 5, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 6, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 7, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 8, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 9, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 10, 14));
+            commands.AddLast(new AddWaterCommand(2, 11, 14));
+            commands.AddLast(new AddWaterCommand(2, 12, 14));
+            commands.AddLast(new AddWaterCommand(2, 13, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 14, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 14));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 14));
+
+
+
+
+            commands.AddLast(new AddWaterCommand(2, 2, 2));
+            commands.AddLast(new AddWaterCommand(2, 3, 2));
+            commands.AddLast(new AddWaterCommand(2, 4, 2));
+            commands.AddLast(new AddWaterCommand(2, 5, 2));
+            commands.AddLast(new AddWaterCommand(2, 6, 2));
+            commands.AddLast(new AddWaterCommand(2, 7, 2));
+            commands.AddLast(new AddWaterCommand(2, 8, 2));
+            commands.AddLast(new AddWaterCommand(2, 9, 2));
+            commands.AddLast(new AddWaterCommand(2, 10, 2));
+            commands.AddLast(new AddWaterCommand(2, 11, 2));
+            commands.AddLast(new AddWaterCommand(2, 12, 2));
+            commands.AddLast(new AddWaterCommand(2, 13, 2));
+            commands.AddLast(new AddWaterCommand(2, 14, 2));
+
+            commands.AddLast(new AddWaterCommand(2, 2, 3));
+            commands.AddLast(new AddWaterCommand(2, 3, 3));
+            commands.AddLast(new AddWaterCommand(2, 4, 3));
+            commands.AddLast(new AddWaterCommand(2, 5, 3));
+            commands.AddLast(new AddWaterCommand(2, 6, 3));
+            commands.AddLast(new AddWaterCommand(2, 7, 3));
+            commands.AddLast(new AddWaterCommand(2, 8, 3));
+            commands.AddLast(new AddWaterCommand(2, 9, 3));
+            commands.AddLast(new AddWaterCommand(2, 10, 3));
+            commands.AddLast(new AddWaterCommand(2, 11, 3));
+            commands.AddLast(new AddWaterCommand(2, 12, 3));
+            commands.AddLast(new AddWaterCommand(2, 13, 3));
+            commands.AddLast(new AddWaterCommand(2, 14, 3));
+
+            commands.AddLast(new AddWaterCommand(2, 2, 4));
+            commands.AddLast(new AddWaterCommand(2, 3, 4));
+            commands.AddLast(new AddWaterCommand(2, 4, 4));
+            commands.AddLast(new AddWaterCommand(2, 5, 4));
+            commands.AddLast(new AddWaterCommand(2, 6, 4));
+            commands.AddLast(new AddWaterCommand(2, 7, 4));
+            commands.AddLast(new AddWaterCommand(2, 8, 4));
+            commands.AddLast(new AddWaterCommand(2, 9, 4));
+            commands.AddLast(new AddWaterCommand(2, 10, 4));
+            commands.AddLast(new AddWaterCommand(2, 11, 4));
+            commands.AddLast(new AddWaterCommand(2, 12, 4));
+            commands.AddLast(new AddWaterCommand(2, 13, 4));
+            commands.AddLast(new AddWaterCommand(2, 14, 4));
+
+            commands.AddLast(new AddWaterCommand(2, 2, 5));
+            commands.AddLast(new AddWaterCommand(2, 3, 5));
+            commands.AddLast(new AddWaterCommand(2, 4, 5));
+            commands.AddLast(new AddWaterCommand(2, 5, 5));
+            commands.AddLast(new AddWaterCommand(2, 6, 5));
+            commands.AddLast(new AddWaterCommand(2, 10, 5));
+            commands.AddLast(new AddWaterCommand(2, 11, 5));
+            commands.AddLast(new AddWaterCommand(2, 12, 5));
+            commands.AddLast(new AddWaterCommand(2, 13, 5));
+            commands.AddLast(new AddWaterCommand(2, 14, 5));
+
+
+
+
+
+            commands.AddLast(new AddWaterCommand(2, 2, 9));
+            commands.AddLast(new AddWaterCommand(2, 3, 9));
+            commands.AddLast(new AddWaterCommand(2, 4, 9));
+            commands.AddLast(new AddWaterCommand(2, 5, 9));
+            commands.AddLast(new AddWaterCommand(2, 6, 9));
+            commands.AddLast(new AddWaterCommand(2, 10, 9));
+            commands.AddLast(new AddWaterCommand(2, 11, 9));
+            commands.AddLast(new AddWaterCommand(2, 12, 9));
+            commands.AddLast(new AddWaterCommand(2, 13, 9));
+            commands.AddLast(new AddWaterCommand(2, 14, 9));
+
+            commands.AddLast(new AddWaterCommand(2, 2, 10));
+            commands.AddLast(new AddWaterCommand(2, 3, 10));
+            commands.AddLast(new AddWaterCommand(2, 4, 10));
+            commands.AddLast(new AddWaterCommand(2, 5, 10));
+            commands.AddLast(new AddWaterCommand(2, 6, 10));
+            commands.AddLast(new AddWaterCommand(2, 7, 10));
+            commands.AddLast(new AddWaterCommand(2, 8, 10));
+            commands.AddLast(new AddWaterCommand(2, 9, 10));
+            commands.AddLast(new AddWaterCommand(2, 10, 10));
+            commands.AddLast(new AddWaterCommand(2, 11, 10));
+            commands.AddLast(new AddWaterCommand(2, 12, 10));
+            commands.AddLast(new AddWaterCommand(2, 13, 10));
+            commands.AddLast(new AddWaterCommand(2, 14, 10));
+
+            commands.AddLast(new AddWaterCommand(2, 2, 11));
+            commands.AddLast(new AddWaterCommand(2, 3, 11));
+            commands.AddLast(new AddWaterCommand(2, 4, 11));
+            commands.AddLast(new AddWaterCommand(2, 5, 11));
+            commands.AddLast(new AddWaterCommand(2, 6, 11));
+            commands.AddLast(new AddWaterCommand(2, 7, 11));
+            commands.AddLast(new AddWaterCommand(2, 8, 11));
+            commands.AddLast(new AddWaterCommand(2, 9, 11));
+            commands.AddLast(new AddWaterCommand(2, 10, 11));
+            commands.AddLast(new AddWaterCommand(2, 11, 11));
+            commands.AddLast(new AddWaterCommand(2, 12, 11));
+            commands.AddLast(new AddWaterCommand(2, 13, 11));
+            commands.AddLast(new AddWaterCommand(2, 14, 11));
+
+            commands.AddLast(new AddWaterCommand(2, 2, 12));
+            commands.AddLast(new AddWaterCommand(2, 3, 12));
+            commands.AddLast(new AddWaterCommand(2, 4, 12));
+            commands.AddLast(new AddWaterCommand(2, 5, 12));
+            commands.AddLast(new AddWaterCommand(2, 6, 12));
+            commands.AddLast(new AddWaterCommand(2, 7, 12));
+            commands.AddLast(new AddWaterCommand(2, 8, 12));
+            commands.AddLast(new AddWaterCommand(2, 9, 12));
+            commands.AddLast(new AddWaterCommand(2, 10, 12));
+            commands.AddLast(new AddWaterCommand(2, 11, 12));
+            commands.AddLast(new AddWaterCommand(2, 12, 12));
+            commands.AddLast(new AddWaterCommand(2, 13, 12));
+            commands.AddLast(new AddWaterCommand(2, 14, 12));
+
+
+            commands.AddLast(new AddRockCommand(2, 0, 6));
+            commands.AddLast(new AddRockCommand(2, 1, 6));
+            commands.AddLast(new AddRockCommand(2, 2, 6));
+            commands.AddLast(new AddRockCommand(2, 3, 6));
+            commands.AddLast(new AddRockCommand(2, 4, 6));
+            commands.AddLast(new AddRockCommand(2, 5, 6));
+            commands.AddLast(new AddRockCommand(2, 6, 6));
+            commands.AddLast(new AddRockCommand(2, 7, 5));
+            commands.AddLast(new AddRockCommand(2, 8, 5));
+            commands.AddLast(new AddRockCommand(2, 9, 5));
+            commands.AddLast(new AddRockCommand(2, 10, 6));
+
+            commands.AddLast(new AddRockCommand(2, 10, 7));
+
+            commands.AddLast(new AddRockCommand(2, 0, 8));
+            commands.AddLast(new AddRockCommand(2, 1, 8));
+            commands.AddLast(new AddRockCommand(2, 2, 8));
+            commands.AddLast(new AddRockCommand(2, 3, 8));
+            commands.AddLast(new AddRockCommand(2, 4, 8));
+            commands.AddLast(new AddRockCommand(2, 5, 8));
+            commands.AddLast(new AddRockCommand(2, 6, 8));
+            commands.AddLast(new AddRockCommand(2, 7, 9));
+            commands.AddLast(new AddRockCommand(2, 8, 9));
+            commands.AddLast(new AddRockCommand(2, 9, 9));
+            commands.AddLast(new AddRockCommand(2, 10, 8));
+
+
+            commands.AddLast(new AddWaterCommand(2, 11, 6));
+            commands.AddLast(new AddWaterCommand(2, 12, 6));
+            commands.AddLast(new AddWaterCommand(2, 13, 6));
+            commands.AddLast(new AddWaterCommand(2, 14, 6));
+
+            commands.AddLast(new AddWaterCommand(2, 11, 7));
+            commands.AddLast(new AddWaterCommand(2, 12, 7));
+            commands.AddLast(new AddWaterCommand(2, 13, 7));
+            commands.AddLast(new AddWaterCommand(2, 14, 7));
+
+            commands.AddLast(new AddWaterCommand(2, 11, 8));
+            commands.AddLast(new AddWaterCommand(2, 12, 8));
+            commands.AddLast(new AddWaterCommand(2, 13, 8));
+            commands.AddLast(new AddWaterCommand(2, 14, 8));
+
+
+
+
+
+
+
+
+
+
+
+
+            commands.AddLast(new AddPortalCommand(4, 0, 6, 3, 1));
+            commands.AddLast(new AddPortalCommand(4, 0, 7, 3, 1));
+            commands.AddLast(new AddPortalCommand(4, 0, 8, 3, 1));
+
+
+        }
+
 
         private void BuildScreen5(LinkedList<WorldBuilderCommand> commands)
         {
@@ -229,10 +907,10 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 16, 14));
 
 
-            commands.AddLast(new AddPortalCommand(4, 0, 7, 1, 0));
-            commands.AddLast(new AddPortalCommand(4, 0, 8, 1, 0));
-            commands.AddLast(new AddPortalCommand(4, 0, 9, 1, 0));
-            commands.AddLast(new AddPortalCommand(4, 0, 10, 1, 0));
+            commands.AddLast(new AddPortalCommand(4, 7, 0, 1, 0));
+            commands.AddLast(new AddPortalCommand(4, 8, 0, 1, 0));
+            commands.AddLast(new AddPortalCommand(4, 9, 0, 1, 0));
+            commands.AddLast(new AddPortalCommand(4, 10, 0, 1, 0));
 
             commands.AddLast(new AddPortalCommand(4, 16, 7, 5, 6));
             commands.AddLast(new AddPortalCommand(4, 16, 8, 5, 6));
@@ -240,6 +918,209 @@ namespace ServiceProxy
             commands.AddLast(new AddPortalCommand(4, 8, 14, 7, 10));
             commands.AddLast(new AddPortalCommand(4, 9, 14, 7, 10));
             commands.AddLast(new AddPortalCommand(4, 10, 14, 7, 10));
+        }
+
+
+        private void BuildScreen6(LinkedList<WorldBuilderCommand> commands)
+        {
+            commands.AddLast(new DeclareScreenCommand(1, 1));
+
+            // Upper-left forest. Think Composite!!!
+            commands.AddLast(new AddStoneWallCommand(2, 0, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 2, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 3, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 4, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 5, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 6, 0));
+
+            commands.AddLast(new AddStoneWallCommand(2, 0, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 1, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 2, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 3, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 4, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 5, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 6, 1));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 2));
+            commands.AddLast(new AddTreeCommand(2, 1, 2));
+            commands.AddLast(new AddTreeCommand(2, 2, 2));
+            commands.AddLast(new AddTreeCommand(2, 3, 2));
+            commands.AddLast(new AddTreeCommand(2, 4, 2));
+            commands.AddLast(new AddTreeCommand(2, 5, 2));
+            commands.AddLast(new AddTreeCommand(2, 6, 2));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 3));
+            commands.AddLast(new AddTreeCommand(2, 1, 3));
+            commands.AddLast(new AddTreeCommand(2, 2, 3));
+            commands.AddLast(new AddTreeCommand(2, 3, 3));
+            commands.AddLast(new AddTreeCommand(2, 4, 3));
+            commands.AddLast(new AddTreeCommand(2, 5, 3));
+            commands.AddLast(new AddTreeCommand(2, 6, 3));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 4));
+            commands.AddLast(new AddTreeCommand(2, 1, 4));
+            commands.AddLast(new AddTreeCommand(2, 2, 4));
+            commands.AddLast(new AddTreeCommand(2, 3, 4));
+            commands.AddLast(new AddTreeCommand(2, 4, 4));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 5));
+            commands.AddLast(new AddTreeCommand(2, 1, 5));
+            commands.AddLast(new AddTreeCommand(2, 2, 5));
+            commands.AddLast(new AddTreeCommand(2, 3, 5));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 6));
+            commands.AddLast(new AddTreeCommand(2, 1, 6));
+            commands.AddLast(new AddTreeCommand(2, 2, 6));
+
+
+            // Upper-right forest
+            commands.AddLast(new AddStoneWallCommand(2, 11, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 12, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 13, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 14, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 0));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 0));
+
+            commands.AddLast(new AddStoneWallCommand(2, 11, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 12, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 13, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 14, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 15, 1));
+            commands.AddLast(new AddStoneWallCommand(2, 16, 1));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 2));
+            commands.AddLast(new AddTreeCommand(2, 12, 2));
+            commands.AddLast(new AddTreeCommand(2, 13, 2));
+            commands.AddLast(new AddTreeCommand(2, 14, 2));
+            commands.AddLast(new AddTreeCommand(2, 15, 2));
+            commands.AddLast(new AddTreeCommand(2, 16, 2));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 3));
+            commands.AddLast(new AddTreeCommand(2, 12, 3));
+            commands.AddLast(new AddTreeCommand(2, 13, 3));
+            commands.AddLast(new AddTreeCommand(2, 14, 3));
+            commands.AddLast(new AddTreeCommand(2, 15, 3));
+            commands.AddLast(new AddTreeCommand(2, 16, 3));
+
+            commands.AddLast(new AddTreeCommand(2, 12, 4));
+            commands.AddLast(new AddTreeCommand(2, 13, 4));
+            commands.AddLast(new AddTreeCommand(2, 14, 4));
+            commands.AddLast(new AddTreeCommand(2, 15, 4));
+            commands.AddLast(new AddTreeCommand(2, 16, 4));
+
+            commands.AddLast(new AddTreeCommand(4, 16, 5));
+            commands.AddLast(new AddTreeCommand(4, 16, 6));
+
+
+            // Lower-left forest
+            commands.AddLast(new AddTreeCommand(2, 0, 9));
+            commands.AddLast(new AddTreeCommand(2, 1, 9));
+            commands.AddLast(new AddTreeCommand(2, 2, 9));
+            commands.AddLast(new AddTreeCommand(2, 3, 9));
+            commands.AddLast(new AddTreeCommand(2, 4, 9));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 10));
+            commands.AddLast(new AddTreeCommand(2, 1, 10));
+            commands.AddLast(new AddTreeCommand(2, 2, 10));
+            commands.AddLast(new AddTreeCommand(2, 3, 10));
+            commands.AddLast(new AddTreeCommand(2, 4, 10));
+            commands.AddLast(new AddTreeCommand(2, 5, 10));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 11));
+            commands.AddLast(new AddTreeCommand(2, 1, 11));
+            commands.AddLast(new AddTreeCommand(2, 2, 11));
+            commands.AddLast(new AddTreeCommand(2, 3, 11));
+            commands.AddLast(new AddTreeCommand(2, 4, 11));
+            commands.AddLast(new AddTreeCommand(2, 5, 11));
+            commands.AddLast(new AddTreeCommand(2, 6, 11));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 12));
+            commands.AddLast(new AddTreeCommand(2, 1, 12));
+            commands.AddLast(new AddTreeCommand(2, 2, 12));
+            commands.AddLast(new AddTreeCommand(2, 3, 12));
+            commands.AddLast(new AddTreeCommand(2, 4, 12));
+            commands.AddLast(new AddTreeCommand(2, 5, 12));
+            commands.AddLast(new AddTreeCommand(2, 6, 12));
+            commands.AddLast(new AddTreeCommand(2, 7, 12));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 13));
+            commands.AddLast(new AddTreeCommand(2, 1, 13));
+            commands.AddLast(new AddTreeCommand(2, 2, 13));
+            commands.AddLast(new AddTreeCommand(2, 3, 13));
+            commands.AddLast(new AddTreeCommand(2, 4, 13));
+            commands.AddLast(new AddTreeCommand(2, 5, 13));
+            commands.AddLast(new AddTreeCommand(2, 6, 13));
+            commands.AddLast(new AddTreeCommand(2, 7, 13));
+
+            commands.AddLast(new AddTreeCommand(2, 0, 14));
+            commands.AddLast(new AddTreeCommand(2, 1, 14));
+            commands.AddLast(new AddTreeCommand(2, 2, 14));
+            commands.AddLast(new AddTreeCommand(2, 3, 14));
+            commands.AddLast(new AddTreeCommand(2, 4, 14));
+            commands.AddLast(new AddTreeCommand(2, 5, 14));
+            commands.AddLast(new AddTreeCommand(2, 6, 14));
+            commands.AddLast(new AddTreeCommand(2, 7, 14));
+
+
+            // Lower-right forest
+            commands.AddLast(new AddTreeCommand(2, 12, 9));
+            commands.AddLast(new AddTreeCommand(2, 13, 9));
+            commands.AddLast(new AddTreeCommand(2, 14, 9));
+            commands.AddLast(new AddTreeCommand(2, 15, 9));
+            commands.AddLast(new AddTreeCommand(2, 16, 9));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 10));
+            commands.AddLast(new AddTreeCommand(2, 12, 10));
+            commands.AddLast(new AddTreeCommand(2, 13, 10));
+            commands.AddLast(new AddTreeCommand(2, 14, 10));
+            commands.AddLast(new AddTreeCommand(2, 15, 10));
+            commands.AddLast(new AddTreeCommand(2, 16, 10));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 11));
+            commands.AddLast(new AddTreeCommand(2, 12, 11));
+            commands.AddLast(new AddTreeCommand(2, 13, 11));
+            commands.AddLast(new AddTreeCommand(2, 14, 11));
+            commands.AddLast(new AddTreeCommand(2, 15, 11));
+            commands.AddLast(new AddTreeCommand(2, 16, 11));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 12));
+            commands.AddLast(new AddTreeCommand(2, 12, 12));
+            commands.AddLast(new AddTreeCommand(2, 13, 12));
+            commands.AddLast(new AddTreeCommand(2, 14, 12));
+            commands.AddLast(new AddTreeCommand(2, 15, 12));
+            commands.AddLast(new AddTreeCommand(2, 16, 12));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 13));
+            commands.AddLast(new AddTreeCommand(2, 12, 13));
+            commands.AddLast(new AddTreeCommand(2, 13, 13));
+            commands.AddLast(new AddTreeCommand(2, 14, 13));
+            commands.AddLast(new AddTreeCommand(2, 15, 13));
+            commands.AddLast(new AddTreeCommand(2, 16, 13));
+
+            commands.AddLast(new AddTreeCommand(2, 11, 14));
+            commands.AddLast(new AddTreeCommand(2, 12, 14));
+            commands.AddLast(new AddTreeCommand(2, 13, 14));
+            commands.AddLast(new AddTreeCommand(2, 14, 14));
+            commands.AddLast(new AddTreeCommand(2, 15, 14));
+            commands.AddLast(new AddTreeCommand(2, 16, 14));
+
+
+            commands.AddLast(new AddPortalCommand(4, 0, 7, 3, 11));
+            commands.AddLast(new AddPortalCommand(4, 0, 8, 3, 11));
+
+
+            commands.AddLast(new AddPortalCommand(4, 7, 0, 1, 7));
+            commands.AddLast(new AddPortalCommand(4, 8, 0, 1, 7));
+            commands.AddLast(new AddPortalCommand(4, 9, 0, 1, 7));
+            commands.AddLast(new AddPortalCommand(4, 10, 0, 1, 7));
+
+            commands.AddLast(new AddPortalCommand(4, 16, 7, 5, 13));
+            commands.AddLast(new AddPortalCommand(4, 16, 8, 5, 13));
+
+            commands.AddLast(new AddPortalCommand(4, 8, 14, 7, 17));
+            commands.AddLast(new AddPortalCommand(4, 9, 14, 7, 17));
+            commands.AddLast(new AddPortalCommand(4, 10, 14, 7, 17));
         }
 
         private void BuildScreen10(LinkedList<WorldBuilderCommand> commands)

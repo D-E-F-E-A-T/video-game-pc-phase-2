@@ -244,8 +244,10 @@
     <ClInclude Include="Model\Movable.h" />
     <ClInclude Include="Model\Layer.h" />
     <ClInclude Include="Model\Player.h" />
+    <ClInclude Include="Model\Rock.h" />
     <ClInclude Include="Model\Sand.h" />
     <ClInclude Include="Model\Stack.h" />
+    <ClInclude Include="Model\StoneWall.h" />
     <ClInclude Include="Model\Sword.h" />
     <ClInclude Include="Model\Thing.h" />
     <ClInclude Include="Model\Tree.h" />

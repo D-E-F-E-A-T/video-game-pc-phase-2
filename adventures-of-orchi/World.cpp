@@ -4,6 +4,8 @@
 #include "Model\Tree.h"
 #include "Model\Portal.h"
 #include "Model\Water.h"
+#include "Model\StoneWall.h"
+#include "Model\Rock.h"
 
 using namespace Windows::Foundation::Collections;
 using namespace std;
@@ -82,7 +84,7 @@ void World::Build(float2 fScreenDimensions, const shared_ptr<DeviceResources>& d
 				((ServiceProxy::AddPortalCommand ^)command)->Destination,
 				deviceResources));
 		}
-		if (command->Type == ADD_WATER_COMMAND)
+		else if (command->Type == ADD_WATER_COMMAND)
 		{
 			ScreenUtils::CalculateSquareCenter(
 				fScreenDimensions.x,
@@ -93,6 +95,38 @@ void World::Build(float2 fScreenDimensions, const shared_ptr<DeviceResources>& d
 				&y);
 
 			(m_lpStacks + m_nCurrentStackIndex)->Add(LAYER_COLLIDABLES, new Water(
+				float2(x, y),
+				float2(1.f, 1.f),
+				true,
+				deviceResources));
+		}
+		else if (command->Type == ADD_STONEWALL_COMMAND)
+		{
+			ScreenUtils::CalculateSquareCenter(
+				fScreenDimensions.x,
+				fScreenDimensions.y,
+				((ServiceProxy::AddStoneWallCommand ^)command)->X,
+				((ServiceProxy::AddStoneWallCommand ^)command)->Y,
+				&x,
+				&y);
+
+			(m_lpStacks + m_nCurrentStackIndex)->Add(LAYER_COLLIDABLES, new StoneWall(
+				float2(x, y),
+				float2(1.f, 1.f),
+				true,
+				deviceResources));
+		}
+		else if (command->Type == ADD_ROCK_COMMAND)
+		{
+			ScreenUtils::CalculateSquareCenter(
+				fScreenDimensions.x,
+				fScreenDimensions.y,
+				((ServiceProxy::AddRockCommand ^)command)->X,
+				((ServiceProxy::AddRockCommand ^)command)->Y,
+				&x,
+				&y);
+
+			(m_lpStacks + m_nCurrentStackIndex)->Add(LAYER_COLLIDABLES, new Rock(
 				float2(x, y),
 				float2(1.f, 1.f),
 				true,
