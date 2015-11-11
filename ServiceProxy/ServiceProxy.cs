@@ -654,6 +654,12 @@ namespace ServiceProxy
 
 
             // Lower-left forest
+            commands.AddLast(new AddTreeCommand(2, 0, 9));
+            commands.AddLast(new AddTreeCommand(2, 1, 9));
+            commands.AddLast(new AddTreeCommand(2, 2, 9));
+            commands.AddLast(new AddTreeCommand(2, 3, 9));
+            commands.AddLast(new AddTreeCommand(2, 4, 9));
+
             commands.AddLast(new AddTreeCommand(2, 0, 10));
             commands.AddLast(new AddTreeCommand(2, 1, 10));
             commands.AddLast(new AddTreeCommand(2, 2, 10));
@@ -676,7 +682,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 12));
             commands.AddLast(new AddTreeCommand(2, 5, 12));
             commands.AddLast(new AddTreeCommand(2, 6, 12));
-            commands.AddLast(new AddTreeCommand(2, 7, 12));
 
             commands.AddLast(new AddTreeCommand(2, 0, 13));
             commands.AddLast(new AddTreeCommand(2, 1, 13));
@@ -685,7 +690,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 13));
             commands.AddLast(new AddTreeCommand(2, 5, 13));
             commands.AddLast(new AddTreeCommand(2, 6, 13));
-            commands.AddLast(new AddTreeCommand(2, 7, 13));
 
             commands.AddLast(new AddTreeCommand(2, 0, 14));
             commands.AddLast(new AddTreeCommand(2, 1, 14));
@@ -694,7 +698,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 14));
             commands.AddLast(new AddTreeCommand(2, 5, 14));
             commands.AddLast(new AddTreeCommand(2, 6, 14));
-            commands.AddLast(new AddTreeCommand(2, 7, 14));
 
 
             // Lower-right forest
@@ -742,7 +745,7 @@ namespace ServiceProxy
 
             commands.AddLast(new AddPortalCommand(4, 0, 7, 3, 11));
             commands.AddLast(new AddPortalCommand(4, 0, 8, 3, 11));
-            commands.AddLast(new AddPortalCommand(4, 0, 9, 3, 11));
+            
 
             commands.AddLast(new AddPortalCommand(4, 7, 0, 1, 7));
             commands.AddLast(new AddPortalCommand(4, 8, 0, 1, 7));
@@ -752,6 +755,7 @@ namespace ServiceProxy
             commands.AddLast(new AddPortalCommand(4, 16, 7, 5, 13));
             commands.AddLast(new AddPortalCommand(4, 16, 8, 5, 13));
 
+            commands.AddLast(new AddPortalCommand(4, 7, 14, 7, 17));
             commands.AddLast(new AddPortalCommand(4, 8, 14, 7, 17));
             commands.AddLast(new AddPortalCommand(4, 9, 14, 7, 17));
             commands.AddLast(new AddPortalCommand(4, 10, 14, 7, 17));
@@ -847,6 +851,12 @@ namespace ServiceProxy
 
 
             // Lower-left forest
+            commands.AddLast(new AddTreeCommand(2, 0, 9));
+            commands.AddLast(new AddTreeCommand(2, 1, 9));
+            commands.AddLast(new AddTreeCommand(2, 2, 9));
+            commands.AddLast(new AddTreeCommand(2, 3, 9));
+            commands.AddLast(new AddTreeCommand(2, 4, 9));
+
             commands.AddLast(new AddTreeCommand(2, 0, 10));
             commands.AddLast(new AddTreeCommand(2, 1, 10));
             commands.AddLast(new AddTreeCommand(2, 2, 10));
@@ -869,7 +879,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 12));
             commands.AddLast(new AddTreeCommand(2, 5, 12));
             commands.AddLast(new AddTreeCommand(2, 6, 12));
-            commands.AddLast(new AddTreeCommand(2, 7, 12));
 
             commands.AddLast(new AddTreeCommand(2, 0, 13));
             commands.AddLast(new AddTreeCommand(2, 1, 13));
@@ -878,7 +887,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 13));
             commands.AddLast(new AddTreeCommand(2, 5, 13));
             commands.AddLast(new AddTreeCommand(2, 6, 13));
-            commands.AddLast(new AddTreeCommand(2, 7, 13));
 
             commands.AddLast(new AddTreeCommand(2, 0, 14));
             commands.AddLast(new AddTreeCommand(2, 1, 14));
@@ -887,7 +895,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 14));
             commands.AddLast(new AddTreeCommand(2, 5, 14));
             commands.AddLast(new AddTreeCommand(2, 6, 14));
-            commands.AddLast(new AddTreeCommand(2, 7, 14));
 
 
             // Lower-right forest
@@ -935,7 +942,6 @@ namespace ServiceProxy
 
             commands.AddLast(new AddPortalCommand(4, 0, 7, 3, 16));
             commands.AddLast(new AddPortalCommand(4, 0, 8, 3, 16));
-            commands.AddLast(new AddPortalCommand(4, 0, 9, 3, 16));
 
             commands.AddLast(new AddPortalCommand(4, 7, 0, 1, 11));
             commands.AddLast(new AddPortalCommand(4, 8, 0, 1, 11));
@@ -947,6 +953,7 @@ namespace ServiceProxy
             commands.AddLast(new AddPortalCommand(4, 16, 7, 5, 14));
             commands.AddLast(new AddPortalCommand(4, 16, 8, 5, 14));
 
+            commands.AddLast(new AddPortalCommand(4, 7, 14, 7, 18));
             commands.AddLast(new AddPortalCommand(4, 8, 14, 7, 18));
             commands.AddLast(new AddPortalCommand(4, 9, 14, 7, 18));
             commands.AddLast(new AddPortalCommand(4, 10, 14, 7, 18));
@@ -983,7 +990,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 0, 4));
             commands.AddLast(new AddTreeCommand(2, 16, 4));
 
-            commands.AddLast(new AddTreeCommand(2, 0, 5));
             commands.AddLast(new AddTreeCommand(2, 16, 5));
 
             commands.AddLast(new AddTreeCommand(2, 7, 6));
@@ -1400,14 +1406,8 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 15, 4));
             commands.AddLast(new AddTreeCommand(2, 16, 4));
 
-            commands.AddLast(new AddTreeCommand(2, 12, 5));
-            commands.AddLast(new AddTreeCommand(2, 13, 5));
-            commands.AddLast(new AddTreeCommand(2, 14, 5));
-            commands.AddLast(new AddTreeCommand(2, 15, 5));
-            commands.AddLast(new AddTreeCommand(2, 16, 5));
-
-            commands.AddLast(new AddTreeCommand(4, 15, 6));
-            commands.AddLast(new AddTreeCommand(4, 16, 6));
+            commands.AddLast(new AddTreeCommand(4, 15, 5));
+            commands.AddLast(new AddTreeCommand(4, 16, 5));
 
 
             // Lower-left forest
@@ -1439,7 +1439,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 12));
             commands.AddLast(new AddTreeCommand(2, 5, 12));
             commands.AddLast(new AddTreeCommand(2, 6, 12));
-            commands.AddLast(new AddTreeCommand(2, 7, 12));
 
             commands.AddLast(new AddTreeCommand(2, 0, 13));
             commands.AddLast(new AddTreeCommand(2, 1, 13));
@@ -1448,7 +1447,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 13));
             commands.AddLast(new AddTreeCommand(2, 5, 13));
             commands.AddLast(new AddTreeCommand(2, 6, 13));
-            commands.AddLast(new AddTreeCommand(2, 7, 13));
 
             commands.AddLast(new AddTreeCommand(2, 0, 14));
             commands.AddLast(new AddTreeCommand(2, 1, 14));
@@ -1457,7 +1455,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 14));
             commands.AddLast(new AddTreeCommand(2, 5, 14));
             commands.AddLast(new AddTreeCommand(2, 6, 14));
-            commands.AddLast(new AddTreeCommand(2, 7, 14));
 
 
             // Lower-right forest
@@ -1511,6 +1508,7 @@ namespace ServiceProxy
             commands.AddLast(new AddPortalCommand(4, 9, 0, 1, 11));
             commands.AddLast(new AddPortalCommand(4, 10, 0, 1, 11));
 
+            commands.AddLast(new AddPortalCommand(4, 16, 5, 5, 17));
             commands.AddLast(new AddPortalCommand(4, 16, 6, 5, 17));
             commands.AddLast(new AddPortalCommand(4, 16, 7, 5, 17));
             commands.AddLast(new AddPortalCommand(4, 16, 8, 5, 17));
@@ -1606,12 +1604,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 15, 4));
             commands.AddLast(new AddTreeCommand(2, 16, 4));
 
-            commands.AddLast(new AddTreeCommand(2, 12, 5));
-            commands.AddLast(new AddTreeCommand(2, 13, 5));
-            commands.AddLast(new AddTreeCommand(2, 14, 5));
-            commands.AddLast(new AddTreeCommand(2, 15, 5));
-            commands.AddLast(new AddTreeCommand(2, 16, 5));
-
 
             // Lower-left forest
             commands.AddLast(new AddTreeCommand(2, 0, 9));
@@ -1642,7 +1634,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 12));
             commands.AddLast(new AddTreeCommand(2, 5, 12));
             commands.AddLast(new AddTreeCommand(2, 6, 12));
-            commands.AddLast(new AddTreeCommand(2, 7, 12));
 
             commands.AddLast(new AddTreeCommand(2, 0, 13));
             commands.AddLast(new AddTreeCommand(2, 1, 13));
@@ -1651,7 +1642,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 13));
             commands.AddLast(new AddTreeCommand(2, 5, 13));
             commands.AddLast(new AddTreeCommand(2, 6, 13));
-            commands.AddLast(new AddTreeCommand(2, 7, 13));
 
             commands.AddLast(new AddTreeCommand(2, 0, 14));
             commands.AddLast(new AddTreeCommand(2, 1, 14));
@@ -1660,7 +1650,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 4, 14));
             commands.AddLast(new AddTreeCommand(2, 5, 14));
             commands.AddLast(new AddTreeCommand(2, 6, 14));
-            commands.AddLast(new AddTreeCommand(2, 7, 14));
 
 
             // Lower-right forest
@@ -1715,6 +1704,7 @@ namespace ServiceProxy
             commands.AddLast(new AddPortalCommand(4, 9, 0, 1, 12));
             commands.AddLast(new AddPortalCommand(4, 10, 0, 1, 12));
 
+            commands.AddLast(new AddPortalCommand(4, 16, 5, 5, 18));
             commands.AddLast(new AddPortalCommand(4, 16, 6, 5, 18));
             commands.AddLast(new AddPortalCommand(4, 16, 7, 5, 18));
             commands.AddLast(new AddPortalCommand(4, 16, 8, 5, 18));
@@ -1805,11 +1795,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 15, 4));
             commands.AddLast(new AddTreeCommand(2, 16, 4));
 
-            commands.AddLast(new AddTreeCommand(2, 12, 5));
-            commands.AddLast(new AddTreeCommand(2, 13, 5));
-            commands.AddLast(new AddTreeCommand(2, 14, 5));
-            commands.AddLast(new AddTreeCommand(2, 15, 5));
-            commands.AddLast(new AddTreeCommand(2, 16, 5));
 
 
             // Lower-left forest
@@ -1899,6 +1884,7 @@ namespace ServiceProxy
             commands.AddLast(new AddPortalCommand(4, 9, 0, 1, 13));
             commands.AddLast(new AddPortalCommand(4, 10, 0, 1, 13));
 
+            commands.AddLast(new AddPortalCommand(4, 16, 4, 5, 19));
             commands.AddLast(new AddPortalCommand(4, 16, 5, 5, 19));
             commands.AddLast(new AddPortalCommand(4, 16, 6, 5, 19));
             commands.AddLast(new AddPortalCommand(4, 16, 7, 5, 19));
@@ -2215,13 +2201,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 15, 4));
             commands.AddLast(new AddTreeCommand(2, 16, 4));
 
-            commands.AddLast(new AddTreeCommand(2, 12, 5));
-            commands.AddLast(new AddTreeCommand(2, 13, 5));
-            commands.AddLast(new AddTreeCommand(2, 14, 5));
-            commands.AddLast(new AddTreeCommand(2, 15, 5));
-            commands.AddLast(new AddTreeCommand(2, 16, 5));
-
-
 
 
             commands.AddLast(new AddWaterCommand(2, 0, 9));
@@ -2429,12 +2408,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 14, 4));
             commands.AddLast(new AddTreeCommand(2, 15, 4));
             commands.AddLast(new AddTreeCommand(2, 16, 4));
-
-            commands.AddLast(new AddTreeCommand(2, 12, 5));
-            commands.AddLast(new AddTreeCommand(2, 13, 5));
-            commands.AddLast(new AddTreeCommand(2, 14, 5));
-            commands.AddLast(new AddTreeCommand(2, 15, 5));
-            commands.AddLast(new AddTreeCommand(2, 16, 5));
 
 
 
@@ -2644,11 +2617,6 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 15, 4));
             commands.AddLast(new AddTreeCommand(2, 16, 4));
 
-            commands.AddLast(new AddTreeCommand(2, 12, 5));
-            commands.AddLast(new AddTreeCommand(2, 13, 5));
-            commands.AddLast(new AddTreeCommand(2, 14, 5));
-            commands.AddLast(new AddTreeCommand(2, 15, 5));
-            commands.AddLast(new AddTreeCommand(2, 16, 5));
 
 
 
@@ -2979,9 +2947,13 @@ namespace ServiceProxy
             commands.AddLast(new AddTreeCommand(2, 15, 13));
             commands.AddLast(new AddTreeCommand(2, 16, 13));
 
-            commands.AddLast(new AddTreeCommand(2, 0, 13));
-            commands.AddLast(new AddTreeCommand(2, 1, 13));
-            commands.AddLast(new AddTreeCommand(2, 2, 13));
+            commands.AddLast(new AddWaterCommand(2, 0, 13));
+            commands.AddLast(new AddWaterCommand(2, 1, 13));
+            commands.AddLast(new AddWaterCommand(2, 2, 13));
+
+            commands.AddLast(new AddWaterCommand(2, 0, 14));
+            commands.AddLast(new AddWaterCommand(2, 1, 14));
+            commands.AddLast(new AddWaterCommand(2, 2, 14));
 
             commands.AddLast(new AddWaterCommand(2, 0, 14));
             commands.AddLast(new AddWaterCommand(2, 1, 14));
