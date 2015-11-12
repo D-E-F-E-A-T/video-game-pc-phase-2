@@ -181,8 +181,11 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 			m_pCurrentStack->Add(LAYER_PLAYERS, m_pPlayer);
 
 			m_pCollided->clear();
+
+#ifdef RENDER_DIAGNOSTICS
 			m_collidedRects.clear();
 			m_collidedRectStatuses.clear();
+#endif // RENDER_DIAGNOSTICS
 
 			return 0;
 		}
@@ -202,7 +205,7 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 			{
 				int intersectRect[4];
 
-				int nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
+				m_nCollisionState = m_pNarrowCollisionDetectionStrategy->Detect(
 					DEVICE_CONTEXT_3D,
 					DEVICE_3D,
 					m_pPlayer,
@@ -223,7 +226,7 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 					};
 
 					m_collidedRects.push_back(rect);
-					m_collidedRectStatuses.push_back(nCollisionState);
+					m_collidedRectStatuses.push_back(m_nCollisionState);
 				}
 #endif // RENDER_DIAGNOSTICS
 			}
@@ -306,7 +309,10 @@ void GameRenderer::Render()
 	//DrawInventoryText();
 	//DrawPackText();
 
+#ifdef RENDER_DIAGNOSTICS
 	grid.SetVisibility(true);
+#endif // RENDER_DIAGNOSTICS
+
 	grid.Draw(DEVICE_CONTEXT_2D, m_deviceResources->m_blackBrush);
 
 	RenderSpaces2D();

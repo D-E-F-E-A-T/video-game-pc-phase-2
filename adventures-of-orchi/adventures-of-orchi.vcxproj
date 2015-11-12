@@ -202,6 +202,7 @@
     <Image Include="heart.dds" />
     <Image Include="link.dds" />
     <Image Include="rock.dds" />
+    <Image Include="stairs.dds" />
     <Image Include="stonewall.dds" />
     <Image Include="test.dds" />
     <Image Include="tree.dds" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Model\Rock.h" />
     <ClInclude Include="Model\Sand.h" />
     <ClInclude Include="Model\Stack.h" />
+    <ClInclude Include="Model\Stairs.h" />
     <ClInclude Include="Model\StoneWall.h" />
     <ClInclude Include="Model\Sword.h" />
     <ClInclude Include="Model\Thing.h" />

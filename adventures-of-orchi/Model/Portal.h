@@ -5,13 +5,14 @@ class Portal : public Immovable
 {
 public:
 	Portal(
+		Platform::String ^ strTextureName,
 		float2 pfLocationRatio, 
 		float2 pfDimensionRatio, 
 		int nDirection, 
 		int nDestination,
 		const shared_ptr<DeviceResources>& deviceResources) :
 		Immovable(
-			nullptr, 
+			strTextureName, 
 			pfLocationRatio, 
 			pfDimensionRatio, 
 			false, 
@@ -35,10 +36,9 @@ public:
 	int GetDestination() { return m_nDestination; }
 
 protected:
-
-private:
-
 	int m_nDirection;
 	int m_nDestination;
+
+private:
 
 };

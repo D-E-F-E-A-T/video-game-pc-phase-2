@@ -233,6 +233,9 @@
     <ClInclude Include="Model\Rock.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="Model\Stairs.h">
+      <Filter>Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -252,6 +255,7 @@
     <Image Include="Assets\splash.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="stairs.dds" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

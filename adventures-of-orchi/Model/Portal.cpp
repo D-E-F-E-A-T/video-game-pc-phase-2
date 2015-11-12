@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "Portal.h"
+#include "Constants.h"
 
 void Portal::Render2D(float2 fWindowDimensions)
 {
+#ifdef RENDER_DIAGNOSTICS
 	float2 fScreenLocation = m_fLocationRatio * fWindowDimensions;
 
 	D2D1_RECT_F rect
@@ -15,7 +17,8 @@ void Portal::Render2D(float2 fWindowDimensions)
 
 	DEVICE_CONTEXT_2D->FillRectangle(
 		rect,
-		m_deviceResources->m_greenBrush.Get());
+		m_deviceResources->m_blackBrush.Get());
+#endif // RENDER_DIAGNOSTICS
 }
 
 void Portal::Render3D(

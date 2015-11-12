@@ -6,6 +6,7 @@
 #include "Model\Water.h"
 #include "Model\StoneWall.h"
 #include "Model\Rock.h"
+#include "Model\Stairs.h"
 
 using namespace Windows::Foundation::Collections;
 using namespace std;
@@ -78,6 +79,7 @@ void World::Build(float2 fScreenDimensions, const shared_ptr<DeviceResources>& d
 				&y);
 
 			(m_lpStacks + m_nCurrentStackIndex)->Add(LAYER_2D, new Portal(
+				nullptr,
 				float2(x, y),
 				float2(0.2f, 0.2f),
 				((ServiceProxy::AddPortalCommand ^)command)->Direction,
@@ -130,6 +132,22 @@ void World::Build(float2 fScreenDimensions, const shared_ptr<DeviceResources>& d
 				float2(x, y),
 				float2(1.f, 1.f),
 				true,
+				deviceResources));
+		}
+		else if (command->Type == ADD_STAIRS_COMMAND)
+		{
+			ScreenUtils::CalculateSquareCenter(
+				fScreenDimensions.x,
+				fScreenDimensions.y,
+				((ServiceProxy::AddStairsCommand ^)command)->X,
+				((ServiceProxy::AddStairsCommand ^)command)->Y,
+				&x,
+				&y);
+
+			(m_lpStacks + m_nCurrentStackIndex)->Add(LAYER_COLLIDABLES, new Stairs(
+				float2(x, y),
+				float2(1.0f, 1.0f),
+				((ServiceProxy::AddStairsCommand ^)command)->Destination,
 				deviceResources));
 		}
 	}
