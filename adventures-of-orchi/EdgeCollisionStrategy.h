@@ -4,7 +4,7 @@
 #include "..\Model\Player.h"
 #include "..\Model\Stack.h"
 
-class PortalCollisionStrategy
+class EdgeCollisionStrategy
 {
 public:
 	void Detect(

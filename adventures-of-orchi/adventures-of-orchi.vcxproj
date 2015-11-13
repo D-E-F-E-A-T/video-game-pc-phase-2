@@ -240,6 +240,7 @@
     <ClInclude Include="Model\AbsoluteLocationStrategy.h" />
     <ClInclude Include="Model\Character.h" />
     <ClInclude Include="Model\Diagnostic.h" />
+    <ClInclude Include="Model\Edge.h" />
     <ClInclude Include="Model\Grass.h" />
     <ClInclude Include="Model\GridSpaceLocationStrategy.h" />
     <ClInclude Include="Model\Movable.h" />
@@ -257,7 +258,7 @@
     <ClInclude Include="NarrowCollisionStrategy.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Model\Portal.h" />
-    <ClInclude Include="PortalCollisionStrategy.h" />
+    <ClInclude Include="EdgeCollisionStrategy.h" />
     <ClInclude Include="Render\Renderer.h" />
     <ClInclude Include="Render\SpriteRenderer.h" />
     <ClInclude Include="RightMargin.h" />
@@ -292,8 +293,8 @@
     <ClCompile Include="LeftMargin.cpp" />
     <ClCompile Include="LifePanel.cpp" />
     <ClCompile Include="MathUtils.cpp" />
+    <ClCompile Include="Model\Edge.cpp" />
     <ClCompile Include="Model\Player.cpp" />
-    <ClCompile Include="Model\Portal.cpp" />
     <ClCompile Include="Model\Space.cpp" />
     <ClCompile Include="Model\Stack.cpp" />
     <ClCompile Include="NarrowCollisionStrategy.cpp" />
@@ -305,7 +306,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="PortalCollisionStrategy.cpp" />
+    <ClCompile Include="EdgeCollisionStrategy.cpp" />
     <ClCompile Include="RightMargin.cpp" />
     <ClCompile Include="ScreenUtils.cpp" />
     <ClCompile Include="Sprites\BasicLoader.cpp" />

@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "PortalCollisionStrategy.h"
+#include "EdgeCollisionStrategy.h"
 #include "..\Model\Space.h"
 #include "..\Model\Stack.h"
 
 
-void PortalCollisionStrategy::Detect(
+void EdgeCollisionStrategy::Detect(
 	Player * player,
 	list<Space *> * spaces,
 	vector<Space *> * retVal,
@@ -24,7 +24,7 @@ void PortalCollisionStrategy::Detect(
 	}
 }
 
-bool PortalCollisionStrategy::IsClose(
+bool EdgeCollisionStrategy::IsClose(
 	Player * player,
 	Space * obstacle,
 	float * pfDistance)

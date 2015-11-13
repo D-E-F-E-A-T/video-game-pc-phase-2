@@ -114,11 +114,11 @@
     <ClCompile Include="Model\Stack.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="Model\Portal.cpp">
+    <ClCompile Include="World.cpp" />
+    <ClCompile Include="Model\Edge.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="PortalCollisionStrategy.cpp" />
-    <ClCompile Include="World.cpp" />
+    <ClCompile Include="EdgeCollisionStrategy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -222,7 +222,6 @@
     <ClInclude Include="Sprites\SpriteUtils.h">
       <Filter>Sprites</Filter>
     </ClInclude>
-    <ClInclude Include="PortalCollisionStrategy.h" />
     <ClInclude Include="Model\Layer.h">
       <Filter>Model</Filter>
     </ClInclude>
@@ -236,6 +235,10 @@
     <ClInclude Include="Model\Stairs.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="Model\Edge.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeCollisionStrategy.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

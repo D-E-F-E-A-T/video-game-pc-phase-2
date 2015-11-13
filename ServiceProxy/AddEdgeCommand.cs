@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceProxy
 {
-    public sealed class AddPortalCommand : WorldBuilderCommand
+    public sealed class AddEdgeCommand : WorldBuilderCommand
     {
         private int type;
         private int layerId;
@@ -53,7 +53,7 @@ namespace ServiceProxy
 
 
 
-        public AddPortalCommand(int layerId, int x, int y, int direction, int destination)
+        public AddEdgeCommand(int layerId, int x, int y, int direction, int destination)
         {
             this.type = 0;
             this.layerId = layerId;

@@ -6,7 +6,7 @@
 #include "LeftMargin.h"
 #include "RightMargin.h"
 #include "LifePanel.h"
-#include "..\Model\Portal.h"
+#include "..\Model\Edge.h"
 #include "Utils.h"
 
 using namespace adventures_of_orchi;
@@ -132,22 +132,22 @@ int GameRenderer::Update(DX::StepTimer const& timer)
 		// Idea: Precedence order of collided objects.
 		//	For example, if colliding with a tree
 		//	and a portal, then the Portal takes precedence.
-		vector<Space *> collidedPortals;
-		vector<float> collidedPortalsDistances;
+		vector<Space *> collidedEdges;
+		vector<float> collidedEdgesDistances;
 
-		m_pPortalCollisionDetectionStrategy->Detect(
+		m_pEdgeCollisionDetectionStrategy->Detect(
 			m_pPlayer,
 			m_pCollided,
-			&collidedPortals,
-			&collidedPortalsDistances);
+			&collidedEdges,
+			&collidedEdgesDistances);
 
-		if (collidedPortals.size() > 0)
+		if (collidedEdges.size() > 0)
 		{
 			int minIndex = 0;
 
-			::GetMinValue(collidedPortalsDistances, &minIndex);
+			::GetMinValue(collidedEdgesDistances, &minIndex);
 
-			int nDirection = ((Portal *)(collidedPortals.at(minIndex)))->GetDirection();
+			int nDirection = ((Edge *)(collidedEdges.at(minIndex)))->GetDirection();
 
 			if (nDirection == NORTH)
 			{

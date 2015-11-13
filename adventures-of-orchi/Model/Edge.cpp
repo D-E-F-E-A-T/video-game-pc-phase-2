@@ -1,8 +1,7 @@
 #include "pch.h"
-#include "Portal.h"
-#include "Constants.h"
+#include "Edge.h"
 
-void Portal::Render2D(float2 fWindowDimensions)
+void Edge::Render2D(float2 fWindowDimensions)
 {
 #ifdef RENDER_DIAGNOSTICS
 	float2 fScreenLocation = m_fLocationRatio * fWindowDimensions;
@@ -21,10 +20,10 @@ void Portal::Render2D(float2 fWindowDimensions)
 #endif // RENDER_DIAGNOSTICS
 }
 
-void Portal::Render3D(
+void Edge::Render3D(
 	ComPtr<ID3D11RenderTargetView> renderTargetView,
 	float2 fWindowDimensions,
 	float2 fScaleDimensions, float dpi)
 {
-
+	// No-op.
 }

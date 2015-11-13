@@ -2,7 +2,7 @@
 #include "World.h"
 #include "ScreenUtils.h"
 #include "Model\Tree.h"
-#include "Model\Portal.h"
+#include "Model\Edge.h"
 #include "Model\Water.h"
 #include "Model\StoneWall.h"
 #include "Model\Rock.h"
@@ -68,22 +68,21 @@ void World::Build(float2 fScreenDimensions, const shared_ptr<DeviceResources>& d
 				true,
 				deviceResources));
 		}
-		else if (command->Type == ADD_PORTAL_COMMAND)
+		else if (command->Type == ADD_EDGE_COMMAND)
 		{
 			ScreenUtils::CalculateSquareCenter(
 				fScreenDimensions.x,
 				fScreenDimensions.y,
-				((ServiceProxy::AddPortalCommand ^)command)->X,
-				((ServiceProxy::AddPortalCommand ^)command)->Y,
+				((ServiceProxy::AddEdgeCommand ^)command)->X,
+				((ServiceProxy::AddEdgeCommand ^)command)->Y,
 				&x,
 				&y);
 
-			(m_lpStacks + m_nCurrentStackIndex)->Add(LAYER_2D, new Portal(
-				nullptr,
+			(m_lpStacks + m_nCurrentStackIndex)->Add(LAYER_2D, new Edge(
 				float2(x, y),
 				float2(0.2f, 0.2f),
-				((ServiceProxy::AddPortalCommand ^)command)->Direction,
-				((ServiceProxy::AddPortalCommand ^)command)->Destination,
+				((ServiceProxy::AddEdgeCommand ^)command)->Direction,
+				((ServiceProxy::AddEdgeCommand ^)command)->Destination,
 				deviceResources));
 		}
 		else if (command->Type == ADD_WATER_COMMAND)
