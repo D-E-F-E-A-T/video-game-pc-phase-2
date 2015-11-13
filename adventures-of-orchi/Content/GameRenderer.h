@@ -10,6 +10,7 @@
 #include "Model\Stack.h"
 #include "..\EdgeCollisionStrategy.h"
 #include "..\World.h"
+#include "Model\Sword.h"
 
 using namespace Windows::UI::Core;
 using namespace std;
@@ -54,6 +55,7 @@ namespace adventures_of_orchi
 		void DrawRightMargin();
 
 	private:
+		void ThrowSword();
 		void Rotate(float radians);
 
 		Platform::Agile<CoreWindow> m_window;
@@ -92,6 +94,7 @@ namespace adventures_of_orchi
 		//void BuildScreen();
 
 		Player * m_pPlayer;
+		Sword * m_pSword;
 
 		float m_fWindowWidth;
 		float m_fWindowHeight;
@@ -123,7 +126,6 @@ namespace adventures_of_orchi
 		void HighlightRegion(int * pLocation, ComPtr<ID2D1SolidColorBrush> brush);
 
 		DWRITE_TEXT_RANGE m_textRange;
-		ComPtr<IDWriteTextFormat>                       m_textFormat;
 
 		World * m_pWorld;
 

@@ -31,7 +31,7 @@ public:
 		float2 fWindowDimensions,
 		float2 fScaleDimensions, float dpi);
 
-	float2 GetLocationRatio();
+	virtual float2 GetLocationRatio(); // virtual because of Sword.
 
 	float2 GetSpriteSize();
 

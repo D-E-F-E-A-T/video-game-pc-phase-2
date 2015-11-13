@@ -204,6 +204,7 @@
     <Image Include="rock.dds" />
     <Image Include="stairs.dds" />
     <Image Include="stonewall.dds" />
+    <Image Include="sword-left.dds" />
     <Image Include="test.dds" />
     <Image Include="tree.dds" />
     <Image Include="water.dds" />

@@ -7,6 +7,7 @@
 #include "Model\StoneWall.h"
 #include "Model\Rock.h"
 #include "Model\Stairs.h"
+#include "Model\Grass.h"
 
 using namespace Windows::Foundation::Collections;
 using namespace std;
@@ -147,6 +148,22 @@ void World::Build(float2 fScreenDimensions, const shared_ptr<DeviceResources>& d
 				float2(x, y),
 				float2(1.0f, 1.0f),
 				((ServiceProxy::AddStairsCommand ^)command)->Destination,
+				deviceResources));
+		}
+		else if (command->Type == ADD_GRASS_COMMAND)
+		{
+			ScreenUtils::CalculateSquareCenter(
+				fScreenDimensions.x,
+				fScreenDimensions.y,
+				((ServiceProxy::AddGrassCommand ^)command)->X,
+				((ServiceProxy::AddGrassCommand ^)command)->Y,
+				&x,
+				&y);
+
+			(m_lpStacks + m_nCurrentStackIndex)->Add(LAYER_BACKGROUND, new Grass(
+				float2(x, y),
+				float2(1.f, 1.f),
+				true,
 				deviceResources));
 		}
 	}

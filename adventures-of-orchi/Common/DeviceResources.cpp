@@ -108,6 +108,17 @@ void DeviceResources::CreateDeviceIndependentResources()
 			)
 		);
 
+	DX::ThrowIfFailed(
+		m_dwriteFactory->CreateTextFormat(
+			L"Segoe UI",
+			nullptr,
+			DWRITE_FONT_WEIGHT_REGULAR,
+			DWRITE_FONT_STYLE_NORMAL,
+			DWRITE_FONT_STRETCH_NORMAL,
+			64.0f,
+			L"en-US",
+			&m_textFormat)
+		);
 }
 
 // Configures the Direct3D device, and stores handles to it and the device context.

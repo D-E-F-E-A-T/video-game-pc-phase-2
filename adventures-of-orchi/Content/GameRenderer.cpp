@@ -25,10 +25,13 @@ GameRenderer::GameRenderer(const shared_ptr<DeviceResources>& deviceResources, C
 	m_deviceResources(deviceResources),
 	m_isControllerConnected(false)
 {
+	m_window = window;
+
 	CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
 
-	m_window = window;
+
+
 
 	//m_pSpaces = new vector<Space *>;
 
@@ -105,12 +108,12 @@ void GameRenderer::CreateWindowSizeDependentResources()
 	DirectX::XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
 
 	// TODO: Create panels for each of these.
-	//CreateLifeText();
-	//CreateButtonsText();
+	CreateLifeText();
+	CreateButtonsText();
 
-	//CreateMapText();
-	//CreateInventoryText();
-	//CreatePackText();
+	CreateMapText();
+	CreateInventoryText();
+	CreatePackText();
 }
 
 // Called once per frame, rotates the cube and calculates the model and view matrices.
@@ -302,12 +305,11 @@ void GameRenderer::Render()
 	DrawLeftMargin();
 	DrawRightMargin();
 
-	//DrawLifeText();
-	//DrawButtonsText();
-
-	//DrawMapText();
-	//DrawInventoryText();
-	//DrawPackText();
+	DrawLifeText();
+	DrawButtonsText();
+	DrawMapText();
+	DrawInventoryText();
+	DrawPackText();
 
 #ifdef RENDER_DIAGNOSTICS
 	grid.SetVisibility(true);
@@ -625,6 +627,10 @@ void GameRenderer::MovePlayer(uint16 buttons, short horizontal, short vertical)
 	{
 		m_pPlayer->MoveEast(m_nCollisionState, PLAYER_MOVE_VELOCITY);
 	}
+	else if (buttons & XINPUT_GAMEPAD_A)
+	{
+		ThrowSword();
+	}
 	else
 	{
 		HandleLeftThumbStick(horizontal, vertical);
@@ -924,8 +930,8 @@ void GameRenderer::CreateLifeText()
 	Platform::String ^ text = "Life";
 
 	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
-	size.height = size.height / 3.0f;
-	size.width = size.width * RIGHT_MARGIN_RATIO;
+	size.height = m_window->Bounds.Height / 3.0f;
+	size.width = m_window->Bounds.Width * RIGHT_MARGIN_RATIO;
 
 	ComPtr<IDWriteTextLayout> textLayout;
 
@@ -933,7 +939,7 @@ void GameRenderer::CreateLifeText()
 		m_deviceResources->m_dwriteFactory->CreateTextLayout(
 			text->Data(),
 			text->Length(),
-			m_textFormat.Get(),
+			m_deviceResources->m_textFormat.Get(),
 			size.width,
 			size.height,
 			&textLayout
@@ -955,8 +961,8 @@ void GameRenderer::CreateMapText()
 	Platform::String ^ text = "Map";
 
 	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
-	size.height = size.height / 3.0f;
-	size.width = size.width * LEFT_MARGIN_RATIO;
+	size.height = m_window->Bounds.Height / 3.0f;
+	size.width = m_window->Bounds.Width * LEFT_MARGIN_RATIO;
 
 	ComPtr<IDWriteTextLayout> textLayout;
 
@@ -964,7 +970,7 @@ void GameRenderer::CreateMapText()
 		m_deviceResources->m_dwriteFactory->CreateTextLayout(
 			text->Data(),
 			text->Length(),
-			m_textFormat.Get(),
+			m_deviceResources->m_textFormat.Get(),
 			size.width,
 			size.height,
 			&textLayout
@@ -985,8 +991,8 @@ void GameRenderer::CreateButtonsText()
 	Platform::String ^ text = "Buttons";
 
 	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
-	size.height = size.height / 3.0f;
-	size.width = size.width * RIGHT_MARGIN_RATIO;
+	size.height = m_window->Bounds.Height / 3.0f;
+	size.width = m_window->Bounds.Width * RIGHT_MARGIN_RATIO;
 
 	ComPtr<IDWriteTextLayout> textLayout;
 
@@ -994,7 +1000,7 @@ void GameRenderer::CreateButtonsText()
 		m_deviceResources->m_dwriteFactory->CreateTextLayout(
 			text->Data(),
 			text->Length(),
-			m_textFormat.Get(),
+			m_deviceResources->m_textFormat.Get(),
 			size.width,
 			size.height,
 			&textLayout
@@ -1015,8 +1021,8 @@ void GameRenderer::CreateInventoryText()
 	Platform::String ^ text = "Inventory";
 
 	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
-	size.height = size.height / 3.0f;
-	size.width = size.width * LEFT_MARGIN_RATIO;
+	size.height = m_window->Bounds.Height / 3.0f;
+	size.width = m_window->Bounds.Width * LEFT_MARGIN_RATIO;
 
 	ComPtr<IDWriteTextLayout> textLayout;
 
@@ -1024,7 +1030,7 @@ void GameRenderer::CreateInventoryText()
 		m_deviceResources->m_dwriteFactory->CreateTextLayout(
 			text->Data(),
 			text->Length(),
-			m_textFormat.Get(),
+			m_deviceResources->m_textFormat.Get(),
 			size.width,
 			size.height,
 			&textLayout
@@ -1045,8 +1051,8 @@ void GameRenderer::CreatePackText()
 	Platform::String ^ text = "Pack";
 
 	D2D1_SIZE_F size = DEVICE_CONTEXT_2D->GetSize();
-	size.height = size.height / 3.0f;
-	size.width = size.width * RIGHT_MARGIN_RATIO;
+	size.height = m_window->Bounds.Height / 3.0f;
+	size.width = m_window->Bounds.Width * RIGHT_MARGIN_RATIO;
 
 	ComPtr<IDWriteTextLayout> textLayout;
 
@@ -1054,7 +1060,7 @@ void GameRenderer::CreatePackText()
 		m_deviceResources->m_dwriteFactory->CreateTextLayout(
 			text->Data(),
 			text->Length(),
-			m_textFormat.Get(),
+			m_deviceResources->m_textFormat.Get(),
 			size.width,
 			size.height,
 			&textLayout
@@ -1094,4 +1100,13 @@ void GameRenderer::RenderSpaces2D()
 			(*iterator)->Render2D(float2{ m_fWindowWidth, m_fWindowHeight });
 		}
 	}
+}
+
+void GameRenderer::ThrowSword()
+{
+	m_pSword = new Sword(
+		m_pPlayer->GetLocationRatio(),
+		m_deviceResources);
+
+	m_pCurrentStack->Add(LAYER_COLLIDABLES, m_pSword);
 }

@@ -259,6 +259,7 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="stairs.dds" />
+    <Image Include="sword-left.dds" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

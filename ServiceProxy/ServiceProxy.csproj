@@ -110,10 +110,13 @@
   <ItemGroup>
     <Compile Include="AddForestCommand.cs" />
     <Compile Include="AddEdgeCommand.cs" />
+    <Compile Include="AddGrassCommand.cs" />
     <Compile Include="AddStairsCommand.cs" />
     <Compile Include="AddStoneWallCommand.cs" />
     <Compile Include="AddWaterCommand.cs" />
     <Compile Include="AddTreeCommand.cs" />
+    <Compile Include="DeclareCaveCommand.cs" />
+    <Compile Include="DeclareDungeonCommand.cs" />
     <Compile Include="DeclareScreenCommand.cs" />
     <Compile Include="DeclareWorldCommand.cs" />
     <Compile Include="AddRockCommand.cs" />

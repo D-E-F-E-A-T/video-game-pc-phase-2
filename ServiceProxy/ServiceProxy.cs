@@ -41,6 +41,8 @@ namespace ServiceProxy
             BuildScreen23(commands);
             BuildScreen24(commands);
 
+            BuildScreen25(commands);
+
             return commands;
         }
 
@@ -2454,7 +2456,9 @@ namespace ServiceProxy
             commands.AddLast(new DeclareScreenCommand(2, 2));
 
             // Upper-left forest. Think Composite!!!
-            commands.AddLast(new AddTreeCommand(2, 0, 0));
+//            commands.AddLast(new AddTreeCommand(2, 0, 0));
+            commands.AddLast(new AddGrassCommand(3, 0, 0));
+
             commands.AddLast(new AddTreeCommand(2, 1, 0));
             commands.AddLast(new AddTreeCommand(2, 2, 0));
             commands.AddLast(new AddTreeCommand(2, 3, 0));
@@ -4877,6 +4881,11 @@ namespace ServiceProxy
             commands.AddLast(new AddEdgeCommand(4, 9, 0, 1, 19));
             commands.AddLast(new AddEdgeCommand(4, 10, 0, 1, 19));
             commands.AddLast(new AddEdgeCommand(4, 11, 0, 1, 19));
+        }
+
+        private void BuildScreen25(LinkedList<WorldBuilderCommand> commands)
+        {
+            commands.AddLast(new DeclareCaveCommand());
         }
     }
 }
