@@ -1,5 +1,5 @@
 # The Adventures Of Orchi
-An 2D/3D adventure game.
+An fun, whiimsical, suprising 2D/3D adventure game written in DirectX, C++, and XAML.  
 
 
 
