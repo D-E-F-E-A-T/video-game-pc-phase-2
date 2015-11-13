@@ -1,5 +1,5 @@
 # The Adventures Of Orchi
-An fun, whiimsical, suprising 2D/3D adventure game written in DirectX, C++, and XAML.  
+An fun, whimsical, suprising 2D/3D adventure game written in DirectX, C++, and XAML based off of the Engine project.  To be released through the Windows App Store in Fall 2016.
 
 
 
