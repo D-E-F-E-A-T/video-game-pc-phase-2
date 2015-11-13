@@ -9,5 +9,6 @@ To compile and run, you will need Visual Studio 2015 and Windows 10 installed on
 Referenced Works
 -----------------------------
 http://kspriter95.deviantart.com/art/kirby-FC-sword-sprite-2-read-description-422652196
+
 3D Game Programming with DirectX 11 by Frank D. Luna
 
