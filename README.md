@@ -1,5 +1,5 @@
 # The Adventures Of Orchi
-An fun, whimsical, suprising 2D/3D adventure game written in DirectX, C++, and XAML based off of the Engine project.
+An fun, whimsical, suprising 2D/3D adventure game of the same genre as the original "Legend of Zelda."  Written in DirectX 11, C++, and XAML based off of the Engine project.
 
 
 
