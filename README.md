@@ -1,4 +1,4 @@
-# The Adventures Of Orchi
+# The Game project Stage 2
 At release, this will be an fun and whimsical 2D/3D adventure game of the same genre as the original "Legend of Zelda."  
 Written in DirectX 11, C++, and XAML this continues the work of Stage 1 of this project.
 
