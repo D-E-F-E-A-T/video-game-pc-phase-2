@@ -6,7 +6,8 @@ Whereas the focus of Stage 1 was to develop core DirectX rendering functionality
 In Stage 3, the underworld will be developed which will include caves and dungeons.  Multi-screen functionality will be refined.  The ServiceProxy will connect to remote web services.  Gameplay, storyline, artwork will be further developed.
 
 
-
+Compilation
+-------------------------
 To compile and run, you will need Visual Studio 2015 and Windows 10 installed on your system.  The use of an XBox One controller is recommended.
 
 
